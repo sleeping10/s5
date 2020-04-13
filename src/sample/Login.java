@@ -1,5 +1,5 @@
 package sample;
 
-public class Login {
+public class Login extends Verification {
     // login class possibly a controler?
 }
