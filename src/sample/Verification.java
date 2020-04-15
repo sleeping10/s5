@@ -4,17 +4,18 @@ public class Verification {
     private String email, pass;
 
     public boolean verifyUser(String email, String pass){
-        boolean verified = true;
+        boolean verified = false;
         this.email = email;
         this.pass = pass;
 
         if (verifyInput()){
-            return verified;
+            verified = true;
         }
         else{
-            return verified = false;
+            verified = false;
         }
 
+        return verified;
         // Check if email already exists in DB (or array for testing purpose)
 
         //DB.checkUser
