@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.DBC;
 import sample.Verification;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class SignupController extends Verification {
     @FXML private CheckBox remember;
     @FXML private Button forgetPassword;
     @FXML private Label lblStatus;
+
 
 
 
