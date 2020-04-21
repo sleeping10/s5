@@ -3,6 +3,7 @@ package sample;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -103,13 +104,12 @@ public class Login extends Verification {
     public void signUpAction(ActionEvent event) {
         try {
 
-            login.getScene().getWindow().hide();
-            Stage signUp = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("/FXML/SginUp.fxml"));
+            Node node = (Node)event.getSource();
+            Stage stage = (Stage)node.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SignUp.fxml"));
+            Parent root = loader.load();
             Scene scene = new Scene(root);
-            signUp.setScene(scene);
-            signUp.show();
-            signUp.setResizable(false);
+            stage.setScene(scene);
 
         } catch (Exception e) {
             System.out.println(" Error signup : " + e);
