@@ -32,7 +32,27 @@ public class Account {
 
     public access getAccessType() {
         return accessType;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+
+    }
+
+    public void setPhoneNr(String phoneNr) {
+        this.phoneNr = phoneNr;
+    }
+
+    public void setAccountID(int accountID) {
+        this.accountID = accountID;
     }
 
     public Account(String email, String password, String name, String phoneNr, int accountID, access accessType) {
