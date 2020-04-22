@@ -44,15 +44,15 @@ public class Login extends Verification {
     private PreparedStatement pst;
 
     //detta är fel då klassen just nu inte är en Controller
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        username.setStyle("-fx-text-inner-color :#a0a2ab");
-        password.setStyle("-fx-text-inner-color :#a0a2ab");
+//    @Override
+//    public void initialize(URL url, ResourceBundle rb) {
+//
+//        username.setStyle("-fx-text-inner-color :#a0a2ab");
+//        password.setStyle("-fx-text-inner-color :#a0a2ab");
 
      //   handler = new DBHandler();
 
-    }
+//    }
 
     @FXML
     public void loginAction(ActionEvent event) throws SQLException {
