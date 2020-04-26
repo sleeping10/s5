@@ -1,4 +1,4 @@
 package sample;
 
-public class Wash extends ServiceCost {
-}
+//public class Wash extends ServiceCost {
+//}

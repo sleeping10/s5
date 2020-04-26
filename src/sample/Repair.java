@@ -1,4 +1,4 @@
 package sample;
 
-public class Repair extends ServiceCost {
-}
+//public class Repair extends ServiceCost {
+//}
