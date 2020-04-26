@@ -30,6 +30,7 @@ public class CreateBookingController implements Initializable {
 
 
     ArrayList<String> subs = new ArrayList<>();
+    ArrayList<Double> subsCost = new ArrayList<>();
 
     int price = 0;
 
@@ -42,14 +43,16 @@ public class CreateBookingController implements Initializable {
 
         if (chbOil.isSelected()){
             price += 50;
+            subsCost.add((double) 50);
             subs.add("Oil change");
         }
         if (chbAC.isSelected()){
             price += 100;
+            subsCost.add((double) 50);
             subs.add("AC fix");
         }
 
-        Service serv = new Service(Service.serviceType.valueOf(rbService.getText()), price, subs);
+        Service serv = new Service(Service.serviceType.valueOf(rbService.getText()), price, subs, subsCost);
         lblA.setText(String.valueOf(price));
 
 

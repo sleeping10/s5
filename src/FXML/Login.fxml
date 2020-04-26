@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.LoginController">
    <children>
       <Button fx:id="signUp" layoutX="581.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleSignUpBtn" text="SignUp" />
-      <Button fx:id="login" layoutX="357.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleLoginBtn" prefHeight="32.0" prefWidth="72.0" text="Login" />
-      <TextField fx:id="username" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" />
-      <PasswordField layoutX="231.0" layoutY="178.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
-      <CheckBox fx:id="remember" layoutX="231.0" layoutY="252.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Remember me" textFill="#a0a2ab80" />
-      <Button fx:id="forgotPassword" layoutX="268.0" layoutY="316.0" mnemonicParsing="false" text="forgot your password?" />
+      <Button fx:id="btnLogin" layoutX="357.0" layoutY="252.0" mnemonicParsing="false" onAction="#handleLoginBtn" prefHeight="32.0" prefWidth="72.0" text="Login" />
+      <TextField fx:id="tfUser" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" />
+      <PasswordField fx:id="pfPass" layoutX="231.0" layoutY="178.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
+      <CheckBox fx:id="chbRemember" layoutX="231.0" layoutY="252.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="119.0" text="Remember me" textFill="#a0a2ab80" />
+      <Button fx:id="btnForgotPass" layoutX="268.0" layoutY="316.0" mnemonicParsing="false" text="forgot your password?" />
       <Label layoutX="275.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" style="-fx-background-color: #2D3447; -fx-text-fill: #FFFFFF;" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
          <font>
             <Font size="24.0" />

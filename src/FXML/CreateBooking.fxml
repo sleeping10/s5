@@ -7,21 +7,21 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
    <children>
-      <CheckBox fx:id="chbOil" layoutX="120.0" layoutY="108.0" mnemonicParsing="false" text="Oil Change - $50" />
-      <CheckBox fx:id="chbAC" layoutX="120.0" layoutY="144.0" mnemonicParsing="false" text="AC fix - $100" />
-      <CheckBox fx:id="chbWheel" layoutX="120.0" layoutY="183.0" mnemonicParsing="false" text="Wheel cHange - $50" />
-      <CheckBox layoutX="120.0" layoutY="216.0" mnemonicParsing="false" text="CheckBox" />
-      <Button fx:id="btnAdd" layoutX="131.0" layoutY="269.0" mnemonicParsing="false" onAction="#handleButton" text="Button" />
-      <Label fx:id="lblA" layoutX="312.0" layoutY="208.0" text="Label" />
-      <Label fx:id="lblB" layoutX="312.0" layoutY="286.0" text="Label" />
-      <RadioButton fx:id="rbInspection" layoutX="113.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRbInspection" selected="true" text="Inspection">
+      <CheckBox fx:id="chbOil" layoutX="21.0" layoutY="108.0" mnemonicParsing="false" text="Oil Change - $50" />
+      <CheckBox fx:id="chbAC" layoutX="21.0" layoutY="144.0" mnemonicParsing="false" text="AC fix - $100" />
+      <CheckBox fx:id="chbWheel" layoutX="21.0" layoutY="183.0" mnemonicParsing="false" text="Wheel cHange - $50" />
+      <CheckBox layoutX="21.0" layoutY="216.0" mnemonicParsing="false" text="CheckBox" />
+      <Button fx:id="btnAdd" layoutX="328.0" layoutY="233.0" mnemonicParsing="false" onAction="#handleButton" text="Button" />
+      <Label fx:id="lblA" layoutX="247.0" layoutY="117.0" text="Label" />
+      <Label fx:id="lblB" layoutX="285.0" layoutY="183.0" text="Label" />
+      <RadioButton fx:id="rbInspection" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleRbInspection" selected="true" text="Inspection">
          <toggleGroup>
             <ToggleGroup fx:id="A" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="rbService" layoutX="114.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleRbService" text="Repair" toggleGroup="$A" />
-      <RadioButton fx:id="rbWash" layoutX="115.0" layoutY="70.0" mnemonicParsing="false" text="Wash" toggleGroup="$A" />
+      <RadioButton fx:id="rbService" layoutX="15.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleRbService" text="Repair" toggleGroup="$A" />
+      <RadioButton fx:id="rbWash" layoutX="16.0" layoutY="70.0" mnemonicParsing="false" text="Wash" toggleGroup="$A" />
       <CheckBox fx:id="chbBasic" layoutX="121.0" layoutY="108.0" mnemonicParsing="false" text="Basic Inspection" visible="false" />
       <CheckBox fx:id="chbAdvanced" layoutX="121.0" layoutY="136.0" mnemonicParsing="false" text="Advanced Inspection" visible="false" />
    </children>

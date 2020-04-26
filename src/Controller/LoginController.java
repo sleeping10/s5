@@ -35,26 +35,34 @@ public class LoginController extends Verification implements Initializable {
 
         }
 
+        private void SceneChanger(ActionEvent event, String fxml){
+            try {
+
+                Node node = (Node)event.getSource();
+                Stage stage = (Stage)node.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/" + fxml + ".fxml"));
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+
+            } catch (Exception e) {
+                System.out.println(" Error signup : " + e);
+            }
+
+        }
+
 
 
     @FXML
     public void handleSignUpBtn(ActionEvent event) {
-        try {
 
-            Node node = (Node)event.getSource();
-            Stage stage = (Stage)node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/SignUp.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-
-        } catch (Exception e) {
-            System.out.println(" Error signup : " + e);
-        }
+        SceneChanger(event, "SignUp");
     }
 
     @FXML
     public void handleLoginBtn(ActionEvent event) {
+
+        SceneChanger(event, "Main");
 
     }
 

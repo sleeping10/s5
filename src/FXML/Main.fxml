@@ -7,9 +7,8 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainScreenController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="400.0" minWidth="600.0" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.MainScreenController">
    <top>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #00bdf3;">
          <children>
@@ -24,7 +23,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="btnCreateBooking" layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="40.0" prefWidth="160.0" text="Create Booking" />
-            <Button fx:id="btnManageBookings" layoutX="20.0" layoutY="68.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Manage bookings" />
+            <Button fx:id="btnManageBookings" layoutX="20.0" layoutY="68.0" mnemonicParsing="false" onAction="#handleManageBookingsBtn" prefHeight="40.0" prefWidth="160.0" text="Manage bookings" />
             <Button fx:id="btnAccount" layoutX="20.0" layoutY="118.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Manage Account" />
             <Button fx:id="btnNearestStation" layoutX="20.0" layoutY="174.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Find Nearest Station" />
             <Button fx:id="btnContact" layoutX="20.0" layoutY="227.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="160.0" text="Contact us" />
@@ -35,6 +34,6 @@
       <Label text="Label" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
-      <StackPane fx:id="mainPane" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER_RIGHT" />
+      <AnchorPane fx:id="anchorInfo" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </center>
 </BorderPane>
