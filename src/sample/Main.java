@@ -14,8 +14,9 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-        System.out.println("swag");
-        System.out.println("Hello");
+        DBC swag = new DBC();
+        swag.connect();
+        swag.disconnect();
     }
 
 
