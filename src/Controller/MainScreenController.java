@@ -24,8 +24,6 @@ public class MainScreenController implements Initializable {
     @FXML private Button btnContactUs;
     @FXML private AnchorPane anchorInfo;
 
-    PaneNavigator pn = new PaneNavigator();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //hboxContainer.setBackground();
