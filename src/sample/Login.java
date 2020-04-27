@@ -59,6 +59,8 @@ public class Login extends Verification {
     @FXML
     public void loginAction(ActionEvent event) throws SQLException {
 
+
+        // Detta här under ska vi försöka få in i DBC klassen, den ska innehålla alla databas connections
         //Login Database
         try {
 

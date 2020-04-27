@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Account;
 import sample.DBC;
+import sample.SceneSwitcher;
 import sample.Verification;
 
 import java.io.IOException;
@@ -28,7 +29,7 @@ public class SignupController extends Verification {
     private Account acc = null;
 
 
-
+    SceneSwitcher sw = new SceneSwitcher();
 
     @FXML private void handleButtonSignUp(ActionEvent event){
         acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
@@ -48,7 +49,10 @@ public class SignupController extends Verification {
 
 
     @FXML private void handleButtonGoBack(ActionEvent event) {
-        changeToLoginScene(event);
+
+
+        //changeToLoginScene(event);
+        sw.loginSignupSceneSwitcher(event, "Login");
     }
 
 
