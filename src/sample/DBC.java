@@ -51,9 +51,35 @@ public class DBC {
             }
         }
         // addBooking
+    public void addBooking(Booking booking){
+//        try {
+//            String query = "INSERT INTO Booking (bookingDate, bookingDesc) VALUES (?, ?)";
+//            statement = dbConnection.prepareStatement(query);
+//            statement.setString(1, acc.getEmail());
+//            statement.setString(2, acc.getPassword());
+//            statement.execute();
+//            statement.close();
+//            System.out.println("felix är cool");
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }
+    }
     // manageBooking
+    public void manageBooking (Booking booking){
+
+    }
+    // seeBookings
+    public void seeBookings (){
+
+    }
     // removeBooking
-    //seeBookings
+    public void removeBooking(Booking booking){
+
+    }
+//    public Account getAccount(){
+//
+//    }
+
 
     public void saveAccount(Account acc){
             try {

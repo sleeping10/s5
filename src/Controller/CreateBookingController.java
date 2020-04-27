@@ -9,8 +9,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Booking;
+import sample.DBC;
 import sample.Service;
 import sample.Verification;
+
+import java.awt.print.Book;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,11 +93,6 @@ public class CreateBookingController implements Initializable {
             subs.add("AC fix");
         }
 
-        //Service serv = new Service(Service.serviceType.valueOf(rbService.getText()), price, subs, subsCost);
-        lblA.setText(String.valueOf(price));
-
-
-        //lblB.setText(serv.getNameOfService() + " + , " + String.valueOf(serv.getCost()) + ", " + serv.getSubCategories());
     }
 
     private void toggleInspectionCheckBoxes(boolean toggle){

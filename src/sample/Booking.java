@@ -1,17 +1,14 @@
 package sample;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Booking {
     private int bookingID;
     private Date date;
     private String bookingDesc;
-    public bookingType bookingType;
     private int accountID;
 
-    enum bookingType {
-        Inspection, Service, Repair, Wash
-    }
 
     public int getBookingID() {
         return bookingID;
@@ -29,11 +26,10 @@ public class Booking {
         return accountID;
     }
 
-    public Booking(int bookingID, Date date, String bookingDesc, bookingType bookingType, int accountID) {
+    public Booking(int bookingID, Date date, String bookingDesc, int accountID, ArrayList<String> subCategories) {
         this.bookingID = bookingID;
         this.date = date;
         this.bookingDesc = bookingDesc;
-        this.bookingType = bookingType;
         this.accountID = accountID;
     }
 
