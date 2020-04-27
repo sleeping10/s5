@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.DBC;
+import sample.SceneSwitcher;
 import sample.Verification;
 
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class SignupController extends Verification {
     @FXML private Label lblStatus;
 
 
-
+    SceneSwitcher sw = new SceneSwitcher();
 
     @FXML private void handleButtonSignUp(ActionEvent event){
 
@@ -42,7 +43,9 @@ public class SignupController extends Verification {
     }
 
     @FXML private void handleButtonGoBack(ActionEvent event) {
-            changeToLoginScene(event);
+
+        //changeToLoginScene(event);
+        sw.loginSignupSceneSwitcher(event, "Login");
     }
 
     private void changeToLoginScene(ActionEvent event){

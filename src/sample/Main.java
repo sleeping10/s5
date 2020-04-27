@@ -13,7 +13,10 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../FXML/Login.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setMinWidth(700);
+        primaryStage.setMinHeight(500);
         primaryStage.show();
+
         DBC swag = new DBC();
         swag.connect();
         swag.disconnect();
