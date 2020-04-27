@@ -78,27 +78,33 @@ public class DBC {
     public boolean verifyAccount(String email, String pass, String phone){
             boolean status = false;
             try {
-                String query = "SELECT * FROM Account WHERE email = " + email + "AND password = " + pass;
+                String query = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
                 stmt = dbConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
 
-                if (rs.getString("email").equals(email)&& rs.getString("password").equals(pass)) {
-                    status = true;
+                if (!rs.next()) {
+                    status=true;
+                } else {
+                    status=false;
+                    do {
+                        // lul inget :)
+                    } while (rs.next());
                 }
-                stmt.close();
-                rs.close();
 
             } catch (Exception ex){
-                ex.printStackTrace();
-            }return status;
+                System.out.println(ex.getMessage());
+            }
+
+            return status;
     }
-    public boolean verifyAccountSignUp(String email, String phone){
+    public boolean verifyAccountSignUp(String s, String email, String phone){
             boolean status = false;
             try {
-                String query = "SELECT email, phone FROM Account WHERE email = " + email + " AND phone = " + phone;
+                String query = "SELECT email, phone FROM Account WHERE email = '" + email + "' AND phone = " + phone;
+                System.out.print(query);
                 stmt = dbConnection.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                if (rs.getString("email").equals(null) && rs.getString("phone").equals(null)) {
+                if (rs.getString("email").isEmpty() && rs.getString("phone").isEmpty()) {
                     status = true;
                 } else {
                     System.out.println("acc exists");
