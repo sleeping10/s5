@@ -8,7 +8,7 @@ public class Account {
     private int accountID;
     public access accessType;
 
-    enum access {
+    public enum access {
         Admin, Employee, Customer
     }
 
@@ -40,6 +40,10 @@ public class Account {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPassword(){
+        return this.password;
     }
 
     public void setName(String name) {

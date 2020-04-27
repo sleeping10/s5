@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Account;
 import sample.DBC;
 import sample.Verification;
 
@@ -23,12 +24,15 @@ public class SignupController extends Verification {
     @FXML private CheckBox remember;
     @FXML private Button forgetPassword;
     @FXML private Label lblStatus;
+    private DBC dbc = new DBC();
+    private Account acc = null;
 
 
 
 
     @FXML private void handleButtonSignUp(ActionEvent event){
-
+        acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
+        dbc.saveAccount(acc);
         SignUp();
 
     }
@@ -41,9 +45,15 @@ public class SignupController extends Verification {
      }
     }
 
+
+
     @FXML private void handleButtonGoBack(ActionEvent event) {
-            changeToLoginScene(event);
+        changeToLoginScene(event);
     }
+
+
+
+
 
     private void changeToLoginScene(ActionEvent event){
         try{
@@ -57,4 +67,5 @@ public class SignupController extends Verification {
 
         }
     }
+
 }
