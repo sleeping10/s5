@@ -11,15 +11,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("../FXML/Login.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("HKR Wash & Service");
         primaryStage.setScene(new Scene(root));
         primaryStage.setMinWidth(700);
         primaryStage.setMinHeight(500);
         primaryStage.show();
 
-        DBC swag = new DBC();
-        swag.connect();
-        swag.disconnect();
     }
 
 

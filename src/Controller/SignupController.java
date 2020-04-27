@@ -3,6 +3,7 @@ package Controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,8 +15,10 @@ import sample.SceneSwitcher;
 import sample.Verification;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class SignupController extends Verification {
+public class SignupController extends Verification implements Initializable {
 
     @FXML private TextField tfName;
     @FXML private TextField tfEmail;
@@ -25,24 +28,22 @@ public class SignupController extends Verification {
     @FXML private CheckBox remember;
     @FXML private Button forgetPassword;
     @FXML private Label lblStatus;
-    private DBC dbc = new DBC();
     private Account acc = null;
-
 
     SceneSwitcher sw = new SceneSwitcher();
 
     @FXML private void handleButtonSignUp(ActionEvent event){
-        acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
-        dbc.saveAccount(acc);
         SignUp();
 
     }
 
     private void SignUp(){
-     if (verifyEmail(tfEmail.getText())){
-         lblStatus.setText("Email already exists");
+     if (verifyAccount(tfEmail.getText(),tfPass.getText(), tfPhone.getText())){
+         acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
+         DBC.getInstance().saveAccount(acc);
+         lblStatus.setText("Account created");
      }else {
-
+        lblStatus.setText("Email or phone already connected to an account");
      }
     }
 
@@ -50,7 +51,7 @@ public class SignupController extends Verification {
 
     @FXML private void handleButtonGoBack(ActionEvent event) {
 
-
+DBC.getInstance().disconnect();
         //changeToLoginScene(event);
         sw.loginSignupSceneSwitcher(event, "Login");
     }
@@ -72,4 +73,8 @@ public class SignupController extends Verification {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+       DBC.getInstance().connect();
+    }
 }
