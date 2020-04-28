@@ -61,7 +61,7 @@ public class LoginController extends Verification implements Initializable {
 
     @FXML
     public void handleLoginBtn(ActionEvent event) {
-
+        verifyAccount(tfUser.getText(),pfPass.getText(),null);
         SceneChanger(event, "Main");
 
     }

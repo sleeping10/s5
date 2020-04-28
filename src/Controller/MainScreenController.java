@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import sample.Account;
+import sample.DBC;
 import sample.SceneSwitcher;
 
 import java.awt.*;
@@ -73,6 +74,7 @@ public class MainScreenController implements Initializable {
 
     @FXML
     private void handleLblSignout(ActionEvent e){
+        DBC.getInstance().disconnect();
         sw.loginSignupSceneSwitcher(e, "Login");
     }
 

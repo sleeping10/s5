@@ -51,7 +51,6 @@ public class SignupController extends Verification implements Initializable {
 
     @FXML private void handleButtonGoBack(ActionEvent event) {
 
-DBC.getInstance().disconnect();
         //changeToLoginScene(event);
         sw.loginSignupSceneSwitcher(event, "Login");
     }
@@ -75,6 +74,6 @@ DBC.getInstance().disconnect();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       DBC.getInstance().connect();
+
     }
 }

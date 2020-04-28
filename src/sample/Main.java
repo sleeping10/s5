@@ -10,6 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        DBC.getInstance().connect();
         Parent root = FXMLLoader.load(getClass().getResource("../FXML/Login.fxml"));
         primaryStage.setTitle("HKR Wash & Service");
         primaryStage.setScene(new Scene(root));

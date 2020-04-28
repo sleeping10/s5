@@ -44,7 +44,7 @@ public class ManageAccountController implements Initializable {
     @FXML
     public void verifyInfo(){
         DBC.getInstance().connect();
-        if (DBC.getInstance().verifyAccountSignUp("", emailT.getText(), phoneT.getText())){
+        if (DBC.getInstance().verifyAccount("", emailT.getText(), phoneT.getText())){
             System.out.println("finns");
         }else System.out.println("finns inte ");
         DBC.getInstance().disconnect();
