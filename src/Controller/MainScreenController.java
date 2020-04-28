@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
+import sample.Account;
 import sample.SceneSwitcher;
 
 import java.awt.*;
@@ -32,6 +33,8 @@ public class MainScreenController implements Initializable {
     private Class MainScreenController;
 
     SceneSwitcher sw = new SceneSwitcher();
+
+    public Account acc = new Account("1212", "pass", "helao", "123", 0, Account.access.Customer);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,12 +63,12 @@ public class MainScreenController implements Initializable {
         sw.mainScreenSceneSwitcher( anchorInfo, "ManageAccount");
     }
 
-    private void handleNearestStationBtn(ActionEvent e){
-
+    private void handleNearestStationBtn(ActionEvent e) throws IOException {
+        sw.mainScreenSceneSwitcher( anchorInfo, "FindNearestStation");
     }
 
-    private void handleContactUsBtn(ActionEvent e){
-
+    private void handleContactUsBtn(ActionEvent e) throws IOException {
+        sw.mainScreenSceneSwitcher( anchorInfo, "ContactUs");
     }
 
     @FXML
