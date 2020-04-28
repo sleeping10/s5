@@ -102,44 +102,44 @@ public class DBC {
     }
 
     public boolean verifyAccount(String email, String pass, String phone){
+            boolean statusLogin = false;
+            boolean statusSignUp = false;
             boolean status = false;
+            String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
+            String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' OR phone = '" + phone + "'";
             try {
-                String query = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
-                stmt = dbConnection.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+                if (pass == null){
+                    stmt = dbConnection.createStatement();
+                    ResultSet rsSignup = stmt.executeQuery(querySignup);
 
-                if (!rs.next()) {
-                    status=true;
-                } else {
-                    status=false;
-                    do {
-                        // lul inget :)
-                    } while (rs.next());
+                    if (!rsSignup.next()) {
+                        statusSignUp=true;
+                    } else {
+                        statusSignUp=false;
+                        do {
+                            // lul inget :)
+                        } while (rsSignup.next());
+                    }
+                    status = statusSignUp;
                 }
-
+                else if (pass != null){
+                    stmt = dbConnection.createStatement();
+                    ResultSet rsLogin = stmt.executeQuery(queryLogin);
+                    if (!rsLogin.next()) {
+                        statusLogin=true;
+                    } else {
+                        statusLogin=false;
+                        do {
+                            // lul inget :)
+                        } while (rsLogin.next());
+                    }
+                    status = statusLogin;
+                }
             } catch (Exception ex){
                 System.out.println(ex.getMessage());
             }
 
             return status;
-    }
-    public boolean verifyAccountSignUp(String s, String email, String phone){
-            boolean status = false;
-            try {
-                String query = "SELECT email, phone FROM Account WHERE email = '" + email + "' AND phone = " + phone;
-                System.out.print(query);
-                stmt = dbConnection.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
-                if (rs.getString("email").isEmpty() && rs.getString("phone").isEmpty()) {
-                    status = true;
-                } else {
-                    System.out.println("acc exists");
-                }
-            }catch (Exception ex){
-                ex.printStackTrace();
-            }
-
-               return status;
     }
     //seeUsers
     //setServiceCost
