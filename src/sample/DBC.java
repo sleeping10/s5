@@ -81,14 +81,14 @@ public class DBC {
 //    }
 
 
-    public void saveAccount(Account acc){
+    public void saveAccount(){
             try {
                 String query = "INSERT INTO Account (email, password, name, phone) VALUES (?, ?, ?, ?)";
                 statement = dbConnection.prepareStatement(query);
-                statement.setString(1, acc.getEmail());
-                statement.setString(2, acc.getPassword());
-                statement.setString(3, acc.getName());
-                statement.setString(4, acc.getPhone());
+                statement.setString(1, Account.getInstance().getEmail());
+                statement.setString(2, Account.getInstance().getPassword());
+                statement.setString(3, Account.getInstance().getName());
+                statement.setString(4, Account.getInstance().getPhone());
                 statement.execute();
                 statement.close();
                 System.out.println("felix är cool");
@@ -105,8 +105,13 @@ public class DBC {
             boolean statusLogin = false;
             boolean statusSignUp = false;
             boolean status = false;
+            String dbmail = "";
+            String dbpass = "";
+
+
             String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
-            String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' OR phone = '" + phone + "'";
+            String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' AND phone = '" + phone + "'";
+            String setLoginStatus = "INSERT INTO Account (login) WHERE email = '" + email + "'  VALUES (?)";
             try {
                 if (pass == null){
                     stmt = dbConnection.createStatement();
@@ -117,21 +122,31 @@ public class DBC {
                     } else {
                         statusSignUp=false;
                         do {
-                            // lul inget :)
+
                         } while (rsSignup.next());
                     }
                     status = statusSignUp;
                 }
                 else if (pass != null){
+                    System.out.println("Du kom hit!");
                     stmt = dbConnection.createStatement();
                     ResultSet rsLogin = stmt.executeQuery(queryLogin);
-                    if (!rsLogin.next()) {
-                        statusLogin=true;
-                    } else {
-                        statusLogin=false;
-                        do {
-                            // lul inget :)
-                        } while (rsLogin.next());
+                    //if (!rsLogin.next()) {
+                     //   statusLogin=true;
+                    //} else {
+                     //   statusLogin=false;
+                      //  do {
+                       //     // lul inget :)
+                       // } while (rsLogin.next());
+                    //}
+
+                    if(rsLogin.next()) {
+                        dbmail = rsLogin.getString(2);
+                        dbpass = rsLogin.getString(3);
+                    }
+
+                    if (dbmail.matches(email) && dbpass.matches(pass)){
+                        statusLogin = true;
                     }
                     status = statusLogin;
                 }
