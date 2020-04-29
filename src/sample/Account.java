@@ -1,10 +1,10 @@
 package sample;
 
 public class Account {
-    private String email = "";
-    private String password ="";
-    private String name = "";
-    private String phoneNr = "";
+    private String email;
+    private String password;
+    private String name;
+    private String phoneNr;
     private int accountID = 0;
     private int accessType;
 
