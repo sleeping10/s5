@@ -6,11 +6,7 @@ public class Account {
     private String name = "";
     private String phoneNr = "";
     private int accountID = 0;
-    public access accessType;
-
-    public enum access {
-        Admin, Employee, Customer
-    }
+    private int accessType;
 
 
     public String getEmail() {
@@ -30,11 +26,11 @@ public class Account {
         return accountID;
     }
 
-    public access getAccessType() {
+    public int getAccessType() {
         return accessType;
     }
 
-    public void setAccessType(access a) {
+    public void setAccessType(int a) {
         this.accessType = a;
     }
 
@@ -63,7 +59,7 @@ public class Account {
         this.accountID = accountID;
     }
 
-    public Account(String email, String password, String name, String phoneNr, int accountID, access accessType) {
+    public Account(String email, String password, String name, String phoneNr, int accountID, int accessType) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -71,5 +67,10 @@ public class Account {
         this.accountID = accountID;
         this.accessType = accessType;
 
+    }
+
+    @Override
+    public String toString() {
+        return this.email + ", " + this.password + ", " + this.name;
     }
 }
