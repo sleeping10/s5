@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Verification;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -30,6 +31,8 @@ public class LoginController extends Verification implements Initializable {
 
             tfUser.setStyle("-fx-text-inner-color :#a0a2ab");
             pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
+
+
 
             //   handler = new DBHandler();
 
@@ -65,5 +68,14 @@ public class LoginController extends Verification implements Initializable {
         SceneChanger(event, "Main");
 
     }
+    @FXML
+    public void forgotPassButton(ActionEvent event) throws IOException {
 
+        Node node = (Node)event.getSource();
+        Stage stage = (Stage)node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ResetPass.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
 }
