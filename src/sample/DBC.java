@@ -81,14 +81,14 @@ public class DBC {
 //    }
 
 
-    public void saveAccount(){
+    public void saveAccount(Account acc){
             try {
                 String query = "INSERT INTO Account (email, password, name, phone) VALUES (?, ?, ?, ?)";
                 statement = dbConnection.prepareStatement(query);
-                statement.setString(1, Account.getInstance().getEmail());
-                statement.setString(2, Account.getInstance().getPassword());
-                statement.setString(3, Account.getInstance().getName());
-                statement.setString(4, Account.getInstance().getPhone());
+                statement.setString(1, acc.getEmail());
+                statement.setString(2, acc.getPassword());
+                statement.setString(3, acc.getName());
+                statement.setString(4, acc.getPhone());
                 statement.execute();
                 statement.close();
                 System.out.println("felix är cool");

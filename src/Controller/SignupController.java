@@ -41,7 +41,7 @@ public class SignupController extends Verification implements Initializable {
      if (verifyAccount(tfEmail.getText(),tfPass.getText(), tfPhone.getText())){
          acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
 
-         DBC.getInstance().saveAccount();
+         DBC.getInstance().saveAccount(acc);
          lblStatus.setText("Account created");
      }else {
         lblStatus.setText("Email or phone already connected to an account");
