@@ -7,15 +7,17 @@
 
 <AnchorPane fx:id="texts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageAccountController">
    <children>
-      <TextField fx:id="nameT" layoutX="140.0" layoutY="27.0" />
-      <TextField fx:id="emailT" layoutX="140.0" layoutY="70.0" />
-      <TextField fx:id="phoneT" layoutX="140.0" layoutY="119.0" />
-      <TextField fx:id="passwordT" layoutX="140.0" layoutY="168.0" />
+      <TextField fx:id="name" layoutX="140.0" layoutY="27.0" />
+      <TextField fx:id="phone" layoutX="140.0" layoutY="70.0" />
+      <TextField fx:id="password" layoutX="140.0" layoutY="119.0" />
+      <TextField fx:id="npassword" layoutX="140.0" layoutY="168.0" />
       <Text layoutX="211.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
-      <Text layoutX="211.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-      <Text layoutX="182.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
-      <Text layoutX="199.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-      <Button layoutX="357.0" layoutY="40.0" mnemonicParsing="false" onAction="#verifyInfo" text="Save" />
+      <Text layoutX="183.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new password" />
+      <Text layoutX="182.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
+      <Text layoutX="199.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <Button layoutX="357.0" layoutY="40.0" mnemonicParsing="false" onAction="#verifyPassword" text="Save" />
       <Text fx:id="text" layoutX="368.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <TextField fx:id="rnpassword" layoutX="140.0" layoutY="217.0" />
+      <Text fx:id="text1" layoutX="160.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="repeat new password" />
    </children>
 </AnchorPane>
