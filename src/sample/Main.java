@@ -19,12 +19,26 @@ public class Main extends Application {
         primaryStage.show();
 
 
-        //primaryStage.setOnCloseRequest(DBC.getInstance().disconnect());
+
+
 
     }
 
 
+
+
     public static void main(String[] args) {
-        launch(args);
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+            @Override
+            public void run() {
+                if (DBC.getInstance().getAcc() != null){
+                    DBC.getInstance().setLoginStatus(false);
+                }
+                DBC.getInstance().disconnect();
+            }
+        });
+
+    launch(args);
     }
 }
