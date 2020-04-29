@@ -18,6 +18,7 @@ public class Main extends Application {
         primaryStage.setMinHeight(500);
         primaryStage.show();
 
+
         //primaryStage.setOnCloseRequest(DBC.getInstance().disconnect());
 
     }

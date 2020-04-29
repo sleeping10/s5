@@ -1,15 +1,26 @@
 package sample;
 
 public class Account {
-    private String email;
-    private String password;
-    private String name;
-    private String phoneNr;
-    private int accountID;
+    private String email = "";
+    private String password ="";
+    private String name = "";
+    private String phoneNr = "";
+    private int accountID = 0;
     public access accessType;
 
     public enum access {
         Admin, Employee, Customer
+    }
+
+    private static Account single_instance = null;
+
+    private Account(){}
+
+    public static Account getInstance(){
+        if (single_instance==null){
+            single_instance=new Account();
+        }
+        return single_instance;
     }
 
 
@@ -32,6 +43,10 @@ public class Account {
 
     public access getAccessType() {
         return accessType;
+    }
+
+    public void setAccessType(access a) {
+        this.accessType = a;
     }
 
     public void setEmail(String email) {
