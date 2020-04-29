@@ -2,6 +2,7 @@ package sample;
 
 import com.mysql.cj.protocol.Resultset;
 
+import java.awt.*;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,8 +11,8 @@ import java.util.logging.Logger;
 public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
-
-        Connection dbConnection = null;
+    private Account acc;
+    Connection dbConnection = null;
 
     private static DBC single_instance = null;
 
@@ -27,11 +28,11 @@ public class DBC {
 
         public boolean connect(){
             try {
-                Class.forName("com.mysql.jdbc.Driver").newInstance();
-                 String URL = "jdbc:mysql://den1.mysql3.gear.host:3306/projkurs2hkr?user=projkurs2hkr&password=Vr2Gr2-qb9O~";
+                Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+                 String URL = "jdbc:mysql://den1.mysql4.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Tm3kp8U406~-&useSSL=false";
                 dbConnection = DriverManager.getConnection(URL);
                 stmt = dbConnection.createStatement();
-                System.out.println("connected to db");
+                System.out.println("DEBUG: Connected to db");
                 return true;
             } catch (Exception e) {
                 System.err.println("ERROR: " + e);
@@ -42,7 +43,7 @@ public class DBC {
         public void disconnect(){
             if (dbConnection!=null){
                 try {
-                    System.out.println("closing db");
+                    System.out.println("DEBUG: Closing db connection");
                     stmt.close();
                     dbConnection.close();
                 } catch (SQLException ex) {
@@ -76,22 +77,32 @@ public class DBC {
     public void removeBooking(Booking booking){
 
     }
-//    public Account getAccount(){
-//
-//    }
+    public String getAccount(){
+      return acc.toString();
+    }
+
+    public Account getAcc(){
+            return acc;
+    }
+
+    public void setAcc(Account acc){
+        this.acc = acc;
+    }
 
 
-    public void saveAccount(Account acc){
+    public void saveAccount(){
             try {
-                String query = "INSERT INTO Account (email, password, name, phone) VALUES (?, ?, ?, ?)";
+                String query = "INSERT INTO Account (email, password, name, phone, loginStatus, Access_AccessID) VALUES (?, ?, ?, ?, ?, ?)";
                 statement = dbConnection.prepareStatement(query);
                 statement.setString(1, acc.getEmail());
                 statement.setString(2, acc.getPassword());
                 statement.setString(3, acc.getName());
                 statement.setString(4, acc.getPhone());
+                statement.setBoolean(5, false);
+                statement.setInt(6, 3);
                 statement.execute();
                 statement.close();
-                System.out.println("felix är cool");
+                System.out.println("DEBUG: Sign up successful");
             }catch (Exception ex){
                 ex.printStackTrace();
             }
@@ -107,13 +118,17 @@ public class DBC {
             boolean status = false;
             String dbmail = "";
             String dbpass = "";
+            String dbname = "";
+            String dbphone = "";
+            int accessType = -1;
+            int dbAccID = 0;
 
 
             String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
             String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' AND phone = '" + phone + "'";
-            String setLoginStatus = "INSERT INTO Account (login) WHERE email = '" + email + "'  VALUES (?)";
             try {
-                if (pass == null){
+                if (phone != null){
+                    System.out.println("DEBUG: Sign up process initiated");
                     stmt = dbConnection.createStatement();
                     ResultSet rsSignup = stmt.executeQuery(querySignup);
 
@@ -127,34 +142,70 @@ public class DBC {
                     }
                     status = statusSignUp;
                 }
-                else if (pass != null){
-                    System.out.println("Du kom hit!");
+                else if (phone == null){
+                    System.out.println("DEBUG: Log in process initiated");
                     stmt = dbConnection.createStatement();
                     ResultSet rsLogin = stmt.executeQuery(queryLogin);
-                    //if (!rsLogin.next()) {
-                     //   statusLogin=true;
-                    //} else {
-                     //   statusLogin=false;
-                      //  do {
-                       //     // lul inget :)
-                       // } while (rsLogin.next());
-                    //}
 
                     if(rsLogin.next()) {
                         dbmail = rsLogin.getString(2);
                         dbpass = rsLogin.getString(3);
+                        dbname = rsLogin.getString(4);
+                        dbphone = rsLogin.getString(5);
+                        accessType = rsLogin.getInt(7);
                     }
 
                     if (dbmail.matches(email) && dbpass.matches(pass)){
+                        dbAccID = getAccountIDfromDB(email, pass);
+
                         statusLogin = true;
+                        acc = new Account(dbmail, dbpass, dbname, dbphone, dbAccID, accessType);
+                        setLoginStatus(true);
+                        System.out.println("DEBUG: User successfully logged in");
                     }
                     status = statusLogin;
                 }
             } catch (Exception ex){
-                System.out.println(ex.getMessage());
+                System.out.println("ERROR; " + ex.getMessage());
             }
 
             return status;
+    }
+
+
+    public void setLoginStatus(boolean toggle){
+        String querysetLoginStatus = "UPDATE Account SET loginStatus = ? WHERE AccountID = ?";
+        try{
+            statement = dbConnection.prepareStatement(querysetLoginStatus);
+            statement.setBoolean(1, toggle);
+            statement.setInt(2, acc.getAccountID());
+            statement.executeUpdate();
+            statement.close();
+            System.out.println("DEBUG: User logged out");
+        }catch (Exception e){
+            System.out.println("ERROR SETLOGINSTATUS: " + e.getMessage());
+        }
+
+    }
+
+    public int getAccountIDfromDB(String email, String pass) {
+        String queryGetAccID = "SELECT AccountID from Account WHERE email = '" + email + "' AND password = '" + pass + "'";
+        int out = -1;
+        try{
+            stmt = dbConnection.createStatement();
+            ResultSet rsGetID = stmt.executeQuery(queryGetAccID);
+
+            if (rsGetID.next()){
+                out = rsGetID.getInt(1);
+            }
+            System.out.println("DEBUG: Account ID retrieved from DB, ID: " + out);
+            stmt.close();
+            rsGetID.close();
+        }catch (Exception e){
+            System.out.print(e.getMessage());
+        }
+
+        return out;
     }
 
 
