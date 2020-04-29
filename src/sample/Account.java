@@ -11,18 +11,7 @@ public class Account {
     public enum access {
         Admin, Employee, Customer
     }
-
-    private static Account single_instance = null;
-
-    private Account(){}
-
-    public static Account getInstance(){
-        if (single_instance==null){
-            single_instance=new Account();
-        }
-        return single_instance;
-    }
-
+    
 
     public String getEmail() {
         return email;
