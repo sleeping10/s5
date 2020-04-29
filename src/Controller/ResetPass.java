@@ -1,5 +1,6 @@
 package Controller;
 
+import com.mysql.cj.jdbc.JdbcConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +11,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sample.DBC;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
@@ -20,8 +24,9 @@ public class ResetPass implements Initializable {
 
     @FXML private Button generateButton;
     @FXML private Label messageLabel;
-    @FXML private TextField username;
+    @FXML private TextField email;
     @FXML private PasswordField passwordField;
+
 
 
     @Override
@@ -30,9 +35,17 @@ public class ResetPass implements Initializable {
     }
 
     @FXML
-    private void generateButton() {
+    private void generateButton() throws SQLException {
 
-        if(username.equals(" ") ){ //vill skapa en if-statement som jämför username från db med username som användaren lägger till ??
+        stmt = dbConnection.createStatement();
+        ResultSet rsCheckEmail = stmt.executeQuery("SELECT * FROM Account WHERE email = '" + email );
+
+        if(rsCheckEmail.next()) {
+            String email = rsCheckEmail.getString(2);
+        }
+
+        if (email.matches(email)){
+            //vill skapa en if-statement som jämför EMAIL från dbc med Email som användaren lägger till ??
             Random random = new Random();
             int randomNumber = random.nextInt(999999);
             messageLabel.setText(String.valueOf(randomNumber));
@@ -43,6 +56,7 @@ public class ResetPass implements Initializable {
             alert.setHeaderText(null);
             alert.setContentText(" username not correct ...");
             alert.showAndWait();
+
         }
 
 
@@ -64,8 +78,6 @@ public class ResetPass implements Initializable {
             alert.showAndWait();
 
         }
-
-
     }
     @FXML
     public void backButton(ActionEvent event) throws IOException {
