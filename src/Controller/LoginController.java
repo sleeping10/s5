@@ -83,6 +83,7 @@ public class LoginController extends Verification implements Initializable {
             case 1: SceneChanger(e, "Main");break;
             case 2: lblStatus.setText("Password must be between 4-8 characters");break;
             case 3: lblStatus.setText("Email or password is empty"); break;
+            case 4: lblStatus.setText("Input is not a valid email"); break;
         }
     }
 
