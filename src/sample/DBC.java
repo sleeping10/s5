@@ -156,6 +156,28 @@ public class DBC {
 
             return status;
     }
+
+
+    public boolean checkEmailDB(String email){
+            String dbemail ="";
+            boolean status = false;
+            try{
+                stmt = dbConnection.createStatement();
+                ResultSet rsCheckEmail = stmt.executeQuery("SELECT * FROM Account WHERE email = '" + email + "'");
+
+                if(rsCheckEmail.next()) {
+                    dbemail = rsCheckEmail.getString(2);
+                }
+
+            } catch (Exception ex){
+                System.out.println(ex.getMessage());
+            }
+
+            if (dbemail.matches(email)){
+                status = true;
+            }
+            return status;
+    }
     //seeUsers
     //setServiceCost
     //getPrice
