@@ -7,11 +7,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Account;
+import sample.DBC;
 import sample.Verification;
 
 import java.io.IOException;
@@ -20,16 +19,17 @@ import java.util.ResourceBundle;
 
 public class LoginController extends Verification implements Initializable {
 
-    @FXML private TextField tfUser;
+    @FXML private TextField tfEmail;
     @FXML private PasswordField pfPass;
     @FXML private Button btnLogin;
     @FXML private CheckBox chbRemember;
     @FXML private Button btnForgotPass;
+    @FXML private Label lblStatus;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-            tfUser.setStyle("-fx-text-inner-color :#a0a2ab");
+            tfEmail.setStyle("-fx-text-inner-color :#a0a2ab");
             pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
 
 
@@ -64,13 +64,7 @@ public class LoginController extends Verification implements Initializable {
 
     @FXML
     public void handleLoginBtn(ActionEvent event) {
-        if (verifyAccount(tfUser.getText(),pfPass.getText(),null)){
-            SceneChanger(event, "Main");
-        }
-        else{
-            System.out.println("wrong user or pw");
-        }
-
+        login(event);
     }
     @FXML
     public void forgotPassButton(ActionEvent event) throws IOException {
@@ -81,5 +75,18 @@ public class LoginController extends Verification implements Initializable {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+    }
+
+    private void login(ActionEvent e){
+        switch (verifyAccount(tfEmail.getText(), pfPass.getText(), null)) {
+            case 0: lblStatus.setText("Email or Pass is wrong");break;
+            case 1: SceneChanger(e, "Main");break;
+            case 2: lblStatus.setText("Password must be between 4-8 characters");break;
+            case 3: lblStatus.setText("Email or password is empty"); break;
+        }
+    }
+
+    public void createNewAccObject(){
+
     }
 }
