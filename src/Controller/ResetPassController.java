@@ -22,10 +22,10 @@ import java.util.ResourceBundle;
 
 public class ResetPassController implements Initializable {
 
-    @FXML private Button generateButton;
-    @FXML private Label messageLabel;
-    @FXML private TextField email;
-    @FXML private PasswordField passwordField;
+    @FXML private Button btnGenerate;
+    @FXML private Label lblMessage;
+    @FXML private TextField tfEmail;
+    @FXML private PasswordField pfPass;
 
 
 
@@ -35,12 +35,12 @@ public class ResetPassController implements Initializable {
     }
 
     @FXML
-    private void generateButton() throws SQLException {
+    private void generateButton() {
 
-        if (DBC.getInstance().checkEmailDB(email.getText())){
+        if (DBC.getInstance().checkEmailDB(tfEmail.getText())){
             Random random = new Random();
             int randomNumber = random.nextInt(999999);
-            messageLabel.setText(String.valueOf(randomNumber));
+            lblMessage.setText(String.valueOf(randomNumber));
             System.out.println("Generated number : " + randomNumber);
         }
         else{
@@ -60,7 +60,7 @@ public class ResetPassController implements Initializable {
     @FXML
     public void resetButton() {
 
-        if (passwordField.equals(messageLabel)){
+        if (pfPass.equals(lblMessage)){
             //vill ändra det till databasen
 
         }else{

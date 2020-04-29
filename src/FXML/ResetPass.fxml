@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPass">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPassController">
     <children>
-        <Button fx:id="backButton" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#backButton" text="&lt;" />
-        <Button fx:id="resetButton" layoutX="300.0" layoutY="391.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="32.0" prefWidth="72.0" text="Reset" />
-        <TextField fx:id="email" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" text="Email" />
-        <PasswordField fx:id="passwordField" layoutX="232.0" layoutY="330.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
+        <Button fx:id="btnBack" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#backButton" text="&lt;" />
+        <Button fx:id="btnReset" layoutX="300.0" layoutY="391.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="32.0" prefWidth="72.0" text="Reset" />
+        <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" text="Email" />
+        <PasswordField fx:id="pfPass" layoutX="232.0" layoutY="330.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
         <Label layoutX="275.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" style="-fx-background-color: #2D3447; -fx-text-fill: #FFFFFF;" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
             <font>
                 <Font size="24.0" />
@@ -23,7 +23,7 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <Button fx:id="generateButton" layoutX="300.0" layoutY="199.0" mnemonicParsing="false" onAction="#generateButton" text="Generate" />
-        <Label fx:id="messageLabel" layoutX="232.0" layoutY="260.0" prefHeight="36.0" prefWidth="209.0" style="-fx-text-fill: #FFFFFF;" />
+        <Button fx:id="btnGenerate" layoutX="300.0" layoutY="199.0" mnemonicParsing="false" onAction="#generateButton" text="Generate" />
+        <Label fx:id="lblMessage" layoutX="232.0" layoutY="260.0" prefHeight="36.0" prefWidth="209.0" style="-fx-text-fill: #FFFFFF;" />
     </children>
 </AnchorPane>
