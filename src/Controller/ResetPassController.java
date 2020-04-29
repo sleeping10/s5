@@ -20,7 +20,7 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-public class ResetPass implements Initializable {
+public class ResetPassController implements Initializable {
 
     @FXML private Button generateButton;
     @FXML private Label messageLabel;
@@ -37,24 +37,17 @@ public class ResetPass implements Initializable {
     @FXML
     private void generateButton() throws SQLException {
 
-        stmt = dbConnection.createStatement();
-        ResultSet rsCheckEmail = stmt.executeQuery("SELECT * FROM Account WHERE email = '" + email );
-
-        if(rsCheckEmail.next()) {
-            String email = rsCheckEmail.getString(2);
-        }
-
-        if (email.matches(email)){
-            //vill skapa en if-statement som jämför EMAIL från dbc med Email som användaren lägger till ??
+        if (DBC.getInstance().checkEmailDB(email.getText())){
             Random random = new Random();
             int randomNumber = random.nextInt(999999);
             messageLabel.setText(String.valueOf(randomNumber));
             System.out.println("Generated number : " + randomNumber);
-        }else{
-            System.out.println("Invalid Username");
+        }
+        else{
+            System.out.println("Invalid Email");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText(" username not correct ...");
+            alert.setContentText("Email not correct ...");
             alert.showAndWait();
 
         }
