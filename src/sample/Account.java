@@ -11,7 +11,7 @@ public class Account {
     public enum access {
         Admin, Employee, Customer
     }
-    
+
 
     public String getEmail() {
         return email;

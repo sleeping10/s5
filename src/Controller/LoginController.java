@@ -64,8 +64,12 @@ public class LoginController extends Verification implements Initializable {
 
     @FXML
     public void handleLoginBtn(ActionEvent event) {
-        verifyAccount(tfUser.getText(),pfPass.getText(),null);
-        SceneChanger(event, "Main");
+        if (verifyAccount(tfUser.getText(),pfPass.getText(),null)){
+            SceneChanger(event, "Main");
+        }
+        else{
+            System.out.println("wrong user or pw");
+        }
 
     }
     @FXML
