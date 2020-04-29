@@ -12,13 +12,15 @@ import java.util.ResourceBundle;
 public class ManageAccountController implements Initializable {
 
     @FXML
-    TextField nameT;
+    TextField name;
     @FXML
-    TextField emailT;
+    TextField phone;
     @FXML
-    TextField passwordT;
+    TextField password;
     @FXML
-    TextField phoneT;
+    TextField npassword;
+    @FXML
+    TextField rnpassword;
     @FXML
     Text text;
 
@@ -31,9 +33,8 @@ public class ManageAccountController implements Initializable {
     public void setCurrent() {
         DBC.getInstance().connect();
 
-        nameT.setPromptText("current");
-        emailT.setPromptText("current");
-        phoneT.setPromptText("current");
+        name.setPromptText("current");
+        phone.setPromptText("current");
 
         /* her we are going to get current account information and place then on the textField
          * so that the user can see in PromptText*/
@@ -41,13 +42,20 @@ public class ManageAccountController implements Initializable {
         DBC.getInstance().disconnect();
 
     }
+
+
     @FXML
-    public void verifyInfo(){
-        DBC.getInstance().connect();
-        if (DBC.getInstance().verifyAccount("", emailT.getText(), phoneT.getText())){
-            System.out.println("finns");
-        }else System.out.println("finns inte ");
-        DBC.getInstance().disconnect();
+    public String verifyPassword() {
+        final String regex = "^([a-öA-Ö0-9@*#]{8,15})$";
+        if (!npassword.getText().isEmpty() && !rnpassword.getText().isEmpty()) {
+            if (npassword.getText().matches(regex) && npassword.getText().matches(rnpassword.getText())) {
+                System.out.println(npassword.getText());
+                return npassword.getText();
+            }
+            System.out.println("fel");
+        }
+        return null;
+
 
     }
 }

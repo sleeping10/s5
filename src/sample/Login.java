@@ -65,7 +65,7 @@ public class Login extends Verification {
         try {
 
           //  connection = handler.getConnection();
-            String st = "select * from carusers where name = ? and password =? ";
+            String st = "select * from carusers where name = ? and password =? "; //vad heter vår table för användaren
             pst = connection.prepareStatement(st);
             pst.setString(1, username.getText());
             pst.setString(2, password.getText());
