@@ -39,14 +39,7 @@ public class SignupController extends Verification implements Initializable {
 
     private void SignUp(){
      if (verifyAccount(tfEmail.getText(),tfPass.getText(), tfPhone.getText())){
-         //acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
-
-         Account.getInstance().setAccountID(0);
-         Account.getInstance().setEmail(tfEmail.getText());
-         Account.getInstance().setPassword(tfPass.getText());
-         Account.getInstance().setName(tfName.getText());
-         Account.getInstance().setPhoneNr(tfPhone.getText());
-         Account.getInstance().setAccessType(Account.access.Customer);
+         acc = new Account(tfEmail.getText(),tfPass.getText(),tfName.getText(),tfPhone.getText(),0, Account.access.Customer);
 
          DBC.getInstance().saveAccount();
          lblStatus.setText("Account created");
