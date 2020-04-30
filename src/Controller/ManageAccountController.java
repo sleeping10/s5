@@ -45,14 +45,16 @@ public class ManageAccountController implements Initializable {
 
 
     @FXML
-    public String verifyPassword() {
+    public String verifyNewPassword() {
         final String regex = "^([a-öA-Ö0-9@*#]{8,15})$";
         if (!npassword.getText().isEmpty() && !rnpassword.getText().isEmpty()) {
-            if (npassword.getText().matches(regex) && npassword.getText().matches(rnpassword.getText())) {
-                System.out.println(npassword.getText());
-                return npassword.getText();
-            }
-            System.out.println("fel");
+            if (password.getText().matches(DBC.getInstance().getAccountObject().getPassword())) { //fix so that this check current match:
+                if (npassword.getText().matches(regex) && npassword.getText().matches(rnpassword.getText())) {
+                    System.out.println(npassword.getText());
+                    return npassword.getText();
+                }
+                System.out.println("fel");
+            } else System.out.println("password dosent match");
         }
         return null;
 

@@ -65,6 +65,9 @@ public class LoginController extends Verification implements Initializable {
     @FXML
     public void handleLoginBtn(ActionEvent event) {
         login(event);
+        DBC.getInstance().setTfUser(tfEmail.getText());
+        DBC.getInstance().setPfPass(pfPass.getText());
+
     }
     @FXML
     public void forgotPassButton(ActionEvent event) throws IOException {

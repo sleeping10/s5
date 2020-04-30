@@ -229,6 +229,36 @@ public class DBC {
             }
             return status;
     }
+    private String tfUser = "";
+
+    private String pfPass = "";
+
+    public void setTfUser(String tfUser) {
+        this.tfUser = tfUser;
+    }
+
+    public void setPfPass(String pfPass) {
+        this.pfPass = pfPass;
+    }
+
+    public Account getAccountObject() {
+        Account acc = null;
+        String query = "SELECT * FROM Account WHERE email = '" + tfUser + "' AND password = '" + pfPass + "'";
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                acc = new Account(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(1), 7);
+                System.out.println(acc.toString());
+            }
+            return acc;
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     //seeUsers
     //setServiceCost
     //getPrice

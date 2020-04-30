@@ -35,7 +35,7 @@ public class MainScreenController implements Initializable {
 
     SceneSwitcher sw = new SceneSwitcher();
 
-    public Account acc = new Account("1212", "pass", "helao", "123", 0, Account.access.Customer);
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
