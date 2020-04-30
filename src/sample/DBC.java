@@ -265,8 +265,7 @@ public class DBC {
         }
 
     }
-//    ArrayList<Account> denna ska returnera en lista.
-    public void seeUsers(){
+    public ArrayList<Account> seeUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
@@ -293,7 +292,7 @@ public class DBC {
         for (int i = 0; i <allUsers.size() ; i++) {
             System.out.println(allUsers.get(i).toString());
         }
-        //return allUsers;
+        return allUsers;
     }
     public void setServiceCost(String serviceName, double price){
        String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
