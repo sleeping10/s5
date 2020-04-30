@@ -12,15 +12,15 @@ import java.util.ResourceBundle;
 public class ManageAccountController implements Initializable {
 
     @FXML
-    TextField name;
+    TextField textFieldName;
     @FXML
-    TextField phone;
+    TextField textFieldPhone;
     @FXML
-    TextField password;
+    TextField textFieldPassword;
     @FXML
-    TextField npassword;
+    TextField textFieldNPassword;
     @FXML
-    TextField rnpassword;
+    TextField textFieldRNPassword;
     @FXML
     Text text;
 
@@ -31,27 +31,19 @@ public class ManageAccountController implements Initializable {
     }
 
     public void setCurrent() {
-        //DBC.getInstance().connect();
-
-        name.setPromptText("current");
-        phone.setPromptText("current");
-
-        /* her we are going to get current account information and place then on the textField
-         * so that the user can see in PromptText*/
-
-        //DBC.getInstance().disconnect();
-
+        textFieldName.setPromptText(DBC.getInstance().getAccount().getName());
+        textFieldPhone.setPromptText(DBC.getInstance().getAccount().getPhone());
     }
 
 
     @FXML
     public String verifyNewPassword() {
         final String regex = "^([a-öA-Ö0-9@*#]{8,15})$";
-        if (!npassword.getText().isEmpty() && !rnpassword.getText().isEmpty()) {
-            if (password.getText().matches(DBC.getInstance().getAccountObject().getPassword())) { //fix so that this check current match:
-                if (npassword.getText().matches(regex) && npassword.getText().matches(rnpassword.getText())) {
-                    System.out.println(npassword.getText());
-                    return npassword.getText();
+        if (!textFieldNPassword.getText().isEmpty() && !textFieldRNPassword.getText().isEmpty()) {
+            if (textFieldPassword.getText().matches(DBC.getInstance().getAccount().getPassword())) { //fix so that this check current match:
+                if (textFieldNPassword.getText().matches(regex) && textFieldNPassword.getText().matches(textFieldRNPassword.getText())) {
+                    System.out.println(textFieldNPassword.getText());
+                    return textFieldNPassword.getText();
                 }
                 System.out.println("fel");
             } else System.out.println("password dosent match");

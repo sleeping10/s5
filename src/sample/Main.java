@@ -32,7 +32,7 @@ public class Main extends Application {
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
-                if (DBC.getInstance().getAcc() != null){
+                if (DBC.getInstance().getAccount() != null){
                     DBC.getInstance().setLoginStatus(false);
                 }
                 DBC.getInstance().disconnect();
