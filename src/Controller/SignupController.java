@@ -34,6 +34,7 @@ public class SignupController extends Verification implements Initializable {
 
     @FXML private void handleButtonSignUp(ActionEvent event){
         signUp();
+        DBC.getInstance().seeUsers();
 
     }
 
@@ -41,7 +42,7 @@ public class SignupController extends Verification implements Initializable {
      switch (verifyAccount(tfEmail.getText(), tfPass.getText(), tfPhone.getText())) {
          case 0: lblStatus.setText("Email or Phone number already in use");break;
          case 1:
-             DBC.getInstance().setAcc(new Account(tfEmail.getText(), tfPass.getText(), tfName.getText(), tfPhone.getText(), 0, 3));
+             DBC.getInstance().setAcc(new Account(0,tfEmail.getText(), tfPass.getText(), tfName.getText(), tfPhone.getText(), false, 3));
              DBC.getInstance().saveAccount();lblStatus.setText("Account created");break;
          case 2: lblStatus.setText("Password must be between 4-15 characters");break;
          case 3: lblStatus.setText("Type something into email"); break;

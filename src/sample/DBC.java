@@ -4,6 +4,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import java.awt.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -164,7 +165,7 @@ public class DBC {
                     dbAccID = getAccountIDfromDB(email, pass);
 
                     statusLogin = true;
-                    acc = new Account(dbmail, dbpass, dbname, dbphone, dbAccID, accessType);
+                    acc = new Account(dbAccID,dbmail,dbpass,dbname,dbphone,true,accessType);
                     setLoginStatus(true);
                     System.out.println("DEBUG: User successfully logged in");
                 }
@@ -252,7 +253,7 @@ public class DBC {
             stmt = dbConnection.createStatement();
             ResultSet resultSet = stmt.executeQuery(query);
             if (resultSet.next()) {
-                acc = new Account(resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), resultSet.getInt(1), resultSet.getInt(7));
+                acc = new Account(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), true, resultSet.getInt(7));
                 System.out.println(acc.toString());
                 setAcc(acc);
             }
@@ -265,6 +266,35 @@ public class DBC {
 
     }
     //seeUsers
+//    ArrayList<Account>
+    public void seeUsers(){
+        ArrayList<Account> allUsers = null;
+        Account tempAcc = null;
+        try {
+            stmt = dbConnection.createStatement();
+            String queryUsers = "SELECT accountID, email, password, name, phone, loginStatus, access_accessID FROM Account";
+            ResultSet rsUsers = stmt.executeQuery(queryUsers);
+            if (!rsUsers.next()) {
+
+            } else {
+
+                do {
+                    tempAcc = new Account(rsUsers.getInt(1),rsUsers.getString(2), rsUsers.getString(3),rsUsers.getString(4),
+                            rsUsers.getString(5), rsUsers.getBoolean(6),rsUsers.getInt(7));
+                    System.out.println(tempAcc.getName()+ tempAcc.getPassword()+ tempAcc.getPhone()+tempAcc.getAccountID()+ tempAcc.getEmail());
+                    allUsers.add(tempAcc);
+                } while (rsUsers.next());
+            }
+
+        }catch(Exception ex){
+            System.out.println("DEBUG: see users");
+            ex.printStackTrace();
+        }
+        for (int i = 0; i <allUsers.size() ; i++) {
+            System.out.println(allUsers.get(i).toString());
+        }
+        //return allUsers;
+    }
     //setServiceCost
     //getPrice
     //get

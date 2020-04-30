@@ -7,6 +7,7 @@ public class Account {
     private String phoneNr;
     private int accountID = 0;
     private int accessType;
+    private boolean loginStatus;
 
 
     public String getEmail() {
@@ -59,13 +60,14 @@ public class Account {
         this.accountID = accountID;
     }
 
-    public Account(String email, String password, String name, String phoneNr, int accountID, int accessType) {
+    public Account(int accountID, String email, String password, String name, String phoneNr,boolean loginStatus, int accessType) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNr = phoneNr;
         this.accountID = accountID;
         this.accessType = accessType;
+        this.loginStatus = loginStatus;
 
     }
 
