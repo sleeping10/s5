@@ -268,7 +268,7 @@ public class DBC {
     //seeUsers
 //    ArrayList<Account>
     public void seeUsers(){
-        ArrayList<Account> allUsers = null;
+        ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
             stmt = dbConnection.createStatement();
@@ -285,6 +285,7 @@ public class DBC {
                     allUsers.add(tempAcc);
                 } while (rsUsers.next());
             }
+            stmt.close();
 
         }catch(Exception ex){
             System.out.println("DEBUG: see users");
