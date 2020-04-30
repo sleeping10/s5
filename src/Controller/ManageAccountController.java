@@ -31,7 +31,7 @@ public class ManageAccountController implements Initializable {
     }
 
     public void setCurrent() {
-        DBC.getInstance().connect();
+        //DBC.getInstance().connect();
 
         name.setPromptText("current");
         phone.setPromptText("current");
@@ -39,7 +39,7 @@ public class ManageAccountController implements Initializable {
         /* her we are going to get current account information and place then on the textField
          * so that the user can see in PromptText*/
 
-        DBC.getInstance().disconnect();
+        //DBC.getInstance().disconnect();
 
     }
 

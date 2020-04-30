@@ -31,11 +31,9 @@ public class MainScreenController implements Initializable {
     @FXML private AnchorPane anchorInfo;
     @FXML private GridPane gridpaneMenu;
     @FXML private Label LblSignout;
-    private Class MainScreenController;
+    //private Class MainScreenController;
 
     SceneSwitcher sw = new SceneSwitcher();
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -63,18 +61,18 @@ public class MainScreenController implements Initializable {
     private void handleAccountBtn(ActionEvent e) throws IOException{
         sw.mainScreenSceneSwitcher( anchorInfo, "ManageAccount");
     }
-
+    @FXML
     private void handleNearestStationBtn(ActionEvent e) throws IOException {
         sw.mainScreenSceneSwitcher( anchorInfo, "FindNearestStation");
     }
-
+    @FXML
     private void handleContactUsBtn(ActionEvent e) throws IOException {
         sw.mainScreenSceneSwitcher( anchorInfo, "ContactUs");
     }
 
     @FXML
-    private void handleLblSignout(ActionEvent e){
-        DBC.getInstance().disconnect();
+    private void handleLinkSignout(ActionEvent e){
+        DBC.getInstance().setLoginStatus(false);
         sw.loginSignupSceneSwitcher(e, "Login");
     }
 

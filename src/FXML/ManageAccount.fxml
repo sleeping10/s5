@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="texts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageAccountController">
+<AnchorPane fx:id="texts" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageAccountController">
    <children>
       <TextField fx:id="name" layoutX="140.0" layoutY="27.0" />
       <TextField fx:id="phone" layoutX="140.0" layoutY="70.0" />
@@ -15,7 +15,7 @@
       <Text layoutX="183.0" layoutY="163.0" strokeType="OUTSIDE" strokeWidth="0.0" text="new password" />
       <Text layoutX="182.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone Number" />
       <Text layoutX="199.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-      <Button layoutX="357.0" layoutY="40.0" mnemonicParsing="false" onAction="#saveButton" text="Save" />
+      <Button layoutX="357.0" layoutY="40.0" mnemonicParsing="false" text="Save" />
       <Text fx:id="text" layoutX="368.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
       <TextField fx:id="rnpassword" layoutX="140.0" layoutY="217.0" />
       <Text fx:id="text1" layoutX="160.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="repeat new password" />
