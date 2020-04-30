@@ -265,8 +265,7 @@ public class DBC {
         }
 
     }
-    //seeUsers
-//    ArrayList<Account>
+//    ArrayList<Account> denna ska returnera en lista.
     public void seeUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
@@ -296,8 +295,35 @@ public class DBC {
         }
         //return allUsers;
     }
-    //setServiceCost
-    //getPrice
-    //get
+    public void setServiceCost(String serviceName, double price){
+       String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
+       try {
+           PreparedStatement prepstmt = dbConnection.prepareStatement(queryPrice);
+           prepstmt.setDouble(1,price);
+           prepstmt.executeUpdate();
+           prepstmt.close();
+       }catch (Exception ex){
+           ex.printStackTrace();
+       }
+
+    }
+
+    public double getServiceCost(String serviceName){
+        String query = "SELECT serviceCost FROM Service where serviceName = '" + serviceName + "'";
+        double price = 0;
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet rsCost = stmt.executeQuery(query);
+            if (rsCost.next()) {
+                System.out.println( rsCost.getDouble(1));
+                price = rsCost.getDouble(1);
+
+            }
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return price;
+    }
+
 }
 
