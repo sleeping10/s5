@@ -190,7 +190,24 @@ public class CreateBookingController implements Initializable {
         chbWashComplete.setVisible(toggle);
     }
 
+    @FXML
+    public void clearSelectionsButton(){
 
+        txtATotal.setText(null);
+        services.clear();
+        System.out.println(services);
+    }
 
+    @FXML
+    public void Backbutton(ActionEvent event) throws IOException {
+
+        Node node = (Node)event.getSource();
+        Stage stage = (Stage)node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateBooking.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+    }
 }
 
