@@ -133,7 +133,7 @@ public class DBC {
             String query = "INSERT INTO Account (email, password, name, phone, loginStatus, Access_AccessID) VALUES (?, ?, ?, ?, ?, ?)";
             statement = dbConnection.prepareStatement(query);
             statement.setString(1, acc.getEmail());
-            statement.setString(2, PasswordEncryption.encryptPassword(acc.getPassword()));
+            statement.setString(2, acc.getPassword());
             statement.setString(3, acc.getName());
             statement.setString(4, acc.getPhone());
             statement.setBoolean(5, false);

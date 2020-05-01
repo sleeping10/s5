@@ -8,7 +8,7 @@ public class Booking {
     private Date date;
     private String bookingDesc;
     private int accountID;
-
+    private ArrayList<String> services;
 
     public int getBookingID() {
         return bookingID;
@@ -26,11 +26,16 @@ public class Booking {
         return accountID;
     }
 
-    public Booking(int bookingID, Date date, String bookingDesc, int accountID, ArrayList<String> subCategories) {
+    public ArrayList<String> getServices(){
+        return this.services;
+    }
+
+    public Booking(int bookingID, Date date, String bookingDesc, int accountID, ArrayList<String> services) {
         this.bookingID = bookingID;
         this.date = date;
         this.bookingDesc = bookingDesc;
         this.accountID = accountID;
+        this.services = services;
     }
 
 
