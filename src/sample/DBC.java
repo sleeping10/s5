@@ -112,7 +112,19 @@ public class DBC {
         }
     }
 
-    public void manageAccount(Account acc) {
+    public void updateAccount(String name,String pass,String phone,int accountID) {
+        int resultSet;
+        String updateQuery = "UPDATE projektkurs2hkr.account set password='"+pass+"', name='"+name+"',phone='"+phone+"'  where accountID='"+accountID+"' ";
+        try {
+            stmt=dbConnection.createStatement();
+            resultSet = stmt.executeUpdate(updateQuery);
+            if (resultSet>0){
+                System.out.println("gick: "+resultSet);
+            }else System.out.println("gick ej: "+resultSet);
+            System.out.println(resultSet);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
