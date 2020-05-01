@@ -4,6 +4,7 @@ import com.mysql.cj.protocol.Resultset;
 
 import java.awt.*;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -304,7 +305,7 @@ public class DBC {
        }catch (Exception ex){
            ex.printStackTrace();
        }
-
+       
     }
 
     public double getServiceCost(String serviceName){
