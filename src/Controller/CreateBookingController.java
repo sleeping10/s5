@@ -1,4 +1,4 @@
-package Controller;
+package sample;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.Booking;
-import sample.DBC;
-import sample.Service;
-import sample.Verification;
 
-import java.awt.print.Book;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -44,12 +39,17 @@ public class CreateBookingController implements Initializable {
     @FXML private CheckBox chbWashInterior;
     @FXML private CheckBox chbWashComplete;
 
+    @FXML private DatePicker datePicker;
+    @FXML private TextArea txtATotal;
+    @FXML private TextField dateField;
+
 
 
 
 
     ArrayList<String> subs = new ArrayList<>();
     ArrayList<Double> subsCost = new ArrayList<>();
+    ArrayList<String> services = new ArrayList<>();
 
     int price = 0;
 
@@ -64,6 +64,8 @@ public class CreateBookingController implements Initializable {
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(true);
         toggleWashCheckBoxes(false);
+
+
     }
     @FXML private void handleMbRepair(ActionEvent e){
         mbService.setText(mbRepair.getText());
@@ -80,17 +82,88 @@ public class CreateBookingController implements Initializable {
         toggleWashCheckBoxes(true);
     }
 
-    @FXML private void handleButton(){
+    @FXML private void handleButton() {
 
-        if (chbOil.isSelected()){
+
+        if (chbRepairOil.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Oil change");
+            txtATotal.appendText("Oil & Filters change $150 \n");
+            services.add(String.valueOf(chbRepairOil));
+            System.out.println(services);
         }
-        if (chbAC.isSelected()){
+        if (chbRepairAC.isSelected()) {
             price += 100;
             subsCost.add((double) 50);
             subs.add("AC fix");
+            txtATotal.appendText("Oil & Filters change $150 \n");
+            services.add(String.valueOf(chbRepairAC));
+            System.out.println(services);
+        }
+        if (chbRepairWheel.isSelected()) {
+            price += 100;
+            subsCost.add((double) 50);
+            subs.add("Wheel Fix");
+            txtATotal.appendText("Wheel Change $50 \n");
+            services.add(String.valueOf(chbRepairWheel));
+            System.out.println(services);
+        }
+        if (chbRepairTimingBelt.isSelected()) {
+            price += 100;
+            subsCost.add((double) 50);
+            subs.add("Timing belt fix");
+            txtATotal.appendText("Timing Belt $500 \n");
+            services.add(String.valueOf(chbRepairTimingBelt));
+            System.out.println(services);
+        }
+        if (chbInspectionBasic.isSelected()){
+            price += 100;
+            subsCost.add((double) 50);
+            subs.add("Basic Inspection");
+            txtATotal.appendText("Basic Inspection $350 \n");
+            services.add(String.valueOf(chbInspectionBasic));
+            System.out.println(services);
+        }
+        if (chbInspectionAdvanced.isSelected()){
+            price += 100;
+            subsCost.add((double) 50);
+            subs.add("Advanced Inspection");
+            txtATotal.appendText("Advanced Inspection $700 \n");
+            services.add(String.valueOf(chbInspectionAdvanced));
+            System.out.println(services);
+        }
+        if (chbWashBasicExt.isSelected()){
+            price += 50;
+            subsCost.add((double) 50);
+            subs.add("Basic exterior wash");
+            txtATotal.appendText("Basic exterior wash $60 \n");
+            services.add(String.valueOf(chbRepairTimingBelt));
+            System.out.println(services);
+        }
+        if (chbWashPremiumExt.isSelected()){
+            price += 50;
+            subsCost.add((double) 50);
+            subs.add("Premium Exterior Wash");
+            txtATotal.appendText("Premium Exterior Wash $120 \n");
+            services.add(String.valueOf(chbRepairTimingBelt));
+            System.out.println(services);
+        }
+        if (chbWashInterior.isSelected()){
+            price += 50;
+            subsCost.add((double) 50);
+            subs.add("Interior Wash");
+            txtATotal.appendText("Interior Wash $40 \n");
+            services.add(String.valueOf(chbWashInterior));
+            System.out.println(services);
+        }
+        if (chbWashComplete.isSelected()){
+            price += 50;
+            subsCost.add((double) 50);
+            subs.add("Complete Wash");
+            txtATotal.appendText("Complete Wash $200 \n");
+            services.add(String.valueOf(chbWashComplete));
+            System.out.println(services);
         }
 
     }
@@ -116,7 +189,36 @@ public class CreateBookingController implements Initializable {
         chbWashComplete.setVisible(toggle);
     }
 
+    @FXML
+    public void nextButton(ActionEvent event) throws IOException {
 
+        Node node = (Node)event.getSource();
+        Stage stage = (Stage)node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Bookingcf.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+    }
+    @FXML
+    public void clearSelectionsButton(){
+
+        txtATotal.setText(null);
+        services.clear();
+        System.out.println(services);
+    }
+
+    @FXML
+    public void Backbutton(ActionEvent event) throws IOException {
+
+        Node node = (Node)event.getSource();
+        Stage stage = (Stage)node.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateBooking.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+
+    }
 
 }
+
 

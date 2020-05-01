@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.CreateBookingController">
    <children>
       <Button fx:id="btnAdd" alignment="TOP_CENTER" contentDisplay="RIGHT" layoutX="433.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleButton" text="Next &gt;" underline="true" />
       <GridPane alignment="CENTER" layoutX="14.0" layoutY="39.0" prefHeight="195.0" prefWidth="232.0">
