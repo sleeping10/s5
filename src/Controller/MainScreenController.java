@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -31,15 +32,14 @@ public class MainScreenController implements Initializable {
     @FXML private AnchorPane anchorInfo;
     @FXML private GridPane gridpaneMenu;
     @FXML private Label LblSignout;
+    @FXML private Label lblSignedInInfo;
     //private Class MainScreenController;
 
     SceneSwitcher sw = new SceneSwitcher();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //hboxContainer.setBackground();
-
-
+        lblSignedInInfo.setText("Signed in as " + DBC.getInstance().getAccount().getEmail());
     }
 
 

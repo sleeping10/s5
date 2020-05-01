@@ -1,8 +1,5 @@
 package sample;
 
-import com.mysql.cj.protocol.Resultset;
-
-import java.awt.*;
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -110,7 +107,7 @@ public class DBC {
             statement.setInt(6, 3);
             statement.execute();
             statement.close();
-            System.out.println("DEBUG: Sign up successful");
+            System.out.println("DEBUG: Sign up successful, saved in remote DB");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -122,77 +119,84 @@ public class DBC {
 
     public boolean verifyAccount(String email, String pass, String phone) {
         boolean statusLogin = false;
-        boolean statusSignUp = false;
+        boolean statusSignUp;
         boolean status = false;
         String dbmail = "";
         String dbpass = "";
         String dbname = "";
         String dbphone = "";
+        boolean dbLoginStatus = false;
         int accessType = -1;
-        int dbAccID = 0;
-
+        int dbAccID = -1;
 
         String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
-        String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' AND phone = '" + phone + "'";
+        String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' OR phone = '" + phone + "'";
         try {
+            stmt = dbConnection.createStatement();
             if (phone != null) {
                 System.out.println("DEBUG: Sign up process initiated");
-                stmt = dbConnection.createStatement();
                 ResultSet rsSignup = stmt.executeQuery(querySignup);
 
                 if (!rsSignup.next()) {
                     statusSignUp = true;
                 } else {
                     statusSignUp = false;
-                    do {
-
-                    } while (rsSignup.next());
+                    System.out.println("DEBUG: Sign up failed");
                 }
+                rsSignup.close();
                 status = statusSignUp;
             } else if (phone == null) {
                 System.out.println("DEBUG: Log in process initiated");
-                stmt = dbConnection.createStatement();
                 ResultSet rsLogin = stmt.executeQuery(queryLogin);
 
                 if (rsLogin.next()) {
+                    dbAccID = rsLogin.getInt(1);
                     dbmail = rsLogin.getString(2);
                     dbpass = rsLogin.getString(3);
                     dbname = rsLogin.getString(4);
                     dbphone = rsLogin.getString(5);
+                    dbLoginStatus = rsLogin.getBoolean(6);
                     accessType = rsLogin.getInt(7);
                 }
 
                 if (dbmail.matches(email) && dbpass.matches(pass)) {
-                    dbAccID = getAccountIDfromDB(email, pass);
-
-                    statusLogin = true;
-                    acc = new Account(dbAccID,dbmail,dbpass,dbname,dbphone,true,accessType);
-                    setLoginStatus(true);
-                    System.out.println("DEBUG: User successfully logged in");
+                    if (dbLoginStatus == false){
+                        statusLogin = true;
+                        acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, true, accessType);
+                        setLoginStatus(true);
+                    }else{
+                        statusLogin = false;
+                        System.out.println("DEBUG: User already logged in");
+                    }
+                }else{
+                    System.out.println("DEBUG: Log in failed");
                 }
+                rsLogin.close();
                 status = statusLogin;
             }
+            stmt.close();
         } catch (Exception ex) {
             System.out.println("ERROR; " + ex.getMessage());
         }
-
         return status;
     }
 
-
     public void setLoginStatus(boolean toggle) {
-        String querysetLoginStatus = "UPDATE Account SET loginStatus = ? WHERE AccountID = ?";
+        String query = "UPDATE Account SET loginStatus = ? WHERE AccountID = ?";
         try {
-            statement = dbConnection.prepareStatement(querysetLoginStatus);
+            statement = dbConnection.prepareStatement(query);
             statement.setBoolean(1, toggle);
             statement.setInt(2, acc.getAccountID());
             statement.executeUpdate();
             statement.close();
-            System.out.println("DEBUG: User logged out");
+            if (!toggle){
+                System.out.println("DEBUG: User logged out");
+            }else{
+                System.out.println("DEBUG: User logged in");
+            }
         } catch (Exception e) {
             System.out.println("ERROR SETLOGINSTATUS: " + e.getMessage());
         }
-
     }
 
     public int getAccountIDfromDB(String email, String pass) {
@@ -205,7 +209,6 @@ public class DBC {
             if (rsGetID.next()) {
                 out = rsGetID.getInt(1);
             }
-            System.out.println("DEBUG: Account ID retrieved from DB, ID: " + out);
             stmt.close();
             rsGetID.close();
         } catch (Exception e) {
@@ -308,22 +311,79 @@ public class DBC {
        
     }
 
-    public double getServiceCost(String serviceName){
-        String query = "SELECT serviceCost FROM Service where serviceName = '" + serviceName + "'";
-        double price = 0;
+    public String getServiceCost(String serviceName){
+        String query = "SELECT * FROM Service where serviceName = '" + serviceName + "'";
+        double cost = 0;
+        double discount = 0;
+        Timestamp current_time = new Timestamp(System.currentTimeMillis());
+        Timestamp discount_startdate = null;
+        Timestamp discount_enddate = null;
         try {
             stmt = dbConnection.createStatement();
             ResultSet rsCost = stmt.executeQuery(query);
             if (rsCost.next()) {
-                System.out.println( rsCost.getDouble(1));
-                price = rsCost.getDouble(1);
+                cost = rsCost.getDouble(2);
+                discount = rsCost.getDouble(3);
+                if (!rsCost.wasNull()){
+                    discount_startdate = rsCost.getTimestamp(4);
+                    discount_enddate = rsCost.getTimestamp(5);
+                }
 
             }
+        }catch (NullPointerException ex){
+            System.out.println("DEBUG: " + ex.getMessage());
+        }
+        catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+        System.out.println("TIME: " + current_time.toString());
+
+        if (discount_startdate != null && discount_enddate != null){
+            if (current_time.after(discount_startdate) && current_time.before(discount_enddate)){
+                System.out.println("Fucker");
+                return "$" + cost + " - " + discount*100 + "% OFF, NOW: $" + Math.round(cost * (1 - discount));
+            }else{
+                System.out.println("Fucker2");
+                return "$" + cost;
+            }
+        }else{
+            return "$" + cost;
+        }
+    }
+
+    public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate){
+        discount = discount / 100;
+
+        String queryDiscount = "UPDATE Service SET discount = ?, discountStart = ?, discountEnd = ? WHERE serviceName = '" + serviceName + "'";
+        try {
+            statement = dbConnection.prepareStatement(queryDiscount);
+            statement.setDouble(1, discount);
+            statement.setTimestamp(2, startDate);
+            statement.setTimestamp(3, endDate);
+            statement.executeUpdate();
+            statement.close();
+            System.out.println("DEBUG: " + discount +", " + startDate);
         }catch (Exception ex){
             ex.printStackTrace();
         }
-        return price;
     }
 
+    public void getDiscount (){
+        String query = "SELECT discountStart FROM Service where serviceName = 'Basic Inspection'";
+        Timestamp ts = null;
+        try{
+            stmt = dbConnection.createStatement();
+            ResultSet rsCost = stmt.executeQuery(query);
+            if (rsCost.next()) {
+
+                ts = rsCost.getTimestamp(1);
+
+            }
+            System.out.println(ts.toString());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

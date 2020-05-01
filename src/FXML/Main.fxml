@@ -40,11 +40,11 @@
                   <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnCreateBooking" alignment="CENTER" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="60.0" prefWidth="160.0" text="Create Booking">
+                  <Button fx:id="btnCreateBooking" alignment="CENTER" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="55.0" prefWidth="160.0" text="Create Booking">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="btnManageBookings" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleManageBookingsBtn" prefHeight="60.0" prefWidth="160.0" text="Manage bookings" GridPane.rowIndex="1">
+                  <Button fx:id="btnManageBookings" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleManageBookingsBtn" prefHeight="55.0" prefWidth="160.0" text="Manage bookings" GridPane.rowIndex="1">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
@@ -56,7 +56,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
-                  <Button fx:id="btnContact" mnemonicParsing="false" onAction="#handleContactUsBtn" prefHeight="60.0" prefWidth="160.0" text="Contact us" GridPane.rowIndex="4">
+                  <Button fx:id="btnContact" mnemonicParsing="false" onAction="#handleContactUsBtn" prefHeight="55.0" prefWidth="160.0" text="Contact us" GridPane.rowIndex="4">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
@@ -65,14 +65,12 @@
                   <Cursor fx:constant="DEFAULT" />
                </cursor>
             </GridPane>
+            <Label fx:id="lblSignedInInfo" text="Signed in as: " />
          </children>
       </AnchorPane>
    </left>
    <bottom>
-      <Hyperlink fx:id="hlSignout" onAction="#handleLinkSignout" text="Sign out" textFill="RED" BorderPane.alignment="TOP_LEFT">
-         <graphic>
-            <Label fx:id="lblSignedInInfo" text="Signed in as: " />
-         </graphic></Hyperlink>
+      <Hyperlink fx:id="hlSignout" onAction="#handleLinkSignout" text="Sign out" textFill="RED" BorderPane.alignment="TOP_LEFT" />
    </bottom>
    <right>
       <AnchorPane fx:id="anchorInfo" prefHeight="307.0" prefWidth="551.0" BorderPane.alignment="CENTER" />
