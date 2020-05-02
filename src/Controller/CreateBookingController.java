@@ -88,16 +88,19 @@ public class CreateBookingController implements Initializable {
 
     @FXML private void handleButton(){
 
-        if (chbOil.isSelected()){
+        if (chbRepairOil.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Oil change");
+            txtATotal.appendText("Oil & Filters Repair $99.99 \n");
+            services.add(String.valueOf(chbRepairOil));
+            System.out.println(services);
         }
-        if (chbAC.isSelected()){
+        if (chbRepairAC.isSelected()) {
             price += 100;
             subsCost.add((double) 50);
             subs.add("AC fix");
-            txtATotal.appendText("Oil & Filters change $150 \n");
+            txtATotal.appendText("Oil & Filters Change $149 \n");
             services.add(String.valueOf(chbRepairAC));
             System.out.println(services);
         }
@@ -105,7 +108,7 @@ public class CreateBookingController implements Initializable {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Wheel Fix");
-            txtATotal.appendText("Wheel Change $50 \n");
+            txtATotal.appendText("Wheel Change $49.99 \n");
             services.add(String.valueOf(chbRepairWheel));
             System.out.println(services);
         }
@@ -121,7 +124,7 @@ public class CreateBookingController implements Initializable {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Basic Inspection");
-            txtATotal.appendText("Basic Inspection $350 \n");
+            txtATotal.appendText("Basic Inspection $39.99 \n");
             services.add(String.valueOf(chbInspectionBasic));
             System.out.println(services);
         }
@@ -129,7 +132,7 @@ public class CreateBookingController implements Initializable {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Advanced Inspection");
-            txtATotal.appendText("Advanced Inspection $700 \n");
+            txtATotal.appendText("Advanced Inspection $59.99 \n");
             services.add(String.valueOf(chbInspectionAdvanced));
             System.out.println(services);
         }
@@ -137,7 +140,7 @@ public class CreateBookingController implements Initializable {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Basic exterior wash");
-            txtATotal.appendText("Basic exterior wash $60 \n");
+            txtATotal.appendText("Basic exterior wash $19.99 \n");
             services.add(String.valueOf(chbRepairTimingBelt));
             System.out.println(services);
         }
@@ -145,7 +148,7 @@ public class CreateBookingController implements Initializable {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Premium Exterior Wash");
-            txtATotal.appendText("Premium Exterior Wash $120 \n");
+            txtATotal.appendText("Premium Exterior Wash $59.99\n");
             services.add(String.valueOf(chbRepairTimingBelt));
             System.out.println(services);
         }
@@ -153,7 +156,7 @@ public class CreateBookingController implements Initializable {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Interior Wash");
-            txtATotal.appendText("Interior Wash $40 \n");
+            txtATotal.appendText("Interior Wash $19.99 \n");
             services.add(String.valueOf(chbWashInterior));
             System.out.println(services);
         }
@@ -161,13 +164,12 @@ public class CreateBookingController implements Initializable {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Complete Wash");
-            txtATotal.appendText("Complete Wash $200 \n");
+            txtATotal.appendText("Complete Wash $79.99 \n");
             services.add(String.valueOf(chbWashComplete));
             System.out.println(services);
         }
 
     }
-
 
     private void toggleInspectionCheckBoxes(boolean toggle){
         chbInspectionBasic.setVisible(toggle);
