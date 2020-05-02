@@ -52,7 +52,6 @@ public class DBC {
         }
     }
 
-    // addBooking
     public void addBooking(Booking booking) {
 //        try {
 //            String query = "INSERT INTO Booking (bookingDate, bookingDesc) VALUES (?, ?)";
