@@ -147,14 +147,15 @@ public class DBC {
     }
 
     public void updateAccount(String name,String pass,String phone,int accountID) {
+       //update the information in the DB
         int resultSet;
         String updateQuery = "UPDATE projektkurs2hkr.account set password='"+pass+"', name='"+name+"',phone='"+phone+"'  where accountID='"+accountID+"' ";
         try {
             stmt=dbConnection.createStatement();
             resultSet = stmt.executeUpdate(updateQuery);
             if (resultSet>0){
-                System.out.println("gick: "+resultSet);
-            }else System.out.println("gick ej: "+resultSet);
+                //System.out.println("gick: "+resultSet);
+            }else //System.out.println("gick ej: "+resultSet);
             System.out.println(resultSet);
         }catch (Exception e){
             e.printStackTrace();
@@ -297,6 +298,7 @@ public class DBC {
     }
 
     public void getAccountFromDb() {
+      //gets the account obj from the database so that you can use it in the program
         String query = "SELECT * FROM Account WHERE email = '" + tfEmail + "' AND password = '" + pfPass + "'";
         try {
             stmt = dbConnection.createStatement();
@@ -429,6 +431,20 @@ public class DBC {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public boolean checkPhoneNumber(String phone){
+        String query="Select phone from Account where phone= '"+phone+"' ";
+        try {
+            stmt=dbConnection.createStatement();
+            ResultSet resultSet=stmt.executeQuery(query);
+
+            if (resultSet.next()){// check if the phone number is in the DB already if it is returns false otherwise true
+                return false;
+            }else return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 

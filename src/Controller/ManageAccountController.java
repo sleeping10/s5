@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import sample.DBC;
+import sample.Verification;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -39,6 +40,7 @@ public class ManageAccountController implements Initializable {
     public void saveB() {
         setCurrent();
         update();
+
     }
 
     public void update() {
@@ -60,7 +62,28 @@ public class ManageAccountController implements Initializable {
         }
         if ((textFieldPhone.getText().isEmpty() && !checkPass)) {
             phone = DBC.getInstance().getAccount().getPhone();
-        } else phone = textFieldPhone.getText();
+        } else {
+            if (verifyPhone()) {
+                if (DBC.getInstance().checkPhoneNumber(textFieldPhone.getText())) {
+                    phone=textFieldPhone.getText();
+
+                }else {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setHeaderText("Phone number already taken");
+                    alert.setContentText("please try again");
+                    alert.showAndWait();
+                    checkPass=true;
+
+
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setHeaderText("wrong phone format.");
+                alert.setContentText("the right (XXXXXXXXXX)\n please try again.");
+                alert.showAndWait();
+                checkPass=true;
+            }
+        }
 
         if (!pass.matches("1") && !checkPass) {
             DBC.getInstance().updateAccount(name, pass, phone, DBC.getInstance().getAccount().getAccountID());
@@ -75,8 +98,6 @@ public class ManageAccountController implements Initializable {
         if (!textFieldNPassword.getText().isEmpty() && !textFieldRNPassword.getText().isEmpty()) { // kollar om du vill ändara lösenord
             if (textFieldNPassword.getText().matches(textFieldRNPassword.getText())) {
                 if (textFieldNPassword.getText().matches(regex) && textFieldRNPassword.getText().matches(regex)) {//kolla om det nya lösenordet matchar regex och andra gången du skriver in lösenordet
-                    System.out.println(textFieldNPassword.getText());
-                    System.out.println("gick igenom");
                     return textFieldNPassword.getText();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -119,6 +140,12 @@ public class ManageAccountController implements Initializable {
 
 
         return "1";
+    }
+
+    public boolean verifyPhone() {
+        //verifies if the phone number you are putting in is in the right format
+        return Verification.validatePhone(textFieldPhone.getText());
+
     }
 
 
