@@ -221,6 +221,16 @@ public class CreateBookingController implements Initializable {
         txtATotal.setText(null);
         services.clear();
         System.out.println(services);
+        chbRepairOil.setSelected(false);
+        chbRepairAC.setSelected(false);
+        chbRepairWheel.setSelected(false);
+        chbRepairTimingBelt.setSelected(false);
+        chbInspectionBasic.setSelected(false);
+        chbInspectionAdvanced.setSelected(false);
+        chbWashBasicExt.setSelected(false);
+        chbWashInterior.setSelected(false);
+        chbWashPremiumExt.setSelected(false);
+        chbWashComplete.setSelected(false);
     }
 
     @FXML
