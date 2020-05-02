@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +52,6 @@ public class DBC {
         }
     }
 
-    // addBooking
     public void addBooking(Booking booking) {
 //        try {
 //            String query = "INSERT INTO Booking (bookingDate, bookingDesc) VALUES (?, ?)";
@@ -355,7 +355,7 @@ public class DBC {
        }catch (Exception ex){
            ex.printStackTrace();
        }
-
+       
     }
 
     public String getServiceCost(String serviceName){
