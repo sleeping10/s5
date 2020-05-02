@@ -22,34 +22,52 @@ import java.util.ResourceBundle;
 
 public class CreateBookingController implements Initializable {
 
-    @FXML private CheckBox chbOil;
-    @FXML private CheckBox chbAC;
-    @FXML private Label lblA;
-    @FXML private Label lblB;
-    @FXML private MenuItem mbInspection;
-    @FXML private MenuItem mbRepair;
-    @FXML private MenuItem mbWash;
-    @FXML private MenuButton mbService;
+    @FXML
+    private CheckBox chbOil;
+    @FXML
+    private CheckBox chbAC;
+    @FXML
+    private Label lblA;
+    @FXML
+    private Label lblB;
+    @FXML
+    private MenuItem mbInspection;
+    @FXML
+    private MenuItem mbRepair;
+    @FXML
+    private MenuItem mbWash;
+    @FXML
+    private MenuButton mbService;
 
-    @FXML private CheckBox chbInspectionBasic;
-    @FXML private CheckBox chbInspectionAdvanced;
+    @FXML
+    private CheckBox chbInspectionBasic;
+    @FXML
+    private CheckBox chbInspectionAdvanced;
 
-    @FXML private CheckBox chbRepairOil;
-    @FXML private CheckBox chbRepairAC;
-    @FXML private CheckBox chbRepairWheel;
-    @FXML private CheckBox chbRepairTimingBelt;
+    @FXML
+    private CheckBox chbRepairOil;
+    @FXML
+    private CheckBox chbRepairAC;
+    @FXML
+    private CheckBox chbRepairWheel;
+    @FXML
+    private CheckBox chbRepairTimingBelt;
 
-    @FXML private CheckBox chbWashBasicExt;
-    @FXML private CheckBox chbWashPremiumExt;
-    @FXML private CheckBox chbWashInterior;
-    @FXML private CheckBox chbWashComplete;
+    @FXML
+    private CheckBox chbWashBasicExt;
+    @FXML
+    private CheckBox chbWashPremiumExt;
+    @FXML
+    private CheckBox chbWashInterior;
+    @FXML
+    private CheckBox chbWashComplete;
 
-    @FXML private DatePicker datePicker;
-    @FXML private TextArea txtATotal;
-    @FXML private TextField dateField;
-
-
-
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextArea txtATotal;
+    @FXML
+    private TextField dateField;
 
 
     ArrayList<String> subs = new ArrayList<>();
@@ -64,21 +82,26 @@ public class CreateBookingController implements Initializable {
 
     }
 
-    @FXML private void handleMbInspection(ActionEvent e){
+    @FXML
+    private void handleMbInspection(ActionEvent e) {
         mbService.setText(mbInspection.getText());
 
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(true);
         toggleWashCheckBoxes(false);
     }
-    @FXML private void handleMbRepair(ActionEvent e){
+
+    @FXML
+    private void handleMbRepair(ActionEvent e) {
         mbService.setText(mbRepair.getText());
 
         toggleRepairCheckBoxes(true);
         toggleInspectionCheckBoxes(false);
         toggleWashCheckBoxes(false);
     }
-    @FXML private void handleMbWash (ActionEvent e){
+
+    @FXML
+    private void handleMbWash(ActionEvent e) {
         mbService.setText(mbWash.getText());
 
         toggleRepairCheckBoxes(false);
@@ -86,18 +109,22 @@ public class CreateBookingController implements Initializable {
         toggleWashCheckBoxes(true);
     }
 
-    @FXML private void handleButton(){
+    @FXML
+    private void handleButton() {
 
-        if (chbOil.isSelected()){
+        if (chbRepairOil.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Oil change");
+            txtATotal.appendText(chbRepairOil.getText() + "$99.99 \n");
+            services.add(String.valueOf(chbRepairOil));
+            System.out.println(services);
         }
-        if (chbAC.isSelected()){
+        if (chbRepairAC.isSelected()) {
             price += 100;
             subsCost.add((double) 50);
             subs.add("AC fix");
-            txtATotal.appendText("Oil & Filters change $150 \n");
+            txtATotal.appendText(chbRepairAC.getText() + " $149 \n");
             services.add(String.valueOf(chbRepairAC));
             System.out.println(services);
         }
@@ -105,7 +132,7 @@ public class CreateBookingController implements Initializable {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Wheel Fix");
-            txtATotal.appendText("Wheel Change $50 \n");
+            txtATotal.appendText(chbRepairWheel.getText() + " $49.99 \n");
             services.add(String.valueOf(chbRepairWheel));
             System.out.println(services);
         }
@@ -113,77 +140,75 @@ public class CreateBookingController implements Initializable {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Timing belt fix");
-            txtATotal.appendText("Timing Belt $500 \n");
+            txtATotal.appendText(chbRepairTimingBelt.getText() + " $499.99 \n");
             services.add(String.valueOf(chbRepairTimingBelt));
             System.out.println(services);
         }
-        if (chbInspectionBasic.isSelected()){
+        if (chbInspectionBasic.isSelected()) {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Basic Inspection");
-            txtATotal.appendText("Basic Inspection $350 \n");
+            txtATotal.appendText(chbInspectionBasic.getText() + " $39.99 \n");
             services.add(String.valueOf(chbInspectionBasic));
             System.out.println(services);
         }
-        if (chbInspectionAdvanced.isSelected()){
+        if (chbInspectionAdvanced.isSelected()) {
             price += 100;
             subsCost.add((double) 50);
             subs.add("Advanced Inspection");
-            txtATotal.appendText("Advanced Inspection $700 \n");
+            txtATotal.appendText(chbInspectionAdvanced.getText() + " $59.99 \n");
             services.add(String.valueOf(chbInspectionAdvanced));
             System.out.println(services);
         }
-        if (chbWashBasicExt.isSelected()){
+        if (chbWashBasicExt.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Basic exterior wash");
-            txtATotal.appendText("Basic exterior wash $60 \n");
+            txtATotal.appendText(chbWashBasicExt.getText() + " $19.99 \n");
             services.add(String.valueOf(chbRepairTimingBelt));
             System.out.println(services);
         }
-        if (chbWashPremiumExt.isSelected()){
+        if (chbWashPremiumExt.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Premium Exterior Wash");
-            txtATotal.appendText("Premium Exterior Wash $120 \n");
+            txtATotal.appendText(chbWashPremiumExt.getText() + " $59.99\n");
             services.add(String.valueOf(chbRepairTimingBelt));
             System.out.println(services);
         }
-        if (chbWashInterior.isSelected()){
+        if (chbWashInterior.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Interior Wash");
-            txtATotal.appendText("Interior Wash $40 \n");
+            txtATotal.appendText(chbWashInterior.getText() + " $19.99 \n");
             services.add(String.valueOf(chbWashInterior));
             System.out.println(services);
         }
-        if (chbWashComplete.isSelected()){
+        if (chbWashComplete.isSelected()) {
             price += 50;
             subsCost.add((double) 50);
             subs.add("Complete Wash");
-            txtATotal.appendText("Complete Wash $200 \n");
+            txtATotal.appendText( chbWashComplete.getText() + " 49.99\n");
             services.add(String.valueOf(chbWashComplete));
             System.out.println(services);
         }
 
     }
 
-
-    private void toggleInspectionCheckBoxes(boolean toggle){
+    private void toggleInspectionCheckBoxes(boolean toggle) {
         chbInspectionBasic.setVisible(toggle);
         chbInspectionAdvanced.setVisible(toggle);
     }
 
 
-
-    private void toggleRepairCheckBoxes(boolean toggle){
+    private void toggleRepairCheckBoxes(boolean toggle) {
         chbRepairOil.setVisible(toggle);
         chbRepairAC.setVisible(toggle);
         chbRepairWheel.setVisible(toggle);
         chbRepairTimingBelt.setVisible(toggle);
     }
 
-    private void toggleWashCheckBoxes(boolean toggle){
+    private void toggleWashCheckBoxes(boolean toggle) {
         chbWashBasicExt.setVisible(toggle);
         chbWashPremiumExt.setVisible(toggle);
         chbWashInterior.setVisible(toggle);
@@ -191,18 +216,28 @@ public class CreateBookingController implements Initializable {
     }
 
     @FXML
-    public void clearSelectionsButton(){
+    public void clearSelectionsButton() {
 
         txtATotal.setText(null);
         services.clear();
         System.out.println(services);
+        chbRepairOil.setSelected(false);
+        chbRepairAC.setSelected(false);
+        chbRepairWheel.setSelected(false);
+        chbRepairTimingBelt.setSelected(false);
+        chbInspectionBasic.setSelected(false);
+        chbInspectionAdvanced.setSelected(false);
+        chbWashBasicExt.setSelected(false);
+        chbWashInterior.setSelected(false);
+        chbWashPremiumExt.setSelected(false);
+        chbWashComplete.setSelected(false);
     }
 
     @FXML
     public void Backbutton(ActionEvent event) throws IOException {
 
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateBooking.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
