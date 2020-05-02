@@ -29,7 +29,7 @@ public class DBC {
     public boolean connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            String URL = "jdbc:mysql://den1.mysql4.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Tm3kp8U406~-&useSSL=false";
+            String URL = "jdbc:mysql://den1.mysql3.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Cx2~?Exu37i5&useSSL=false";
             dbConnection = DriverManager.getConnection(URL);
             stmt = dbConnection.createStatement();
             System.out.println("DEBUG: Connected to db");
@@ -64,6 +64,40 @@ public class DBC {
 //        }catch (Exception ex){
 //            ex.printStackTrace();
 //        }
+        java.util.Date utilDate = booking.getDate();
+        java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
+        System.out.println("DEBUG: TIMESTAMP : " + sq.toString());
+        System.out.println("DEBUG BOOKING: " + booking.getBookingDesc());
+
+        try {
+
+            String queryAddBooking = "INSERT INTO Booking (bookingID, date, bookingDesc, Account_AccountID, serviceCompleted)" +
+                    "VALUES (?, ?, ?, ?, ?)";
+            String queryAddServicesToBooking = "INSERT INTO Booking_has_Service (Booking_bookingID, Service_serviceName)" +
+                    "VALUES (?, ?)";
+
+
+            statement = dbConnection.prepareStatement(queryAddBooking);
+            statement.setInt(1, booking.getBookingID());
+            statement.setTimestamp(2, sq);
+            statement.setString(3, booking.getBookingDesc());
+            statement.setInt(4, booking.getAccountID());
+            statement.setBoolean(5, false);
+            statement.execute();
+            statement.close();
+            System.out.println("DEBUG: Booking added");
+            for (int i = 0; i < booking.getServices().size(); i++){
+                statement = dbConnection.prepareStatement(queryAddServicesToBooking);
+                statement.setInt(1, booking.getBookingID());
+                statement.setString(2, booking.getServices().get(i));
+                statement.execute();
+            }
+            statement.close();
+            System.out.println("DEBUG: Booking connected to Services");
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     // manageBooking
@@ -112,7 +146,20 @@ public class DBC {
         }
     }
 
-    public void manageAccount(Account acc) {
+    public void updateAccount(String name,String pass,String phone,int accountID) {
+       //update the information in the DB
+        int resultSet;
+        String updateQuery = "UPDATE projektkurs2hkr.account set password='"+pass+"', name='"+name+"',phone='"+phone+"'  where accountID='"+accountID+"' ";
+        try {
+            stmt=dbConnection.createStatement();
+            resultSet = stmt.executeUpdate(updateQuery);
+            if (resultSet>0){
+                //System.out.println("gick: "+resultSet);
+            }else //System.out.println("gick ej: "+resultSet);
+            System.out.println(resultSet);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
 
@@ -157,8 +204,8 @@ public class DBC {
                     dbLoginStatus = rsLogin.getBoolean(6);
                     accessType = rsLogin.getInt(7);
                 }
-
                 if (dbmail.matches(email) && dbpass.matches(pass)) {
+
                     if (dbLoginStatus == false){
                         statusLogin = true;
                         acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, true, accessType);
@@ -251,6 +298,7 @@ public class DBC {
     }
 
     public void getAccountFromDb() {
+      //gets the account obj from the database so that you can use it in the program
         String query = "SELECT * FROM Account WHERE email = '" + tfEmail + "' AND password = '" + pfPass + "'";
         try {
             stmt = dbConnection.createStatement();
@@ -383,6 +431,20 @@ public class DBC {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    public boolean checkPhoneNumber(String phone){
+        String query="Select phone from Account where phone= '"+phone+"' ";
+        try {
+            stmt=dbConnection.createStatement();
+            ResultSet resultSet=stmt.executeQuery(query);
+
+            if (resultSet.next()){// check if the phone number is in the DB already if it is returns false otherwise true
+                return false;
+            }else return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
 
