@@ -10,15 +10,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Account;
+import sample.Booking;
 import sample.DBC;
 import sample.Verification;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class LoginController extends Verification implements Initializable {
@@ -35,6 +37,12 @@ public class LoginController extends Verification implements Initializable {
         checkRememberMe();
         tfEmail.setStyle("-fx-text-inner-color :#a0a2ab");
         pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
+
+        Date date = new java.util.Date();
+        ArrayList<String> serv = new ArrayList<String>();
+        serv.add("Basic Inspection");
+        serv.add("Advanced Inspection");
+        //DBC.getInstance().addBooking(new Booking(8, date, "Hej", 30, serv));
         }
 
         private void SceneChanger(ActionEvent event, String fxml){

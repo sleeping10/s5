@@ -29,6 +29,9 @@ public class Main extends Application {
 
     public static void main(String[] args) {
 
+        PasswordEncryption pw = new PasswordEncryption();
+        pw.main(args);
+
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
