@@ -53,7 +53,12 @@ public class CreateBookingController implements Initializable {
     @FXML
     private CheckBox chbRepairWheel;
     @FXML
+    private CheckBox chbWheelAlignment;
+    @FXML
     private CheckBox chbRepairTimingBelt;
+    @FXML
+    private CheckBox chbChangeBattery;
+
 
     @FXML
     private CheckBox chbWashBasicExt;
@@ -62,7 +67,11 @@ public class CreateBookingController implements Initializable {
     @FXML
     private CheckBox chbWashInterior;
     @FXML
+    private CheckBox chbWashInteriorPremium;
+    @FXML
     private CheckBox chbWashComplete;
+    @FXML
+    private CheckBox chbWashCompletePremium;
 
     @FXML
     private DatePicker datePicker;
@@ -70,7 +79,6 @@ public class CreateBookingController implements Initializable {
     private TextArea txtATotal;
     @FXML
     private TextField dateField;
-
 
 
     ArrayList<String> subs = new ArrayList<>();
@@ -136,72 +144,114 @@ public class CreateBookingController implements Initializable {
             System.out.println(services);
         }
         if (chbRepairWheel.isSelected()) {
-            price += 100;
-            subsCost.add((double) 50);
-            subs.add("Wheel Fix");
+            double cost = DBC.getInstance().getServiceCost("service_wheelchange");
+            price += cost;
+            //  subsCost.add((double) 50);
+            subs.add("Wheel change");
             txtATotal.appendText(chbRepairWheel.getText() + " $49.99 \n");
-            services.add(String.valueOf(chbRepairWheel));
-            System.out.println(services);
+            services.add("service_wheelchange");
+            System.out.println("service_wheelchange");
+        }
+        if (chbWheelAlignment.isSelected()) {
+            double cost = DBC.getInstance().getServiceCost("service_wheelalignment");
+            price += cost;
+            //  subsCost.add((double) 50);
+            subs.add("Wheel Alignment");
+            txtATotal.appendText(chbWheelAlignment.getText() + " $109.99 \n");
+            services.add("service_wheelalignment");
+            System.out.println("service_wheelalignment");
+        }
+        if (chbChangeBattery.isSelected()) {
+            double cost = DBC.getInstance().getServiceCost("service_battery");
+            price += cost;
+            //  subsCost.add((double) 50);
+            subs.add("Battery Change");
+            txtATotal.appendText(chbWheelAlignment.getText() + " $89.99 \n");
+            services.add("service_battery");
+            System.out.println("service_battery");
         }
         if (chbRepairTimingBelt.isSelected()) {
-            price += 100;
-            subsCost.add((double) 50);
-            subs.add("Timing belt fix");
+            double cost = DBC.getInstance().getServiceCost("service_timingbelt");
+            price += cost;
+            //  subsCost.add((double) 50);
+            subs.add("Timing belt change");
             txtATotal.appendText(chbRepairTimingBelt.getText() + " $499.99 \n");
-            services.add(String.valueOf(chbRepairTimingBelt));
-            System.out.println(services);
+            services.add("service_timingbelt");
+            System.out.println("service_timingbelt");
         }
         if (chbInspectionBasic.isSelected()) {
-            price += 100;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("inspection_basic");
+            price += cost;
+            // subsCost.add((double) 50);
             subs.add("Basic Inspection");
             txtATotal.appendText(chbInspectionBasic.getText() + " $39.99 \n");
-            services.add(String.valueOf(chbInspectionBasic));
-            System.out.println(services);
+            services.add("inspection_basic");
+            System.out.println("inspection_basic");
         }
         if (chbInspectionAdvanced.isSelected()) {
-            price += 100;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("inspection_advanced");
+            price += cost;
+            // subsCost.add((double) 50);
             subs.add("Advanced Inspection");
             txtATotal.appendText(chbInspectionAdvanced.getText() + " $59.99 \n");
-            services.add(String.valueOf(chbInspectionAdvanced));
-            System.out.println(services);
+            services.add("inspection_advanced");
+            System.out.println("inspection_advanced");
         }
         if (chbWashBasicExt.isSelected()) {
-            price += 50;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("wash_basic_exterior");
+            price += cost;
+            //   subsCost.add((double) 50);
             subs.add("Basic exterior wash");
-            txtATotal.appendText(chbWashBasicExt.getText() + " $19.99 \n");
-            services.add(String.valueOf(chbRepairTimingBelt));
-            System.out.println(services);
+            txtATotal.appendText(chbWashBasicExt.getText() + " $29.99 \n");
+            services.add("wash_basic_exterior");
+            System.out.println("wash_basic_exterior");
         }
         if (chbWashPremiumExt.isSelected()) {
-            price += 50;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("wash_premium_exterior");
+            price += cost;
+            //  subsCost.add((double) 50);
             subs.add("Premium Exterior Wash");
             txtATotal.appendText(chbWashPremiumExt.getText() + " $59.99\n");
-            services.add(String.valueOf(chbRepairTimingBelt));
-            System.out.println(services);
+            services.add("wash_premium_exterior");
+            System.out.println("wash_premium_exterior");
         }
         if (chbWashInterior.isSelected()) {
-            price += 50;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("wash_basic_interior");
+            price += cost;
+            //  subsCost.add((double) 50);
             subs.add("Interior Wash");
             txtATotal.appendText(chbWashInterior.getText() + " $19.99 \n");
-            services.add(String.valueOf(chbWashInterior));
-            System.out.println(services);
+            services.add("wash_basic_interior");
+            System.out.println("wash_basic_interior");
+        }
+        if (chbWashInteriorPremium.isSelected()) {
+            double cost = DBC.getInstance().getServiceCost("wash_premium_interior");
+            price += cost;
+            //  subsCost.add((double) 50);
+            subs.add("Interior Wash Premium");
+            txtATotal.appendText(chbWashInterior.getText() + " $79.99 \n");
+            services.add("wash_premium_interior");
+            System.out.println("wash_premium_interior");
         }
         if (chbWashComplete.isSelected()) {
-            price += 50;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("wash_compl_basic");
+            price += cost;
+            // subsCost.add((double) 50);
             subs.add("Complete Wash");
-            txtATotal.appendText( chbWashComplete.getText() + " 49.99\n");
-            services.add(String.valueOf(chbWashComplete));
-            System.out.println(services);
+            txtATotal.appendText(chbWashComplete.getText() + " 49.99\n");
+            services.add("wash_compl_basic");
+            System.out.println("wash_compl_basic");
+        }
+        if (chbWashCompletePremium.isSelected()) {
+            double cost = DBC.getInstance().getServiceCost("wash_compl_premium");
+            price += cost;
+            // subsCost.add((double) 50)
+            subs.add("complete wash premium");
+            txtATotal.appendText(chbWashCompletePremium.getText() + "79.99\n");
         }
 
 
-        DBC.getInstance().addBooking(new Booking (5, date, "test", DBC.getInstance().getAccount().getAccountID(), services));
+        DBC.getInstance().addBooking(new Booking(5, date, "test", DBC.getInstance().getAccount().getAccountID(), services));
 
 
     }
@@ -217,6 +267,9 @@ public class CreateBookingController implements Initializable {
         chbRepairAC.setVisible(toggle);
         chbRepairWheel.setVisible(toggle);
         chbRepairTimingBelt.setVisible(toggle);
+        chbWheelAlignment.setVisible(toggle);
+        chbChangeBattery.setVisible(toggle);
+
     }
 
     private void toggleWashCheckBoxes(boolean toggle) {
@@ -224,6 +277,8 @@ public class CreateBookingController implements Initializable {
         chbWashPremiumExt.setVisible(toggle);
         chbWashInterior.setVisible(toggle);
         chbWashComplete.setVisible(toggle);
+        chbWashCompletePremium.setVisible(toggle);
+        chbWashInteriorPremium.setVisible(toggle);
     }
 
     @FXML

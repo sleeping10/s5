@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="571.0" prefWidth="1014.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
     <children>
         <GridPane alignment="CENTER" layoutX="431.0" layoutY="212.0" prefHeight="195.0" prefWidth="232.0">
             <columnConstraints>
@@ -28,16 +28,23 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <CheckBox fx:id="chbRepairOil" mnemonicParsing="false" text="Oil Change &amp; Filters - $150" visible="false" />
-                <CheckBox fx:id="chbRepairAC" mnemonicParsing="false" text="AC Service - $120" visible="false" GridPane.rowIndex="1" />
-                <CheckBox fx:id="chbRepairWheel" mnemonicParsing="false" text="Wheel Change - $50" visible="false" GridPane.rowIndex="2" />
-                <CheckBox fx:id="chbRepairTimingBelt" mnemonicParsing="false" text="Timing Belt Change - $500" visible="false" GridPane.rowIndex="3" />
+                <CheckBox fx:id="chbRepairOil" mnemonicParsing="false" text="Oil Change" visible="false" />
+                <CheckBox fx:id="chbRepairAC" mnemonicParsing="false" text="AC Service" visible="false" GridPane.rowIndex="1" />
+                <CheckBox fx:id="chbRepairWheel" mnemonicParsing="false" text="Wheel Change" visible="false" GridPane.rowIndex="2" />
+                <CheckBox fx:id="chbRepairTimingBelt" mnemonicParsing="false" text="Timing Belt Change" visible="false" GridPane.rowIndex="3" />
+                <CheckBox fx:id="chbChangeBattery" mnemonicParsing="false" text="Change Battery" visible="false" GridPane.rowIndex="3" />
+                <CheckBox fx:id="chbWheelAlignment" mnemonicParsing="false" text="Wheel Alignment" visible="false" GridPane.rowIndex="2" />
+
+
+
                 <CheckBox fx:id="chbInspectionBasic" mnemonicParsing="false" text="Basic Inspection" visible="false" />
                 <CheckBox fx:id="chbInspectionAdvanced" mnemonicParsing="false" text="Advanced Inspection" visible="false" GridPane.rowIndex="1" />
                 <CheckBox fx:id="chbWashBasicExt" mnemonicParsing="false" text="Basic Exterior Wash" visible="false" />
                 <CheckBox fx:id="chbWashPremiumExt" mnemonicParsing="false" text="Premium Exterior Wash" visible="false" GridPane.rowIndex="1" />
                 <CheckBox fx:id="chbWashInterior" mnemonicParsing="false" text="Interior Wash" visible="false" GridPane.rowIndex="2" />
                 <CheckBox fx:id="chbWashComplete" mnemonicParsing="false" text="Complete Wash" visible="false" GridPane.rowIndex="3" />
+                <CheckBox fx:id="chbWashInteriorPremium" mnemonicParsing="false" text="Interior Wash Premium" visible="false" GridPane.rowIndex="3" />
+                <CheckBox fx:id="chbWashCompletePremium" mnemonicParsing="false" text="Complete Wash Premium" visible="false" GridPane.rowIndex="3" />
             </children>
         </GridPane>
         <MenuButton fx:id="mbService" layoutX="441.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="134.0" text="Select Service">
