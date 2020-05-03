@@ -53,17 +53,6 @@ public class DBC {
     }
 
     public void addBooking(Booking booking) {
-//        try {
-//            String query = "INSERT INTO Booking (bookingDate, bookingDesc) VALUES (?, ?)";
-//            statement = dbConnection.prepareStatement(query);
-//            statement.setString(1, acc.getEmail());
-//            statement.setString(2, acc.getPassword());
-//            statement.execute();
-//            statement.close();
-//            System.out.println("felix är cool");
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
         java.util.Date utilDate = booking.getDate();
         java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
         System.out.println("DEBUG: TIMESTAMP : " + sq.toString());

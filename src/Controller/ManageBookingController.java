@@ -16,42 +16,47 @@ import java.util.ResourceBundle;
 
 public class ManageBookingController implements Initializable {
     Account acc = DBC.getInstance().getAccount();
-    @FXML private TableView<Booking> twBookings;
+    @FXML private TableView<Booking> tvBookings;
     @FXML private TextField tfPhone;
     @FXML private TextField tfBookingID;
     @FXML private TableColumn tcBookingID;
     @FXML private TableColumn tcStartDate;
     @FXML private TableColumn tcEndDate;
     @FXML private TableColumn tcBookingDesc;
-    @FXML private TableView twField;
+    @FXML private TableView tvField;
     @FXML private Button buttonFilter;
     private ArrayList<Booking> list = DBC.getInstance().getBooking();
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if(acc.getAccessType()==3) {
+            tfPhone.setVisible(false);
+            tfBookingID.setVisible(false);
+            buttonFilter.setVisible(false);
+        }
         tcBookingID.setCellValueFactory(new PropertyValueFactory<Integer, Booking>("bookingID"));
         tcStartDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
         tcBookingDesc.setCellValueFactory(new PropertyValueFactory<String, Booking>("bookingDesc"));
         for (int i = 0; i <list.size() ; i++) {
-            twBookings.getItems().add(list.get(i));
+            tvBookings.getItems().add(list.get(i));
         }
 
 
     }
 
 
+
     public void filterButtonPressed(ActionEvent actionEvent) {
-        twBookings.getItems().clear();
+        tvBookings.getItems().clear();
         if (!tfBookingID.getText().isEmpty()) {
             for (Booking b : list) {
                 if (tfBookingID.getText().matches(String.valueOf(b.getBookingID()))) {
-                    twBookings.getItems().add(b);
+                    tvBookings.getItems().add(b);
                 }
             }
         } else if (!tfPhone.getText().isEmpty()){
             for(Booking b : list){
             if(tfPhone.getText().matches( DBC.getInstance().swag(b.getAccountID()))){
-            twBookings.getItems().add(b);
+            tvBookings.getItems().add(b);
             }
         }
         }
