@@ -17,7 +17,9 @@ import sample.Verification;
 import java.awt.print.Book;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CreateBookingController implements Initializable {
@@ -68,6 +70,7 @@ public class CreateBookingController implements Initializable {
     private TextArea txtATotal;
     @FXML
     private TextField dateField;
+
 
 
     ArrayList<String> subs = new ArrayList<>();
@@ -192,6 +195,7 @@ public class CreateBookingController implements Initializable {
             services.add(String.valueOf(chbWashComplete));
             System.out.println(services);
         }
+
 
     }
 

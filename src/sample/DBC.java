@@ -296,6 +296,18 @@ public class DBC {
     public void setPfPass(String pfPass) {
         this.pfPass = pfPass;
     }
+    public String swag (int accID){
+        String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
+        String phone = "";
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(queryPhone);
+            phone = rs.getString(1);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return phone;
+    }
 
     public void getAccountFromDb() {
       //gets the account obj from the database so that you can use it in the program
