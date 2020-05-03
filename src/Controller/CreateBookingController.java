@@ -114,21 +114,25 @@ public class CreateBookingController implements Initializable {
 
     @FXML
     private void handleButton() {
+        txtATotal.clear();
+        Date date = new Date();
 
         if (chbRepairOil.isSelected()) {
-            price += 50;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("service_oilchange");
+            price += cost;
+            //subsCost.add((double) 50);
             subs.add("Oil change");
             txtATotal.appendText(chbRepairOil.getText() + "$99.99 \n");
-            services.add(String.valueOf(chbRepairOil));
-            System.out.println(services);
+            services.add("service_oilchange");
+            System.out.println("service_oilchange");
         }
         if (chbRepairAC.isSelected()) {
-            price += 100;
-            subsCost.add((double) 50);
+            double cost = DBC.getInstance().getServiceCost("service_ac");
+            price += cost;
+            //subsCost.add((double) 50);
             subs.add("AC fix");
             txtATotal.appendText(chbRepairAC.getText() + " $149 \n");
-            services.add(String.valueOf(chbRepairAC));
+            services.add("service_ac");
             System.out.println(services);
         }
         if (chbRepairWheel.isSelected()) {
@@ -195,6 +199,9 @@ public class CreateBookingController implements Initializable {
             services.add(String.valueOf(chbWashComplete));
             System.out.println(services);
         }
+
+
+        DBC.getInstance().addBooking(new Booking (5, date, "test", DBC.getInstance().getAccount().getAccountID(), services));
 
 
     }

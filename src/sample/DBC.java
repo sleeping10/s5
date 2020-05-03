@@ -57,27 +57,31 @@ public class DBC {
         java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
         System.out.println("DEBUG: TIMESTAMP : " + sq.toString());
         System.out.println("DEBUG BOOKING: " + booking.getBookingDesc());
+        int totalBookings = 0;
 
         try {
-
-            String queryAddBooking = "INSERT INTO Booking (bookingID, date, bookingDesc, Account_AccountID, serviceCompleted)" +
-                    "VALUES (?, ?, ?, ?, ?)";
+            String queryAddBooking = "INSERT INTO Booking (date, bookingDesc, Account_AccountID, serviceCompleted)" +
+                    "VALUES (?, ?, ?, ?)";
             String queryAddServicesToBooking = "INSERT INTO Booking_has_Service (Booking_bookingID, Service_serviceName)" +
                     "VALUES (?, ?)";
+            String queryGetTotalBookings = "select count(bookingID) from Booking;";
 
+            stmt = dbConnection.createStatement();
+            ResultSet rsid = stmt.executeQuery(queryGetTotalBookings);
+
+            if (rsid.next()){ totalBookings = rsid.getInt(1); }
 
             statement = dbConnection.prepareStatement(queryAddBooking);
-            statement.setInt(1, booking.getBookingID());
-            statement.setTimestamp(2, sq);
-            statement.setString(3, booking.getBookingDesc());
-            statement.setInt(4, booking.getAccountID());
-            statement.setBoolean(5, false);
+            statement.setTimestamp(1, sq);
+            statement.setString(2, booking.getBookingDesc());
+            statement.setInt(3, booking.getAccountID());
+            statement.setBoolean(4, false);
             statement.execute();
             statement.close();
             System.out.println("DEBUG: Booking added");
             for (int i = 0; i < booking.getServices().size(); i++){
                 statement = dbConnection.prepareStatement(queryAddServicesToBooking);
-                statement.setInt(1, booking.getBookingID());
+                statement.setInt(1, totalBookings+1);
                 statement.setString(2, booking.getServices().get(i));
                 statement.execute();
             }
