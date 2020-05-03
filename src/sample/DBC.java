@@ -110,19 +110,21 @@ public class DBC {
 
             } else {
                 stmt = dbConnection.createStatement();
-                System.out.println("DEBUG: Sign up process initiated");
+                System.out.println("DEBUG: Manage booking process initiated");
 
                 ResultSet rsService = stmt.executeQuery(queryService);
 
-                if (rsService.next()) {
+                while (rsService.next()) {
                     bookingIds.add(rsService.getInt(1));
                     services.add(rsService.getString(2));
                 }
                 rsService.close();
+
                 ResultSet resultSet = stmt.executeQuery(queryAdmin);
 
-                if (resultSet.next()) {
+                while (resultSet.next()) {
                     bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
+                    System.out.println("DEBUG: " + bookings.toString());
                 }
 
 
