@@ -98,13 +98,12 @@ public class DBC {
 
     }
 
-    // seeBookings
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
         String queryService = "SELECT *From Booking_has_service";
-        ArrayList<Booking> bookings = null;
-        ArrayList<String> services = null;
-        ArrayList<Integer> bookingIds = null;
+        ArrayList<Booking> bookings = new ArrayList<>();
+        ArrayList<String> services = new ArrayList<>();
+        ArrayList<Integer> bookingIds = new ArrayList<>();
         Booking tempBooking;
         try {
             if (DBC.getInstance().getAccount().getAccessType() == 3) {
