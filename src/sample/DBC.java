@@ -322,13 +322,15 @@ public class DBC {
     public void setPfPass(String pfPass) {
         this.pfPass = pfPass;
     }
-    public String swag (int accID){
+    public String getPhoneFilter(int accID){
         String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
         String phone = "";
         try {
             stmt = dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery(queryPhone);
-            phone = rs.getString(1);
+            if(rs.next()) {
+                phone = rs.getString(1);
+            }
         }catch (Exception ex){
             ex.printStackTrace();
         }
