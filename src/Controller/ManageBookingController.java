@@ -1,5 +1,7 @@
 package Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,7 +18,7 @@ import java.util.ResourceBundle;
 
 public class ManageBookingController implements Initializable {
     Account acc = DBC.getInstance().getAccount();
-    @FXML private TableView<Booking> tvBookings;
+    @FXML private TableView<Booking> tvBookings = new TableView<>();
     @FXML private TextField tfPhone;
     @FXML private TextField tfBookingID;
     @FXML private TableColumn tcBookingID;
@@ -26,9 +28,22 @@ public class ManageBookingController implements Initializable {
     @FXML private TableView tvField;
     @FXML private Button buttonFilter;
     private ArrayList<Booking> list = new ArrayList<>();
+
+
+    // för table view kanske flytta?
+    public ObservableList<Booking> view (){
+        ObservableList<Booking> views = FXCollections.observableArrayList();
+        list=DBC.getInstance().getBooking();
+        for (int i = 0; i <list.size() ; i++) {
+            views.add(list.get(i));
+        }
+        return views;
+    }
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        list = DBC.getInstance().getBooking();
         if(acc.getAccessType()==3) {
             tfPhone.setVisible(false);
             tfBookingID.setVisible(false);
@@ -39,6 +54,7 @@ public class ManageBookingController implements Initializable {
         tcStartDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
         tcEndDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
         tcBookingDesc.setCellValueFactory(new PropertyValueFactory<String, Booking>("bookingDesc"));
+        tvField.setItems(view());
         if(list.size()!=0) {
             for (int i = 0; i < list.size(); i++) {
                 tvBookings.getItems().add(list.get(i));
