@@ -251,7 +251,7 @@ public class CreateBookingController implements Initializable {
         }
 
 
-        DBC.getInstance().addBooking(new Booking(5, date, "test", DBC.getInstance().getAccount().getAccountID(), services));
+        //DBC.getInstance().addBooking(new Booking(5, date, "test", DBC.getInstance().getAccount().getAccountID(), services));
 
 
     }
