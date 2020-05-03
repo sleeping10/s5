@@ -25,17 +25,21 @@ public class ManageBookingController implements Initializable {
     @FXML private TableColumn tcBookingDesc;
     @FXML private TableView tvField;
     @FXML private Button buttonFilter;
-    private ArrayList<Booking> list = DBC.getInstance().getBooking();
+    private ArrayList<Booking> list = new ArrayList<>();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        list = DBC.getInstance().getBooking();
         if(acc.getAccessType()==3) {
             tfPhone.setVisible(false);
             tfBookingID.setVisible(false);
             buttonFilter.setVisible(false);
         }
+
         tcBookingID.setCellValueFactory(new PropertyValueFactory<Integer, Booking>("bookingID"));
         tcStartDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
+        tcEndDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
         tcBookingDesc.setCellValueFactory(new PropertyValueFactory<String, Booking>("bookingDesc"));
+
         for (int i = 0; i <list.size() ; i++) {
             tvBookings.getItems().add(list.get(i));
         }
