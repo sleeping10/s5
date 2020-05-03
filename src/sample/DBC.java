@@ -106,14 +106,46 @@ public class DBC {
     }
 
     // seeBookings
-    public void seeBookings() {
+    public ArrayList<Booking> getBooking() {
+        String queryAdmin = "SELECT * From Booking";
+        String queryService = "SELECT *From Booking_has_service";
+        ArrayList<Booking> bookings = null;
+        ArrayList<String> services = null;
+        ArrayList<Integer> bookingIds = null;
+        Booking tempBooking;
+        try {
+            if (DBC.getInstance().getAccount().getAccessType() == 3) {
 
+            } else {
+                stmt = dbConnection.createStatement();
+                System.out.println("DEBUG: Sign up process initiated");
+
+                ResultSet rsService = stmt.executeQuery(queryService);
+
+                if (rsService.next()) {
+                    bookingIds.add(rsService.getInt(1));
+                    services.add(rsService.getString(2));
+                }
+                rsService.close();
+                ResultSet resultSet = stmt.executeQuery(queryAdmin);
+
+                if (resultSet.next()) {
+                    bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
+                }
+
+
+            }
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+
+        return bookings;
     }
 
     // removeBooking
-    public void removeBooking(Booking booking) {
-
-    }
+    //public void removeBooking(Booking booking) {
+//
+  //  }
 
     public String getAccountAsString() {
         return acc.toString();
@@ -370,7 +402,7 @@ public class DBC {
        
     }
 
-    public String getServiceCost(String serviceName){
+    public double getServiceCost(String serviceName){
         String query = "SELECT * FROM Service where serviceName = '" + serviceName + "'";
         double cost = 0;
         double discount = 0;
@@ -401,13 +433,13 @@ public class DBC {
         if (discount_startdate != null && discount_enddate != null){
             if (current_time.after(discount_startdate) && current_time.before(discount_enddate)){
                 System.out.println("Fucker");
-                return "$" + cost + " - " + discount*100 + "% OFF, NOW: $" + Math.round(cost * (1 - discount));
+                return Math.round(cost * (1 - discount));
             }else{
                 System.out.println("Fucker2");
-                return "$" + cost;
+                return cost;
             }
         }else{
-            return "$" + cost;
+            return cost;
         }
     }
 
