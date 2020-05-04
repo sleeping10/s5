@@ -1,5 +1,7 @@
 package sample;
 
+import com.mysql.cj.protocol.Resultset;
+
 import java.sql.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -100,13 +102,36 @@ public class DBC {
 
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
-        String queryService = "SELECT *From Booking_has_service";
+        String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
+        String queryService = "SELECT * From Booking_has_service";
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<String> services = new ArrayList<>();
         ArrayList<Integer> bookingIds = new ArrayList<>();
         Booking tempBooking;
         try {
             if (DBC.getInstance().getAccount().getAccessType() == 3) {
+                stmt = dbConnection.createStatement();
+                ResultSet rsService = stmt.executeQuery(queryCustomer);
+
+                while (rsService.next()) {
+                    bookingIds.add(rsService.getInt(1));
+                    services.add(rsService.getString(2));
+                }
+                rsService.close();
+
+                ResultSet rs = stmt.executeQuery(queryCustomer);
+
+                while (rs.next()){
+
+                    for(int i = 0; i < bookingIds.size(); i++){
+                        if (rs.getInt(1 ) == bookingIds.get(i)){
+                            bookings.add(new Booking(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4), rs.getString(5), services));
+                            System.out.println("MATCH FOUND");
+                        }
+                    }
+
+                }
+                rs.close();
 
             } else {
                 stmt = dbConnection.createStatement();
@@ -126,6 +151,7 @@ public class DBC {
                     //bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
                     System.out.println("DEBUG: " + bookings.toString());
                 }
+                resultSet.close();
 
 
             }
