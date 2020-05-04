@@ -64,10 +64,10 @@
         <Button fx:id="btnClearSelections" layoutX="12.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleClearSelectionsBtn" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
         <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="17.0" promptText="datePicker" visible="false" />
         <Button fx:id="btnNext" layoutX="379.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="117.0" text="Next &gt;" />
-      <TextField fx:id="tfLicense" layoutX="179.0" layoutY="17.0" promptText="License Number" visible="false" />
+      <TextField fx:id="tfLicense" layoutX="194.0" layoutY="17.0" prefHeight="25.0" prefWidth="134.0" promptText="License Number" visible="false" />
       <TextArea fx:id="taDesc" layoutX="12.0" layoutY="51.0" prefHeight="135.0" prefWidth="316.0" promptText="Add additional description if needed" visible="false" />
       <Button fx:id="btnCreateBooking" layoutX="363.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" text="Create new Booking" visible="false" />
       <Label fx:id="lblTotalCost" layoutX="321.0" layoutY="250.0" text="Total cost: " />
-      <Label fx:id="lblStatus" layoutX="146.0" layoutY="282.0" text="Label" visible="false"/>
+      <Label fx:id="lblStatus" layoutX="146.0" layoutY="282.0" text="Label" visible="false" />
     </children>
 </AnchorPane>
