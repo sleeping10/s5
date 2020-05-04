@@ -361,8 +361,8 @@ public class CreateBookingController implements Initializable {
             lblCostTwo.setText(getServiceCostAsString("service_ac"));
             lblCostThree.setText(getServiceCostAsString("service_wheelchange"));
             lblCostFour.setText(getServiceCostAsString("service_timingbelt"));
-            lblCostFive.setText(getServiceCostAsString("service_wheelalignment"));
-            lblCostSix.setText(getServiceCostAsString("service_battery"));
+            lblCostFive.setText(getServiceCostAsString("service_battery"));
+            lblCostSix.setText(getServiceCostAsString("service_wheelalignment"));
         }
 
     }
