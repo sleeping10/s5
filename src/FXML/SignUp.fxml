@@ -7,24 +7,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="650.0" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/10.0.2-interna1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="650.0" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
    <children>
       <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Email Address" />
       <TextField fx:id="tfName" layoutX="231.0" layoutY="166.0" prefHeight="36.0" prefWidth="209.0" promptText="Name" />
       <TextField fx:id="tfPhone" layoutX="231.0" layoutY="217.0" prefHeight="36.0" prefWidth="209.0" promptText="Phone number" />
       <PasswordField fx:id="tfPass" layoutX="231.0" layoutY="271.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
       <Button fx:id="btnSignup" layoutX="300.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleButtonSignUp" prefHeight="32.0" prefWidth="72.0" text="Sign up" />
-      <Label focusTraversable="false" layoutX="259.0" layoutY="40.0" prefHeight="51.0" prefWidth="237.0" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
+      <Label focusTraversable="false" layoutX="268.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label layoutX="219.0" layoutY="45.0" prefHeight="35.0" prefWidth="49.0" style="-fx-text-fill: #2196F3;" text="HKR">
+      <Label layoutX="219.0" layoutY="45.0" prefHeight="35.0" prefWidth="49.0" text="HKR">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <Button fx:id="btnGoBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonGoBack" text="&lt;" />
-      <Label fx:id="lblStatus" layoutX="322.0" layoutY="383.0" textFill="WHITE" />
+      <Label fx:id="lblStatus" layoutX="322.0" layoutY="383.0" />
+      <Label layoutX="468.0" layoutY="281.0" text="4-15 Characters" />
    </children>
 </AnchorPane>
