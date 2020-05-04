@@ -53,7 +53,7 @@
             <Label fx:id="lblCostSix" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <MenuButton fx:id="mbService" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="134.0" text="Select Service">
+        <MenuButton fx:id="mbService" layoutX="12.0" layoutY="14.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" text="Select Service">
             <items>
                 <MenuItem fx:id="mbInspection" mnemonicParsing="false" onAction="#handleMbInspection" text="Inspection" />
                 <MenuItem fx:id="mbRepair" mnemonicParsing="false" onAction="#handleMbRepair" text="Repair" />
@@ -63,7 +63,7 @@
         <TextArea fx:id="txtATotal" layoutX="321.0" layoutY="14.0" prefHeight="229.0" prefWidth="174.0" />
         <Button fx:id="btnClearSelections" layoutX="12.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleClearSelectionsBtn" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
         <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="17.0" promptText="datePicker" visible="false" />
-        <Button fx:id="btnNext" layoutX="379.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="117.0" text="Next &gt;" />
+        <Button fx:id="btnNext" layoutX="379.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="31.0" prefWidth="117.0" text="Next &gt;" />
       <TextField fx:id="tfLicense" layoutX="194.0" layoutY="17.0" prefHeight="25.0" prefWidth="134.0" promptText="License Number" visible="false" />
       <TextArea fx:id="taDesc" layoutX="12.0" layoutY="51.0" prefHeight="135.0" prefWidth="316.0" promptText="Add additional description if needed" visible="false" />
       <Button fx:id="btnCreateBooking" layoutX="363.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" text="Create new Booking" visible="false" />

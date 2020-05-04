@@ -78,7 +78,7 @@ public class CreateBookingController implements Initializable {
         lblTotalCost.setVisible(true);
     }
 
-    private double getCost(String service){
+    private double getServiceCost(String service){
         double cost = 0;
         for (int i = 0; i < availableServices.size(); i++){
             if (service.matches(availableServices.get(i).getserviceName())){
@@ -88,7 +88,7 @@ public class CreateBookingController implements Initializable {
         return cost;
     }
 
-    private String getCostAsString(String service){
+    private String getServiceCostAsString(String service){
         String out = "";
         for (int i = 0; i < availableServices.size(); i++){
             if (service.matches(availableServices.get(i).getserviceName())){
@@ -177,7 +177,7 @@ public class CreateBookingController implements Initializable {
 
 
     @FXML
-    private void handleButton() {
+    private void handleNextBtn() {
         txtATotal.clear();
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(false);
@@ -199,13 +199,13 @@ public class CreateBookingController implements Initializable {
         chbInspectionBasic.setVisible(toggle);
         chbInspectionAdvanced.setVisible(toggle);
         if (toggle){
-            lblCostOne.setText( getCostAsString("inspection_basic"));
-            lblCostTwo.setText( getCostAsString("inspection_advanced"));
+            lblCostOne.setText( getServiceCostAsString("inspection_basic"));
+            lblCostTwo.setText( getServiceCostAsString("inspection_advanced"));
         }
     }
 
     private void addServiceToCurrentBooking(boolean toggle, String service){
-        double cost = getCost(service);
+        double cost = getServiceCost(service);
         if (toggle) {
             price += cost;
             txtATotal.appendText(service + ", $" + cost + " \n");
@@ -215,7 +215,7 @@ public class CreateBookingController implements Initializable {
             price -= cost;
             services.remove(service);
             for (int i = 0; i < services.size(); i++){
-                txtATotal.appendText(services.get(i) + ", $" + getCost(services.get(i)) + "\n");
+                txtATotal.appendText(services.get(i) + ", $" + getServiceCost(services.get(i)) + "\n");
             }
         }
         lblTotalCost.setText("$" + Math.round(price));
@@ -357,12 +357,12 @@ public class CreateBookingController implements Initializable {
         chbRepairChangeBattery.setVisible(toggle);
 
         if (toggle) {
-            lblCostOne.setText(getCostAsString("service_oilchange"));
-            lblCostTwo.setText(getCostAsString("service_ac"));
-            lblCostThree.setText(getCostAsString("service_wheelchange"));
-            lblCostFour.setText(getCostAsString("service_timingbelt"));
-            lblCostFive.setText(getCostAsString("service_wheelalignment"));
-            lblCostSix.setText(getCostAsString("service_battery"));
+            lblCostOne.setText(getServiceCostAsString("service_oilchange"));
+            lblCostTwo.setText(getServiceCostAsString("service_ac"));
+            lblCostThree.setText(getServiceCostAsString("service_wheelchange"));
+            lblCostFour.setText(getServiceCostAsString("service_timingbelt"));
+            lblCostFive.setText(getServiceCostAsString("service_wheelalignment"));
+            lblCostSix.setText(getServiceCostAsString("service_battery"));
         }
 
     }
@@ -376,12 +376,12 @@ public class CreateBookingController implements Initializable {
         chbWashInteriorPremium.setVisible(toggle);
 
         if (toggle) {
-            lblCostOne.setText(getCostAsString("wash_basic_exterior"));
-            lblCostTwo.setText(getCostAsString("wash_premium_exterior"));
-            lblCostThree.setText(getCostAsString("wash_basic_interior"));
-            lblCostFour.setText(getCostAsString("wash_premium_interior"));
-            lblCostFive.setText(getCostAsString("wash_compl_basic"));
-            lblCostSix.setText("LUL" + getCostAsString("wash_compl_premium"));
+            lblCostOne.setText(getServiceCostAsString("wash_basic_exterior"));
+            lblCostTwo.setText(getServiceCostAsString("wash_premium_exterior"));
+            lblCostThree.setText(getServiceCostAsString("wash_basic_interior"));
+            lblCostFour.setText(getServiceCostAsString("wash_premium_interior"));
+            lblCostFive.setText(getServiceCostAsString("wash_compl_basic"));
+            lblCostSix.setText(getServiceCostAsString("wash_compl_premium"));
         }
 
     }
