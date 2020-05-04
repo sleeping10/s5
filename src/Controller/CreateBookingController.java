@@ -13,14 +13,9 @@ import javafx.stage.Stage;
 import sample.Booking;
 import sample.DBC;
 import sample.Service;
-import sample.Verification;
-
-import java.awt.print.Book;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CreateBookingController implements Initializable {
@@ -39,10 +34,10 @@ public class CreateBookingController implements Initializable {
 
     @FXML private CheckBox chbRepairOil;
     @FXML private CheckBox chbRepairAC;
-    @FXML private CheckBox chbRepairWheel;
-    @FXML private CheckBox chbWheelAlignment;
+    @FXML private CheckBox chbRepairWheelChange;
+    @FXML private CheckBox chbRepairWheelAlignment;
     @FXML private CheckBox chbRepairTimingBelt;
-    @FXML private CheckBox chbChangeBattery;
+    @FXML private CheckBox chbRepairChangeBattery;
 
 
     @FXML private CheckBox chbWashBasicExt;
@@ -50,8 +45,7 @@ public class CreateBookingController implements Initializable {
     @FXML private CheckBox chbWashInterior;
     @FXML private CheckBox chbWashInteriorPremium;
     @FXML private CheckBox chbWashComplete;
-    @FXML
-    private CheckBox chbWashCompletePremium;
+    @FXML private CheckBox chbWashCompletePremium;
 
     @FXML private DatePicker datePicker;
     @FXML private TextArea txtATotal;
@@ -68,6 +62,7 @@ public class CreateBookingController implements Initializable {
     @FXML private Label lblCostFive;
     @FXML private Label lblCostSix;
     @FXML private Label lblTotalCost;
+    @FXML private Label lblStatus;
     @FXML private Button btnNext;
 
     @FXML private GridPane gridPaneMain;
@@ -76,17 +71,40 @@ public class CreateBookingController implements Initializable {
     ArrayList<String> subs = new ArrayList<>();
     ArrayList<Double> subsCost = new ArrayList<>();
     ArrayList<String> services = new ArrayList<>();
+    ArrayList<Service> availableServices = new ArrayList<>();
 
 
-    int price = 0;
+    double price = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        availableServices = DBC.getInstance().getAvailableServices();
+
         taDesc.setVisible(false);
         gridPaneMain.setVisible(true);
         tfLicense.setVisible(false);
         lblTotalCost.setVisible(true);
+    }
 
+    private double getCost(String service){
+        double cost = 0;
+        for (int i = 0; i < availableServices.size(); i++){
+            if (service.matches(availableServices.get(i).getserviceName())){
+                cost =  availableServices.get(i).getCurrentCost();
+            }
+        }
+        return cost;
+    }
+
+    private String getCostAsString(String service){
+        String out = "";
+        for (int i = 0; i < availableServices.size(); i++){
+            if (service.matches(availableServices.get(i).getserviceName())){
+                out =  availableServices.get(i).getCostAndDiscountAsString();
+            }
+        }
+        return out;
     }
 
     @FXML
@@ -96,6 +114,7 @@ public class CreateBookingController implements Initializable {
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(true);
         toggleWashCheckBoxes(false);
+        toggleCostLabels(1);
     }
 
     @FXML
@@ -105,153 +124,66 @@ public class CreateBookingController implements Initializable {
         toggleRepairCheckBoxes(true);
         toggleInspectionCheckBoxes(false);
         toggleWashCheckBoxes(false);
+        toggleCostLabels(2);
     }
 
     @FXML
     private void handleMbWash(ActionEvent e) {
         mbService.setText(mbWash.getText());
-
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(false);
         toggleWashCheckBoxes(true);
+        toggleCostLabels(3);
     }
 
+    private void toggleCostLabels(int toggle){
+        if (toggle==1){
+            lblCostOne.setVisible(true);
+            lblCostTwo.setVisible(true);
+            lblCostThree.setVisible(false);
+            lblCostFour.setVisible(false);
+            lblCostFive.setVisible(false);
+            lblCostSix.setVisible(false);
+        }else if (toggle==2 ||toggle == 3){
+            lblCostOne.setVisible(true);
+            lblCostTwo.setVisible(true);
+            lblCostThree.setVisible(true);
+            lblCostFour.setVisible(true);
+            lblCostFive.setVisible(true);
+            lblCostSix.setVisible(true);
+        }else{
+            lblCostOne.setVisible(false);
+            lblCostTwo.setVisible(false);
+            lblCostThree.setVisible(false);
+            lblCostFour.setVisible(false);
+            lblCostFive.setVisible(false);
+            lblCostSix.setVisible(false);
+        }
+    }
+
+
     @FXML
-    private void handleCreateBookingBtn(){
+    private void handleCreateBookingBtn() {
         java.util.Date date = null;
         txtATotal.clear();
         try {
             java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(datePicker.getValue());
             date = new java.util.Date(gettedDatePickerDate.getTime());
-        }catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("ERROR: Not able to get date");
         }
 
-        if (datePicker.getValue() == null || tfLicense.getText().isEmpty()){
+        if (datePicker.getValue() == null || tfLicense.getText().isEmpty()) {
             System.out.println("inge datum eller reg nummer");
-        }
-
-        else {
-
-            if (chbRepairAC.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("service_ac");
-                price += cost;
-                //subsCost.add((double) 50);
-                subs.add("AC Service");
-                txtATotal.appendText(chbRepairAC.getText() + " $149 \n");
-                services.add("service_ac");
-                System.out.println(services);
-            }
-            if (chbRepairWheel.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("service_wheelchange");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Wheel change");
-                txtATotal.appendText(chbRepairWheel.getText() + " $49.99 \n");
-                services.add("service_wheelchange");
-                System.out.println("service_wheelchange");
-            }
-            if (chbWheelAlignment.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("service_wheelalignment");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Wheel Alignment");
-                txtATotal.appendText(chbWheelAlignment.getText() + " $109.99 \n");
-                services.add("service_wheelalignment");
-                System.out.println("service_wheelalignment");
-            }
-            if (chbChangeBattery.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("service_battery");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Battery Change");
-                txtATotal.appendText(chbWheelAlignment.getText() + " $89.99 \n");
-                services.add("service_battery");
-                System.out.println("service_battery");
-            }
-            if (chbRepairTimingBelt.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("service_timingbelt");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Timing belt change");
-                txtATotal.appendText(chbRepairTimingBelt.getText() + " $499.99 \n");
-                services.add("service_timingbelt");
-                System.out.println("service_timingbelt");
-            }
-            if (chbInspectionBasic.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("inspection_basic");
-                price += cost;
-                // subsCost.add((double) 50);
-                subs.add("Basic Inspection");
-                txtATotal.appendText(chbInspectionBasic.getText() + " $39.99 \n");
-                services.add("inspection_basic");
-                System.out.println("inspection_basic");
-            }
-            if (chbInspectionAdvanced.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("inspection_advanced");
-                price += cost;
-                // subsCost.add((double) 50);
-                subs.add("Advanced Inspection");
-                txtATotal.appendText(chbInspectionAdvanced.getText() + " $59.99 \n");
-                services.add("inspection_advanced");
-                System.out.println("inspection_advanced");
-            }
-            if (chbWashBasicExt.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_basic_exterior");
-                price += cost;
-                //   subsCost.add((double) 50);
-                subs.add("Basic exterior wash");
-                txtATotal.appendText(chbWashBasicExt.getText() + " $29.99 \n");
-                services.add("wash_basic_exterior");
-                System.out.println("wash_basic_exterior");
-            }
-            if (chbWashPremiumExt.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_premium_exterior");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Premium Exterior Wash");
-                txtATotal.appendText(chbWashPremiumExt.getText() + " $59.99\n");
-                services.add("wash_premium_exterior");
-                System.out.println("wash_premium_exterior");
-            }
-            if (chbWashInterior.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_basic_interior");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Interior Wash");
-                txtATotal.appendText(chbWashInterior.getText() + " $19.99 \n");
-                services.add("wash_basic_interior");
-                System.out.println("wash_basic_interior");
-            }
-            if (chbWashInteriorPremium.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_premium_interior");
-                price += cost;
-                //  subsCost.add((double) 50);
-                subs.add("Interior Wash Premium");
-                txtATotal.appendText(chbWashInterior.getText() + " $79.99 \n");
-                services.add("wash_premium_interior");
-                System.out.println("wash_premium_interior");
-            }
-            if (chbWashComplete.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_compl_basic");
-                price += cost;
-                // subsCost.add((double) 50);
-                subs.add("Complete Wash");
-                txtATotal.appendText(chbWashComplete.getText() + " 49.99\n");
-                services.add("wash_compl_basic");
-                System.out.println("wash_compl_basic");
-            }
-            if (chbWashCompletePremium.isSelected()) {
-                double cost = DBC.getInstance().getServiceCost("wash_compl_premium");
-                price += cost;
-                // subsCost.add((double) 50)
-                subs.add("complete wash premium");
-                txtATotal.appendText(chbWashCompletePremium.getText() + "79.99\n");
-            }
-            DBC.getInstance().addBooking(new Booking(0, date, "test", DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
+            lblStatus.setText("Status: Please select a date and Registration ID");
+        } else {
+            DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
             lblTotalCost.setText(String.valueOf(price));
+            lblStatus.setText("Status: Booking successfully added");
+            btnCreateBooking.setDisable(true);
         }
     }
+
 
     @FXML
     private void handleButton() {
@@ -267,44 +199,183 @@ public class CreateBookingController implements Initializable {
         btnNext.setVisible(false);
         datePicker.setVisible(true);
         tfLicense.setVisible(true);
+        lblStatus.setVisible(true);
+        lblStatus.setText("Status: ");
+        toggleCostLabels(0);
     }
 
     private void toggleInspectionCheckBoxes(boolean toggle) {
         chbInspectionBasic.setVisible(toggle);
-        lblCostOne.setVisible(true);
-        lblCostTwo.setVisible(true);
-        lblCostOne.setText("$" + String.valueOf(DBC.getInstance().getServiceCost("inspection_basic")));
-        lblCostTwo.setText("$" + String.valueOf(DBC.getInstance().getServiceCost("inspection_advanced")));
         chbInspectionAdvanced.setVisible(toggle);
+        if (toggle){
+            lblCostOne.setText( getCostAsString("inspection_basic"));
+            lblCostTwo.setText( getCostAsString("inspection_advanced"));
+        }
+    }
+
+    private void addServiceToCurrentBooking(boolean toggle, String service){
+        double cost = getCost(service);
+        if (toggle) {
+            price += cost;
+            subsCost.add(cost);
+            subs.add(service);
+            txtATotal.appendText(service + ", $" + cost + " \n");
+            services.add(service);
+        }else{
+            txtATotal.clear();
+            price -= cost;
+            subs.remove(cost);
+            services.remove(service);
+            for (int i = 0; i < services.size(); i++){
+                txtATotal.appendText(services.get(i) + ", $" + getCost(services.get(i)) + "\n");
+            }
+        }
+        lblTotalCost.setText("$" + Math.round(price));
     }
 
     @FXML
-    private void handleServiceOilChbox(){
-        txtATotal.clear();
-        double cost = DBC.getInstance().getServiceCost("service_oilchange");
-        if (chbRepairOil.isSelected()) {
-            price += cost;
-            subsCost.add(cost);
-            subs.add("Oil change");
-            txtATotal.appendText(chbRepairOil.getText() + ", $" + cost + " \n");
-            services.add("service_oilchange");
+    private void handleInspectionBasicChbox() {
+        if (chbInspectionBasic.isSelected()) {
+            addServiceToCurrentBooking(true, "inspection_basic");
         }else{
-            price -= cost;
-            subs.remove(cost);
-            services.remove("service_oilchange");
-            System.out.println("Not pressed");
+            addServiceToCurrentBooking(false, "inspection_basic");
         }
-        lblTotalCost.setText("$" + String.valueOf(price));
+    }
+
+    @FXML
+    private void handleInspectionAdvancedChbox() {
+        if (chbInspectionAdvanced.isSelected()) {
+            addServiceToCurrentBooking(true, "inspection_advanced");
+        }else{
+            addServiceToCurrentBooking(false, "inspection_advanced");
+        }
+    }
+
+    @FXML
+        private void handleServiceOilChbox() {
+            if (chbRepairOil.isSelected()) {
+                addServiceToCurrentBooking(true, "service_oilchange");
+            }else{
+                addServiceToCurrentBooking(false, "service_oilchange");
+            }
+        }
+
+    @FXML
+    private void handleServiceACFixChbox() {
+        if (chbRepairAC.isSelected()) {
+            addServiceToCurrentBooking(true, "service_ac");
+        }else{
+            addServiceToCurrentBooking(false, "service_ac");
+        }
+    }
+
+    @FXML
+    private void handleServiceTimingBeltChbox() {
+        if (chbRepairTimingBelt.isSelected()) {
+            addServiceToCurrentBooking(true, "service_timingbelt");
+        }else{
+            addServiceToCurrentBooking(false, "service_timingbelt");
+        }
+    }
+
+    @FXML
+    private void handleServiceWheelAlignChbox() {
+        if (chbRepairWheelAlignment.isSelected()) {
+            addServiceToCurrentBooking(true, "service_wheelalignment");
+        }else{
+            addServiceToCurrentBooking(false, "service_wheelalignment");
+        }
+    }
+
+    @FXML
+    private void handleServiceWheelChangeChbox() {
+        if (chbRepairWheelChange.isSelected()) {
+            addServiceToCurrentBooking(true, "service_wheelchange");
+        }else{
+            addServiceToCurrentBooking(false, "service_wheelchange");
+        }
+    }
+
+    @FXML
+    private void handleServiceChangeBatteryChbox() {
+        if (chbRepairChangeBattery.isSelected()) {
+            addServiceToCurrentBooking(true, "service_battery");
+        }else{
+            addServiceToCurrentBooking(false, "service_battery");
+        }
+    }
+
+    @FXML
+    private void handleWashBasicExtChb() {
+        if (chbWashBasicExt.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_basic_exterior");
+        }else{
+            addServiceToCurrentBooking(false, "wash_basic_exterior");
+        }
+    }
+
+    @FXML
+    private void handleWashPremiumExtChb() {
+        if (chbWashPremiumExt.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_premium_exterior");
+        }else{
+            addServiceToCurrentBooking(false, "wash_premium_exterior");
+        }
+    }
+
+    @FXML
+    private void handleWashBasicInteriorChb() {
+        if (chbWashInterior.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_basic_interior");
+        }else{
+            addServiceToCurrentBooking(false, "wash_basic_interior");
+        }
+    }
+
+    @FXML
+    private void handleWashInteriorPremiumChb() {
+        if (chbWashInteriorPremium.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_premium_interior");
+        }else{
+            addServiceToCurrentBooking(false, "wash_premium_interior");
+        }
+    }
+
+    @FXML
+    private void handleWashBasicCompleteChb() {
+        if (chbWashComplete.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_compl_basic");
+        }else{
+            addServiceToCurrentBooking(false, "wash_compl_basic");
+        }
+    }
+
+    @FXML
+    private void handleWashPremiumCompleteChb() {
+        if (chbWashComplete.isSelected()) {
+            addServiceToCurrentBooking(true, "wash_compl_premium");
+        }else{
+            addServiceToCurrentBooking(false, "wash_compl_premium");
+        }
     }
 
 
     private void toggleRepairCheckBoxes(boolean toggle) {
         chbRepairOil.setVisible(toggle);
         chbRepairAC.setVisible(toggle);
-        chbRepairWheel.setVisible(toggle);
+        chbRepairWheelChange.setVisible(toggle);
         chbRepairTimingBelt.setVisible(toggle);
-        chbWheelAlignment.setVisible(toggle);
-        chbChangeBattery.setVisible(toggle);
+        chbRepairWheelAlignment.setVisible(toggle);
+        chbRepairChangeBattery.setVisible(toggle);
+
+        if (toggle) {
+            lblCostOne.setText(getCostAsString("service_oilchange"));
+            lblCostTwo.setText(getCostAsString("service_ac"));
+            lblCostThree.setText(getCostAsString("service_wheelchange"));
+            lblCostFour.setText(getCostAsString("service_timingbelt"));
+            lblCostFive.setText(getCostAsString("service_wheelalignment"));
+            lblCostSix.setText(getCostAsString("service_battery"));
+        }
 
     }
 
@@ -315,36 +386,40 @@ public class CreateBookingController implements Initializable {
         chbWashComplete.setVisible(toggle);
         chbWashCompletePremium.setVisible(toggle);
         chbWashInteriorPremium.setVisible(toggle);
+
+        if (toggle) {
+            lblCostOne.setText(getCostAsString("wash_basic_exterior"));
+            lblCostTwo.setText(getCostAsString("wash_premium_exterior"));
+            lblCostThree.setText(getCostAsString("wash_basic_interior"));
+            lblCostFour.setText(getCostAsString("wash_premium_interior"));
+            lblCostFive.setText(getCostAsString("wash_compl_basic"));
+            lblCostSix.setText("LUL" + getCostAsString("wash_compl_premium"));
+        }
+
     }
 
     @FXML
-    public void clearSelectionsButton() {
-
+    public void handleClearSelectionsBtn() {
         txtATotal.setText(null);
+        price = 0;
         services.clear();
         System.out.println(services);
         chbRepairOil.setSelected(false);
         chbRepairAC.setSelected(false);
-        chbRepairWheel.setSelected(false);
+        chbRepairWheelChange.setSelected(false);
         chbRepairTimingBelt.setSelected(false);
+        chbRepairWheelAlignment.setSelected(false);
+        chbRepairChangeBattery.setSelected(false);
+
         chbInspectionBasic.setSelected(false);
         chbInspectionAdvanced.setSelected(false);
+
         chbWashBasicExt.setSelected(false);
-        chbWashInterior.setSelected(false);
         chbWashPremiumExt.setSelected(false);
+        chbWashInterior.setSelected(false);
+        chbWashInteriorPremium.setSelected(false);
         chbWashComplete.setSelected(false);
-    }
-
-    @FXML
-    public void Backbutton(ActionEvent event) throws IOException {
-
-        Node node = (Node) event.getSource();
-        Stage stage = (Stage) node.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("CreateBooking.fxml"));
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-
+        chbWashCompletePremium.setSelected(false);
     }
 }
 
