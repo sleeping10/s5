@@ -4,17 +4,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import sample.Account;
-import sample.Booking;
-import sample.DBC;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.*;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 
 public class ManageBookingController implements Initializable {
     Account acc = DBC.getInstance().getAccount();
@@ -27,6 +30,7 @@ public class ManageBookingController implements Initializable {
     @FXML private TableView tvField;
     @FXML private Button buttonFilter;
     private ArrayList<Booking> list = new ArrayList<>();
+    private SceneSwitcher ss = new SceneSwitcher();
 
 
     // för table view kanske flytta?
@@ -84,6 +88,25 @@ public class ManageBookingController implements Initializable {
     }
 
     public void handleButtonManagePressed(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("DetailedBookingView.fxml"));
+            DetailedBookingViewController dbvc = new DetailedBookingViewController((Booking)tvField.getSelectionModel().getSelectedItem());
+            loader.setController(dbvc);
+            Stage detailedStage = new Stage();
+            detailedStage.setTitle("Manage Booking");
+            detailedStage.initOwner(tvField.getScene().getWindow());
+            detailedStage.initModality(Modality.APPLICATION_MODAL);
+            detailedStage.setScene(new Scene(loader.load()));
+            detailedStage.showAndWait();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
+
+
+
+
+//        ss.loginSignupSceneSwitcher(actionEvent, "DetailedBookingView");
         //open new scene
         // ObservableList<Booking> allList, selectedList;
         //        allList=tvField.getItems();
