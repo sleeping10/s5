@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+//Don't forget to import JDBC & javafx libraries :)
+
 public class Main extends Application {
 
     @Override
@@ -17,21 +19,9 @@ public class Main extends Application {
         primaryStage.setMinWidth(700);
         primaryStage.setMinHeight(500);
         primaryStage.show();
-
-
-
-
-
     }
 
-
-
-
     public static void main(String[] args) {
-
-        PasswordEncryption pw = new PasswordEncryption();
-        pw.main(args);
-
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {

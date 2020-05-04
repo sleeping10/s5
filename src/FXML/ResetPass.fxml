@@ -7,18 +7,18 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #2D3447;" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPassController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPassController">
     <children>
         <Button fx:id="btnBack" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#backButton" text="&lt;" />
         <Button fx:id="btnReset" layoutX="300.0" layoutY="391.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="32.0" prefWidth="72.0" text="Reset" />
         <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" text="Email" />
         <PasswordField fx:id="pfPass" layoutX="232.0" layoutY="330.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
-        <Label layoutX="275.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" style="-fx-background-color: #2D3447; -fx-text-fill: #FFFFFF;" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
+        <Label layoutX="275.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
             <font>
                 <Font size="24.0" />
             </font>
         </Label>
-        <Label layoutX="219.0" layoutY="45.0" prefHeight="35.0" prefWidth="49.0" style="-fx-text-fill: #2196F3;" text="HKR">
+        <Label layoutX="219.0" layoutY="45.0" prefHeight="35.0" prefWidth="49.0" text="HKR">
             <font>
                 <Font size="24.0" />
             </font>

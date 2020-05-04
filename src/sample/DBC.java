@@ -1,14 +1,11 @@
 package sample;
 
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.*;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
+//This class is a Singleton class
 public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
@@ -30,7 +27,7 @@ public class DBC {
 
     public boolean connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
+            Class.forName("com.mysql.cj.jdbc.Driver");
             String URL = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
             dbConnection = DriverManager.getConnection(URL);
             stmt = dbConnection.createStatement();
@@ -96,11 +93,12 @@ public class DBC {
         }
     }
 
-    // manageBooking
+    // manageBooking (not done/implemented yet)
     public void manageBooking(Booking booking) {
 
     }
 
+    //Gets all the bookings from the Database
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
         String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
@@ -118,26 +116,17 @@ public class DBC {
                     services.add(rsService.getString(2));
                 }
                 rsService.close();
-
                 ResultSet rs = stmt.executeQuery(queryCustomer);
-
                 while (rs.next()){
-
                     for(int i = 0; i < bookingIds.size(); i++){
                         if (rs.getInt(1 ) == bookingIds.get(i)){
                             bookings.add(new Booking(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4), rs.getString(6), services));
-                            System.out.println("MATCH FOUND");
-                            System.out.println("DEBUGGER LICENSE: " + rs.getString(6));
                         }
                     }
-
                 }
                 rs.close();
-
             } else {
                 stmt = dbConnection.createStatement();
-                System.out.println("DEBUG: Manage booking process initiated");
-
                 ResultSet rsService = stmt.executeQuery(queryService);
 
                 while (rsService.next()) {
@@ -149,16 +138,11 @@ public class DBC {
                 ResultSet resultSet = stmt.executeQuery(queryAdmin);
 
                 while (resultSet.next()) {
-                    //bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
-                    System.out.println("DEBUG: " + bookings.toString());
+                    bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), resultSet.getString(6), services));
                 }
                 resultSet.close();
-
-
             }
-        }catch (Exception ex){
-            System.out.println(ex.getMessage());
-        }
+        }catch (Exception ex){ System.out.println(ex.getMessage()); }
 
         return bookings;
     }
@@ -217,9 +201,8 @@ public class DBC {
             ex.printStackTrace();
         }
     }
-
+    //update the information in the DB
     public void updateAccount(String name,String pass,String phone,int accountID) {
-       //update the information in the DB
         int resultSet;
         String updateQuery = "UPDATE projektkurs2hkr.account set password='"+pass+"', name='"+name+"',phone='"+phone+"'  where accountID='"+accountID+"' ";
         try {
@@ -317,26 +300,6 @@ public class DBC {
         }
     }
 
-    public int getAccountIDfromDB(String email, String pass) {
-        String queryGetAccID = "SELECT AccountID from Account WHERE email = '" + email + "' AND password = '" + pass + "'";
-        int out = -1;
-        try {
-            stmt = dbConnection.createStatement();
-            ResultSet rsGetID = stmt.executeQuery(queryGetAccID);
-
-            if (rsGetID.next()) {
-                out = rsGetID.getInt(1);
-            }
-            stmt.close();
-            rsGetID.close();
-        } catch (Exception e) {
-            System.out.print(e.getMessage());
-        }
-
-        return out;
-    }
-
-
     public boolean checkEmailDB(String email) {
         String dbemail = "";
         boolean status = false;
@@ -358,16 +321,6 @@ public class DBC {
         return status;
     }
 
-    private String tfEmail = null;
-    private String pfPass = null;
-
-    public void setTfUser(String tfUser) {
-        this.tfEmail = tfUser;
-    }
-
-    public void setPfPass(String pfPass) {
-        this.pfPass = pfPass;
-    }
     public String getPhoneFilter(int accID){
         String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
         String phone = "";
@@ -383,25 +336,7 @@ public class DBC {
         return phone;
     }
 
-    public void getAccountFromDb() {
-      //gets the account obj from the database so that you can use it in the program
-        String query = "SELECT * FROM Account WHERE email = '" + tfEmail + "' AND password = '" + pfPass + "'";
-        try {
-            stmt = dbConnection.createStatement();
-            ResultSet resultSet = stmt.executeQuery(query);
-            if (resultSet.next()) {
-                acc = new Account(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getString(5), true, resultSet.getInt(7));
-                System.out.println(acc.toString());
-                setAcc(acc);
-            }
-            stmt.close();
-            resultSet.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
+    //This method is not implemented yet, should be used by Admin user
     public ArrayList<Account> seeUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
@@ -410,9 +345,7 @@ public class DBC {
             String queryUsers = "SELECT accountID, email, password, name, phone, loginStatus, access_accessID FROM Account";
             ResultSet rsUsers = stmt.executeQuery(queryUsers);
             if (!rsUsers.next()) {
-
             } else {
-
                 do {
                     tempAcc = new Account(rsUsers.getInt(1),rsUsers.getString(2), rsUsers.getString(3),rsUsers.getString(4),
                             rsUsers.getString(5), rsUsers.getBoolean(6),rsUsers.getInt(7));
@@ -431,6 +364,8 @@ public class DBC {
         }
         return allUsers;
     }
+
+    //This method is not implemented yet, should be used by Admin user
     public void setServiceCost(String serviceName, double price){
        String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
        try {
@@ -441,9 +376,9 @@ public class DBC {
        }catch (Exception ex){
            ex.printStackTrace();
        }
-       
     }
 
+    //This method is not implemented yet, should be used by Admin user
     public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate){
         discount = discount / 100;
 
@@ -461,22 +396,6 @@ public class DBC {
         }
     }
 
-    public void getDiscount (){
-        String query = "SELECT discountStart FROM Service where serviceName = 'Basic Inspection'";
-        Timestamp ts = null;
-        try{
-            stmt = dbConnection.createStatement();
-            ResultSet rsCost = stmt.executeQuery(query);
-            if (rsCost.next()) {
-
-                ts = rsCost.getTimestamp(1);
-
-            }
-            System.out.println(ts.toString());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
     public boolean checkPhoneNumber(String phone){
         String query="Select phone from Account where phone= '"+phone+"' ";
         try {

@@ -1,7 +1,7 @@
 package Controller;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -24,11 +24,7 @@ public class SignupController extends Verification implements Initializable {
     @FXML private TextField tfEmail;
     @FXML private PasswordField tfPass;
     @FXML private TextField tfPhone;
-    @FXML private Button btnSignup;
-    @FXML private CheckBox remember;
-    @FXML private Button forgetPassword;
     @FXML private Label lblStatus;
-    private Account acc = null;
 
     SceneSwitcher sw = new SceneSwitcher();
 
@@ -49,19 +45,6 @@ public class SignupController extends Verification implements Initializable {
 
     @FXML private void handleButtonGoBack(ActionEvent event) {
         sw.loginSignupSceneSwitcher(event, "Login");
-    }
-
-    private void changeToLoginScene(ActionEvent event){
-        try{
-            Node node = (Node)event.getSource();
-            Stage stage = (Stage)node.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/Login.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
-        }catch (IOException e){
-
-        }
     }
 
     @Override

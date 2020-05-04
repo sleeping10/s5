@@ -7,7 +7,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import Controller.MainScreenController;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,9 +19,7 @@ public class SceneSwitcher {
         try {
             anchorInfo.getChildren().clear();
             anchorInfo.getChildren().add(newPane);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
     public void loginSignupSceneSwitcher(ActionEvent event, String fxml){
@@ -33,8 +30,6 @@ public class SceneSwitcher {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             stage.setScene(scene);
-        }catch (IOException e){
-
-        }
+        }catch (IOException e){e.printStackTrace(); }
     }
 }

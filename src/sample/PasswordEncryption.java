@@ -2,6 +2,10 @@ package sample;
 
 public class PasswordEncryption {
 
+    //This method is not used yet.
+    //This method is not used yet.
+    //This method is not used yet.
+
     public static String encryptPassword(String pass){
 
         String hash = "";

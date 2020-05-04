@@ -5,22 +5,20 @@ import java.util.Date;
 
 public class Service {
 
-        private double cost = 0;
-        private double discount = 0;
-        private String serviceName = "";
+        private double cost;
+        private double discount;
+        private String serviceName;
         private Timestamp discountStart;
         private Timestamp discountEnd;
-
         private Timestamp current_time = new Timestamp(System.currentTimeMillis());
 
-    public Service(String serviceName, double cost, double discount, Timestamp discountStart, Timestamp discountEnd) {
-        this.serviceName = serviceName;
-        this.cost = cost;
-        this.discount = discount;
-        this.discountStart = discountStart;
-        this.discountEnd = discountEnd;
-    }
-
+        public Service(String serviceName, double cost, double discount, Timestamp discountStart, Timestamp discountEnd) {
+            this.serviceName = serviceName;
+            this.cost = cost;
+            this.discount = discount;
+            this.discountStart = discountStart;
+            this.discountEnd = discountEnd;
+        }
 
     public String getserviceName() { return serviceName; }
 
@@ -51,8 +49,4 @@ public class Service {
         }
         return out;
     }
-
-    public double getDiscount(){return discount;};
-    public Date getDiscountStart(){return discountStart;};
-    public Date getDiscountEnd(){return discountEnd;};
 }

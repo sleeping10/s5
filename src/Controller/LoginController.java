@@ -1,7 +1,7 @@
 package Controller;
 
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -10,26 +10,18 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Account;
-import sample.Booking;
 import sample.DBC;
 import sample.Verification;
 
 import java.io.*;
 import java.net.URL;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class LoginController extends Verification implements Initializable {
 
     @FXML private TextField tfEmail;
     @FXML private PasswordField pfPass;
-    @FXML private Button btnLogin;
     @FXML private CheckBox chbRemember;
-    @FXML private Button btnForgotPass;
     @FXML private Label lblStatus;
 
     @Override
@@ -37,12 +29,6 @@ public class LoginController extends Verification implements Initializable {
         checkRememberMe();
         tfEmail.setStyle("-fx-text-inner-color :#a0a2ab");
         pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
-
-        Date date = new java.util.Date();
-        ArrayList<String> serv = new ArrayList<String>();
-        serv.add("Basic Inspection");
-        serv.add("Advanced Inspection");
-        //DBC.getInstance().addBooking(new Booking(8, date, "Hej", 30, serv));
         }
 
         private void SceneChanger(ActionEvent event, String fxml){
@@ -60,8 +46,6 @@ public class LoginController extends Verification implements Initializable {
             }
 
         }
-
-
 
     @FXML
     public void handleSignUpBtn(ActionEvent event) {
@@ -84,8 +68,6 @@ public class LoginController extends Verification implements Initializable {
                 if (DBC.getInstance().getAccount() != null){out.writeObject(DBC.getInstance().getAccount());}
                 out.close();
                 fileOut.close();
-                DBC.getInstance().setTfUser(tfEmail.getText());
-                DBC.getInstance().setPfPass(pfPass.getText());
                 System.out.println("DEBUG: Saved Remember Me Data");
             } catch (IOException i) {
                 i.printStackTrace();
@@ -144,14 +126,8 @@ public class LoginController extends Verification implements Initializable {
             chbRemember.setSelected(true);
             System.out.println("DEBUG: Remember me info loaded");
 
-        } catch (FileNotFoundException e) {
-            System.out.println("DEBUG: Remember me file not found");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            System.out.println("User doesnt exist");
+        } catch (Exception e){
+            System.out.println(e.getMessage());
         }
     }
 }
