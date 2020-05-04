@@ -26,7 +26,7 @@ public class SignupController extends Verification implements Initializable {
     @FXML private TextField tfPhone;
     @FXML private Label lblStatus;
 
-    SceneSwitcher sw = new SceneSwitcher();
+    private SceneSwitcher sw = new SceneSwitcher();
 
     @FXML private void handleButtonSignUp(ActionEvent event){
         signUp();

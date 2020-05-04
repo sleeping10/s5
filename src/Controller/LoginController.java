@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Account;
 import sample.DBC;
+import sample.SceneSwitcher;
 import sample.Verification;
 
 import java.io.*;
@@ -24,6 +25,8 @@ public class LoginController extends Verification implements Initializable {
     @FXML private CheckBox chbRemember;
     @FXML private Label lblStatus;
 
+    private SceneSwitcher sw = new SceneSwitcher();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         checkRememberMe();
@@ -31,25 +34,9 @@ public class LoginController extends Verification implements Initializable {
         pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
         }
 
-        private void SceneChanger(ActionEvent event, String fxml){
-            try {
-
-                Node node = (Node)event.getSource();
-                Stage stage = (Stage)node.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/" + fxml + ".fxml"));
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-
-            } catch (Exception e) {
-                System.out.println(" Error signup : " + e);
-            }
-
-        }
-
     @FXML
     public void handleSignUpBtn(ActionEvent event) {
-        SceneChanger(event, "SignUp");
+        sw.loginSignupSceneSwitcher(event, "SignUp");
     }
 
     @FXML
@@ -105,7 +92,7 @@ public class LoginController extends Verification implements Initializable {
     private void login(ActionEvent e){
         switch (verifyAccount(tfEmail.getText(), pfPass.getText(), null)) {
             case 0: lblStatus.setText("Email or Pass is wrong or user already logged in");break;
-            case 1: SceneChanger(e, "Main");break;
+            case 1: sw.loginSignupSceneSwitcher(e, "Main");break;
             case 2: lblStatus.setText("Password must be between 4-15 characters");break;
             case 3: lblStatus.setText("Email or password is empty"); break;
             case 4: lblStatus.setText("Input is not a valid email"); break;

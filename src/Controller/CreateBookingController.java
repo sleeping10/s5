@@ -61,14 +61,11 @@ public class CreateBookingController implements Initializable {
 
     @FXML private GridPane gridPaneMain;
 
-
-    ArrayList<String> subs = new ArrayList<>();
-    ArrayList<Double> subsCost = new ArrayList<>();
-    ArrayList<String> services = new ArrayList<>();
-    ArrayList<Service> availableServices = new ArrayList<>();
+    private ArrayList<String> services = new ArrayList<>();
+    private ArrayList<Service> availableServices = new ArrayList<>();
 
 
-    double price = 0;
+    private double price = 0;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -211,14 +208,11 @@ public class CreateBookingController implements Initializable {
         double cost = getCost(service);
         if (toggle) {
             price += cost;
-            subsCost.add(cost);
-            subs.add(service);
             txtATotal.appendText(service + ", $" + cost + " \n");
             services.add(service);
         }else{
             txtATotal.clear();
             price -= cost;
-            subs.remove(cost);
             services.remove(service);
             for (int i = 0; i < services.size(); i++){
                 txtATotal.appendText(services.get(i) + ", $" + getCost(services.get(i)) + "\n");
@@ -346,7 +340,7 @@ public class CreateBookingController implements Initializable {
 
     @FXML
     private void handleWashPremiumCompleteChb() {
-        if (chbWashComplete.isSelected()) {
+        if (chbWashCompletePremium.isSelected()) {
             addServiceToCurrentBooking(true, "wash_compl_premium");
         }else{
             addServiceToCurrentBooking(false, "wash_compl_premium");
