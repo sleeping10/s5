@@ -171,10 +171,6 @@ public class DBC {
         return services;
     }
 
-    public String getAccountAsString() {
-        return acc.toString();
-    }
-
     public Account getAccount() {
         return acc;
     }
@@ -337,7 +333,7 @@ public class DBC {
     }
 
     //This method is not implemented yet, should be used by Admin user
-    public ArrayList<Account> seeUsers(){
+    public ArrayList<Account> seeAllUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
