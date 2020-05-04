@@ -28,7 +28,8 @@ public class MainScreenController implements Initializable {
     @FXML private Button btnManageBookings;
     @FXML private Button btnManageAccount;
     @FXML private Button btnNearestStation;
-    @FXML private Button btnContactUs;
+    @FXML private Button btnContact;
+    @FXML private Button btnAdmin;
     @FXML private AnchorPane anchorInfo;
     @FXML private GridPane gridpaneMenu;
     @FXML private Label LblSignout;
@@ -40,8 +41,22 @@ public class MainScreenController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         lblSignedInInfo.setText("Signed in as " + DBC.getInstance().getAccount().getEmail());
+        checkIfAdmin();
     }
 
+    private void checkIfAdmin(){
+        if (DBC.getInstance().getAccount().getAccessType() == 1){
+            btnAdmin.setVisible(true);
+            btnContact.setVisible(false);
+        }else{
+            btnAdmin.setVisible(false);
+        }
+    }
+
+    @FXML
+    private void handleAdminBtn(ActionEvent e) throws IOException{
+        sw.mainScreenSceneSwitcher(anchorInfo, "AdminMenu");
+    }
 
     @FXML
     private void handleCreateBookingBtn(ActionEvent e) throws IOException {

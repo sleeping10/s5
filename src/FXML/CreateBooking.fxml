@@ -15,7 +15,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
     <children>
-        <GridPane alignment="CENTER" layoutX="14.0" layoutY="76.0" prefHeight="163.0" prefWidth="232.0">
+        <GridPane fx:id="gridPaneMain" alignment="CENTER" layoutX="14.0" layoutY="76.0" prefHeight="163.0" prefWidth="232.0" visible="false">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="149.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="104.0" minWidth="10.0" prefWidth="40.0" />
@@ -29,7 +29,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <CheckBox fx:id="chbRepairOil" mnemonicParsing="false" text="Oil Change" visible="false" />
+                <CheckBox fx:id="chbRepairOil" mnemonicParsing="false" onAction="#handleServiceOilChbox" text="Oil Change" visible="false" />
                 <CheckBox fx:id="chbRepairAC" mnemonicParsing="false" text="AC Service" visible="false" GridPane.rowIndex="1" />
                 <CheckBox fx:id="chbRepairWheel" mnemonicParsing="false" text="Wheel Change" visible="false" GridPane.rowIndex="2" />
                 <CheckBox fx:id="chbRepairTimingBelt" mnemonicParsing="false" text="Timing Belt Change" visible="false" GridPane.rowIndex="3" />
@@ -46,9 +46,15 @@
                 <CheckBox fx:id="chbWashInteriorPremium" mnemonicParsing="false" text="Interior Wash Premium" visible="false" GridPane.rowIndex="3" />
                 <CheckBox fx:id="chbWashComplete" mnemonicParsing="false" text="Complete Wash" visible="false" GridPane.rowIndex="4" />
                 <CheckBox fx:id="chbWashCompletePremium" mnemonicParsing="false" text="Complete Wash Premium" visible="false" GridPane.rowIndex="5" />
+            <Label fx:id="lblCostOne" text="Label" visible="false" GridPane.columnIndex="1" />
+            <Label fx:id="lblCostTwo" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="lblCostThree" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label fx:id="lblCostFour" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="lblCostFive" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="lblCostSix" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <MenuButton fx:id="mbService" layoutX="14.0" layoutY="45.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="134.0" text="Select Service">
+        <MenuButton fx:id="mbService" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="134.0" text="Select Service">
             <items>
                 <MenuItem fx:id="mbInspection" mnemonicParsing="false" onAction="#handleMbInspection" text="Inspection" />
                 <MenuItem fx:id="mbRepair" mnemonicParsing="false" onAction="#handleMbRepair" text="Repair" />
@@ -56,10 +62,12 @@
             </items>
         </MenuButton>
         <TextArea fx:id="txtATotal" layoutX="341.0" layoutY="17.0" prefHeight="201.0" prefWidth="145.0" />
-        <Label layoutX="195.0" layoutY="14.0" prefHeight="31.0" prefWidth="124.0" text="Service description : " />
-        <Button layoutX="14.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearSelectionsButton" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
-        <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="17.0" promptText="datePicker" />
-        <Button layoutX="148.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="117.0" text="Add Booking" />
-        <TextField fx:id="dateField" layoutX="341.0" layoutY="224.0" prefHeight="31.0" prefWidth="145.0" />
+        <Button fx:id="btnClearSelections" layoutX="19.0" layoutY="255.0" mnemonicParsing="false" onAction="#clearSelectionsButton" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
+        <DatePicker fx:id="datePicker" layoutX="14.0" layoutY="17.0" promptText="datePicker" visible="false" />
+        <Button fx:id="btnNext" layoutX="370.0" layoutY="255.0" mnemonicParsing="false" onAction="#handleButton" prefHeight="31.0" prefWidth="117.0" text="Next &gt;" />
+      <TextField fx:id="tfLicense" layoutX="179.0" layoutY="17.0" promptText="License Number" />
+      <TextArea fx:id="taDesc" layoutX="12.0" layoutY="51.0" prefHeight="135.0" prefWidth="316.0" promptText="Add additional description if needed" />
+      <Button fx:id="btnCreateBooking" layoutX="363.0" layoutY="258.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" text="Create new Booking" visible="false" />
+      <Label fx:id="lblTotalCost" layoutX="12.0" layoutY="197.0" text="Total cost: " />
     </children>
 </AnchorPane>

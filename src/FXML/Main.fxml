@@ -60,6 +60,7 @@
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
+                  <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#handleAdminBtn" prefHeight="55.0" prefWidth="160.0" text="ADMIN MENU" visible="false" GridPane.rowIndex="4" />
                </children>
                <cursor>
                   <Cursor fx:constant="DEFAULT" />
