@@ -62,8 +62,8 @@ public class DBC {
         int totalBookings = 0;
 
         try {
-            String queryAddBooking = "INSERT INTO Booking (date, bookingDesc, Account_AccountID, serviceCompleted)" +
-                    "VALUES (?, ?, ?, ?)";
+            String queryAddBooking = "INSERT INTO Booking (date, bookingDesc, Account_AccountID, serviceCompleted, licenseID)" +
+                    "VALUES (?, ?, ?, ?, ?)";
             String queryAddServicesToBooking = "INSERT INTO Booking_has_Service (Booking_bookingID, Service_serviceName)" +
                     "VALUES (?, ?)";
             String queryGetTotalBookings = "select count(bookingID) from Booking;";
@@ -78,6 +78,7 @@ public class DBC {
             statement.setString(2, booking.getBookingDesc());
             statement.setInt(3, booking.getAccountID());
             statement.setBoolean(4, false);
+            statement.setString(5, booking.getLicensePlate());
             statement.execute();
             statement.close();
             System.out.println("DEBUG: Booking added");
@@ -125,8 +126,9 @@ public class DBC {
 
                     for(int i = 0; i < bookingIds.size(); i++){
                         if (rs.getInt(1 ) == bookingIds.get(i)){
-                            bookings.add(new Booking(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4), rs.getString(5), services));
+                            bookings.add(new Booking(rs.getInt(1), rs.getDate(2), rs.getString(3), rs.getInt(4), rs.getString(6), services));
                             System.out.println("MATCH FOUND");
+                            System.out.println("DEBUGGER LICENSE: " + rs.getString(6));
                         }
                     }
 
