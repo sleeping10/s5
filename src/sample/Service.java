@@ -1,42 +1,58 @@
 package sample;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class Service {
 
-        private double cost;
-        private String nameOfService;
-        private ArrayList<String> subCategories;
-        private ArrayList<Double> subCosts;
+        private double cost = 0;
+        private double discount = 0;
+        private String serviceName = "";
+        private Timestamp discountStart;
+        private Timestamp discountEnd;
 
-    public serviceType sType;
+        private Timestamp current_time = new Timestamp(System.currentTimeMillis());
 
-    public enum serviceType {
-        Repair, Inspection, Wash
+    public Service(String serviceName, double cost, double discount, Timestamp discountStart, Timestamp discountEnd) {
+        this.serviceName = serviceName;
+        this.cost = cost;
+        this.discount = discount;
+        this.discountStart = discountStart;
+        this.discountEnd = discountEnd;
     }
 
 
-    public Service(serviceType sType, double totalCost, ArrayList<String> subCategories, ArrayList<Double> subCosts) {
-        this.sType = sType;
-        this.cost = totalCost;
-        this.subCategories = subCategories;
-    }
+    public String getserviceName() { return serviceName; }
 
+    public double getCurrentCost() {
+        double discount = this.discount / 100;
 
-    public String getNameOfService() {
-        return sType.toString();
-    }
+        if (discountStart != null && discountEnd != null) {
+            if (current_time.after(discountStart) && current_time.before(discountEnd)) {
+                return Math.round(cost * (1 - discount));
+            } else {
+                return cost;
+            }
 
-    public double getCost(){
+        }
         return cost;
     }
 
-    public String getSubCategories(){
+    public String getCostAndDiscountAsString() {
+        double discount = this.discount / 100;
         String out = "";
-        for (int i = 0; i < subCategories.size(); i++){
-            out += subCategories.get(i) + ", ";
+        if (discountStart != null && discountEnd != null) {
+            if (current_time.after(discountStart) && current_time.before(discountEnd)) {
+                System.out.println("DEBUG: Discount applied");
+                out = "$" + cost + "(-" + this.discount + "%) , NOW: $" + Math.round(cost * (1 - discount)) ;
+            }
+        }else{
+            out = "$" + cost;
         }
-
         return out;
     }
+
+    public double getDiscount(){return discount;};
+    public Date getDiscountStart(){return discountStart;};
+    public Date getDiscountEnd(){return discountEnd;};
 }

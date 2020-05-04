@@ -108,7 +108,6 @@ public class DBC {
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<String> services = new ArrayList<>();
         ArrayList<Integer> bookingIds = new ArrayList<>();
-        Booking tempBooking;
         try {
             if (DBC.getInstance().getAccount().getAccessType() == 3) {
                 stmt = dbConnection.createStatement();
@@ -168,6 +167,25 @@ public class DBC {
     //public void removeBooking(Booking booking) {
 //
   //  }
+
+
+    public ArrayList<Service> getAvailableServices() {
+        String query = "SELECT * From Service";
+        ArrayList<Service> services = new ArrayList<>();
+        try {
+                stmt = dbConnection.createStatement();
+                ResultSet rs = stmt.executeQuery(query);
+
+                while (rs.next()){
+                            services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5)));
+                        }
+                rs.close();
+
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return services;
+    }
 
     public String getAccountAsString() {
         return acc.toString();
@@ -424,47 +442,6 @@ public class DBC {
            ex.printStackTrace();
        }
        
-    }
-
-    public double getServiceCost(String serviceName){
-        String query = "SELECT * FROM Service where serviceName = '" + serviceName + "'";
-        double cost = 0;
-        double discount = 0;
-        Timestamp current_time = new Timestamp(System.currentTimeMillis());
-        Timestamp discount_startdate = null;
-        Timestamp discount_enddate = null;
-        try {
-            stmt = dbConnection.createStatement();
-            ResultSet rsCost = stmt.executeQuery(query);
-            if (rsCost.next()) {
-                cost = rsCost.getDouble(2);
-                discount = rsCost.getDouble(3);
-                if (!rsCost.wasNull()){
-                    discount_startdate = rsCost.getTimestamp(4);
-                    discount_enddate = rsCost.getTimestamp(5);
-                }
-
-            }
-        }catch (NullPointerException ex){
-            System.out.println("DEBUG: " + ex.getMessage());
-        }
-        catch (Exception ex){
-            ex.printStackTrace();
-        }
-
-        System.out.println("TIME: " + current_time.toString());
-
-        if (discount_startdate != null && discount_enddate != null){
-            if (current_time.after(discount_startdate) && current_time.before(discount_enddate)){
-                System.out.println("Fucker");
-                return Math.round(cost * (1 - discount));
-            }else{
-                System.out.println("Fucker2");
-                return cost;
-            }
-        }else{
-            return cost;
-        }
     }
 
     public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate){
