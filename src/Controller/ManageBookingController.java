@@ -29,6 +29,7 @@ public class ManageBookingController implements Initializable {
     @FXML private TableColumn tcBookingDesc;
     @FXML private TableView tvField;
     @FXML private Button buttonFilter;
+    @FXML private TableColumn tcRegNR;
     private ArrayList<Booking> list = new ArrayList<>();
     private SceneSwitcher ss = new SceneSwitcher();
 
@@ -58,6 +59,7 @@ public class ManageBookingController implements Initializable {
         tcStartDate.setCellValueFactory(new PropertyValueFactory<Date, Booking>("date"));
         tcAccID.setCellValueFactory(new PropertyValueFactory<Integer, Booking>("accountID"));
         tcBookingDesc.setCellValueFactory(new PropertyValueFactory<String, Booking>("bookingDesc"));
+        tcRegNR.setCellValueFactory(new PropertyValueFactory<String, Booking>("licensePlate"));
         tvField.setItems(view());
 
 
@@ -86,21 +88,21 @@ public class ManageBookingController implements Initializable {
         }
 
     }
-
+//does not work as of yet
     public void handleButtonManagePressed(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("DetailedBookingView.fxml"));
-            DetailedBookingViewController dbvc = new DetailedBookingViewController((Booking)tvField.getSelectionModel().getSelectedItem());
-            loader.setController(dbvc);
-            Stage detailedStage = new Stage();
-            detailedStage.setTitle("Manage Booking");
-            detailedStage.initOwner(tvField.getScene().getWindow());
-            detailedStage.initModality(Modality.APPLICATION_MODAL);
-            detailedStage.setScene(new Scene(loader.load()));
-            detailedStage.showAndWait();
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
+//        try {
+//            FXMLLoader loader = new FXMLLoader(Main.class.getResource("DetailedBookingView.fxml"));
+//            DetailedBookingViewController dbvc = new DetailedBookingViewController((Booking)tvField.getSelectionModel().getSelectedItem());
+//            loader.setController(dbvc);
+//            Stage detailedStage = new Stage();
+//            detailedStage.setTitle("Manage Booking");
+//            detailedStage.initOwner(tvField.getScene().getWindow());
+//            detailedStage.initModality(Modality.APPLICATION_MODAL);
+//            detailedStage.setScene(new Scene(loader.load()));
+//            detailedStage.showAndWait();
+//        }catch (Exception ex){
+//            ex.printStackTrace();
+//        }
 
 
 
