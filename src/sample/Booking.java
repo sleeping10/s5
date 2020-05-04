@@ -27,6 +27,8 @@ public class Booking {
         return accountID;
     }
 
+    public String getLicensePlate(){return licensePlate;}
+
     public ArrayList<String> getServices(){
         return this.services;
     }
