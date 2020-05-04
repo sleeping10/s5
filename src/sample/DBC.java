@@ -29,7 +29,7 @@ public class DBC {
     public boolean connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver").newInstance();
-            String URL = "jdbc:mysql://den1.mysql3.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Cx2~?Exu37i5&useSSL=false";
+            String URL = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
             dbConnection = DriverManager.getConnection(URL);
             stmt = dbConnection.createStatement();
             System.out.println("DEBUG: Connected to db");
@@ -123,7 +123,7 @@ public class DBC {
                 ResultSet resultSet = stmt.executeQuery(queryAdmin);
 
                 while (resultSet.next()) {
-                    bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
+                    //bookings.add(new Booking(resultSet.getInt(1), resultSet.getDate(2), resultSet.getString(3), resultSet.getInt(4), services));
                     System.out.println("DEBUG: " + bookings.toString());
                 }
 
