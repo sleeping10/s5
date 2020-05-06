@@ -1,74 +1,65 @@
 package sample;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
+import java.util.Base64;
+
+//Made by Felix :)
+
 public class PasswordEncryption {
 
     //This method is not used yet.
     //This method is not used yet.
     //This method is not used yet.
 
-    public static String encryptPassword(String pass){
+    private static final SecureRandom RAND = new SecureRandom();
+    private static final int ITERATIONS = 65536;
+    private static final int KEY_LENGTH = 512;
+    private static final String ALGORITHM = "PBKDF2WithHmacSHA512";
 
-        String hash = "";
-        try {
-            hash = byteArrayToHexString(computeHash(pass));
-        }catch (Exception e){
-            e.printStackTrace();
+    public static String generateSalt (final int length) {
+
+        if (length < 1) {
+            System.err.println("error in generateSalt: length must be > 0");
         }
-        return hash;
+
+        byte[] salt = new byte[length];
+        RAND.nextBytes(salt);
+
+        return Base64.getEncoder().encodeToString(salt);
     }
 
-    public static String checkPassword(String hash){
+    public static String hashPassword (String password, String salt) {
+
+        char[] chars = password.toCharArray();
+        byte[] bytes = salt.getBytes();
         String out = "";
+
+        PBEKeySpec spec = new PBEKeySpec(chars, bytes, ITERATIONS, KEY_LENGTH);
+
+        Arrays.fill(chars, Character.MIN_VALUE);
+
         try {
-            out = byteArrayToHexString(computeHash(hash));
-        }catch (Exception e){
-            e.printStackTrace();
+            SecretKeyFactory sfc = SecretKeyFactory.getInstance(ALGORITHM);
+            byte[] securePassword = sfc.generateSecret(spec).getEncoded();
+            out =  Base64.getEncoder().encodeToString(securePassword);
+
+        } catch (NoSuchAlgorithmException | InvalidKeySpecException ex) {
+            System.err.println("Error in hashing");
+        } finally {
+            spec.clearPassword();
         }
         return out;
     }
-    public static void main(String arg[]) {
-        try {
-            // quick way to do input from the keyboard, now deprecated...
-            String input = "hej123";
-            //
-            String hash = byteArrayToHexString(PasswordEncryption.computeHash(input));
-            System.out.println("the computed hash (hex string) : " + hash);
-            boolean ok = true;
-            String inputHash = "";
-            while (ok) {
-                System.out.print("Now try to enter a password : " );
-                inputHash = byteArrayToHexString(PasswordEncryption.computeHash(input));
-                if (hash.equals(inputHash)){
-                    System.out.println("You got it!");
-                    ok = false;
-                }
-                else
-                    System.out.println("Wrong, try again...!");
-            }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
+    public static boolean verifyPassword (String password, String key, String salt) {
+        String encrypted = hashPassword(password, salt);
+        return encrypted.equals(key);
     }
 
-    public static byte[] computeHash(String x) throws Exception
-    {
-        java.security.MessageDigest d =null;
-        d = java.security.MessageDigest.getInstance("SHA-1");
-        d.reset();
-        d.update(x.getBytes());
-        return  d.digest();
-    }
 
-    public static String byteArrayToHexString(byte[] b){
-        StringBuffer sb = new StringBuffer(b.length * 2);
-        for (int i = 0; i < b.length; i++){
-            int v = b[i] & 0xff;
-            if (v < 16) {
-                sb.append('0');
-            }
-            sb.append(Integer.toHexString(v));
-        }
-        return sb.toString().toUpperCase();
-    }
 }
