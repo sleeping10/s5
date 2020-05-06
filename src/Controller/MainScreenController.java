@@ -1,5 +1,6 @@
 package Controller;
 
+import com.mysql.cj.xdevapi.DbDoc;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
@@ -25,8 +26,13 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblSignedInInfo.setText("Signed in as " + DBC.getInstance().getAccount().getEmail());
+        lblSignedInInfo.setText("Signed in as: " + DBC.getInstance().getAccount().getEmail());
         checkIfAdmin();
+        try {
+            sw.mainScreenSceneSwitcher(anchorInfo, "CreateBooking");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void checkIfAdmin(){

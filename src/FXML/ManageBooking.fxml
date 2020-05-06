@@ -6,21 +6,21 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageBookingController">
    <children>
       <TextField fx:id="tfPhone" layoutX="10.0" layoutY="19.0" prefHeight="25.0" prefWidth="121.0" promptText="Phone" />
       <TextField fx:id="tfBookingID" layoutX="158.0" layoutY="19.0" promptText="Booking ID" />
-      <TableView fx:id="tvField" layoutX="4.0" layoutY="59.0" prefHeight="200.0" prefWidth="389.0">
+      <TableView fx:id="tvField" layoutX="4.0" layoutY="59.0" prefHeight="213.0" prefWidth="541.0">
         <columns>
-          <TableColumn fx:id="tcBookingID" prefWidth="75.0" text="Booking ID" />
-            <TableColumn fx:id="tcAccID" prefWidth="75.0" text="Acc ID" />
-          <TableColumn fx:id="tcStartDate" prefWidth="75.0" text="Start Date" />
-            <TableColumn fx:id="tcBookingDesc" prefWidth="75.0" text="Description" />
-            <TableColumn fx:id="tcRegNR" prefWidth="75.0" text="License Plate" />
+          <TableColumn fx:id="tcBookingID" prefWidth="87.0" text="Booking ID" />
+            <TableColumn fx:id="tcAccID" prefWidth="54.0" text="Acc ID" />
+          <TableColumn fx:id="tcStartDate" prefWidth="89.0" text="Date" />
+            <TableColumn fx:id="tcBookingDesc" prefWidth="214.0" text="Description" />
+            <TableColumn fx:id="tcRegNR" prefWidth="91.0" text="License Plate" />
         </columns>
       </TableView>
       <Button fx:id="buttonFilter" layoutX="325.0" layoutY="19.0" mnemonicParsing="false" onAction="#filterButtonPressed" text="Filter" />
-      <Button fx:id="buttonManage" layoutX="333.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleButtonManagePressed" text="Manage" />
-      <Button fx:id="buttonDelete" layoutX="192.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleButtonCancelAppointmentPressed" text="Cancel Appointment" />
+      <Button fx:id="buttonManage" layoutX="485.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleButtonManagePressed" text="Manage" />
+      <Button fx:id="buttonDelete" layoutX="347.0" layoutY="280.0" mnemonicParsing="false" onAction="#handleButtonCancelAppointmentPressed" text="Cancel Appointment" />
    </children>
 </AnchorPane>

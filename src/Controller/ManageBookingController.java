@@ -57,6 +57,7 @@ public class ManageBookingController implements Initializable {
         tcRegNR.setCellValueFactory(new PropertyValueFactory<String, Booking>("licensePlate"));
         tvField.setItems(view());
 
+        tvField.getSelectionModel().getSelectedItem();
 
 
     }

@@ -14,10 +14,6 @@ import java.util.ResourceBundle;
 
 public class CreateBookingController implements Initializable {
 
-    @FXML private CheckBox chbOil;
-    @FXML private CheckBox chbAC;
-    @FXML private Label lblA;
-    @FXML private Label lblB;
     @FXML private MenuItem mbInspection;
     @FXML private MenuItem mbRepair;
     @FXML private MenuItem mbWash;
@@ -57,9 +53,12 @@ public class CreateBookingController implements Initializable {
     @FXML private Label lblCostSix;
     @FXML private Label lblTotalCost;
     @FXML private Label lblStatus;
+    @FXML private Label lblInfo;
     @FXML private Button btnNext;
+    @FXML private Button btnGoBack;
 
     @FXML private GridPane gridPaneMain;
+    @FXML private GridPane gridPaneTwo;
 
     private ArrayList<String> services = new ArrayList<>();
     private ArrayList<Service> availableServices = new ArrayList<>();
@@ -76,6 +75,9 @@ public class CreateBookingController implements Initializable {
         gridPaneMain.setVisible(true);
         tfLicense.setVisible(false);
         lblTotalCost.setVisible(true);
+        txtATotal.setEditable(false);
+        btnCreateBooking.setVisible(false);
+
     }
 
     private double getServiceCost(String service){
@@ -169,7 +171,7 @@ public class CreateBookingController implements Initializable {
             lblStatus.setText("Status: Please select a date and Registration ID");
         } else {
             DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
-            lblTotalCost.setText(String.valueOf(price));
+            lblTotalCost.setText("Total cost: $" + price);
             lblStatus.setText("Status: Booking successfully added");
             btnCreateBooking.setDisable(true);
         }
@@ -178,21 +180,38 @@ public class CreateBookingController implements Initializable {
 
     @FXML
     private void handleNextBtn() {
-        txtATotal.clear();
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(false);
         toggleWashCheckBoxes(false);
         mbService.setVisible(false);
         btnClearSelections.setVisible(false);
-        txtATotal.setVisible(false);
+        btnGoBack.setVisible(true);
         taDesc.setVisible(true);
         btnCreateBooking.setVisible(true);
         btnNext.setVisible(false);
         datePicker.setVisible(true);
         tfLicense.setVisible(true);
         lblStatus.setVisible(true);
+        lblInfo.setVisible(true);
         lblStatus.setText("Status: ");
         toggleCostLabels(0);
+        gridPaneTwo.setVisible(true);
+    }
+
+    @FXML
+    private void handleGoBackBtn() {
+        mbService.setVisible(true);
+        btnClearSelections.setVisible(true);
+        btnGoBack.setVisible(false);
+        taDesc.setVisible(false);
+        btnCreateBooking.setVisible(false);
+        btnNext.setVisible(true);
+        datePicker.setVisible(false);
+        tfLicense.setVisible(false);
+        lblStatus.setVisible(true);
+        lblInfo.setVisible(false);
+        lblStatus.setText("Status: ");
+        gridPaneTwo.setVisible(false);
     }
 
     private void toggleInspectionCheckBoxes(boolean toggle) {
@@ -218,7 +237,7 @@ public class CreateBookingController implements Initializable {
                 txtATotal.appendText(services.get(i) + ", $" + getServiceCost(services.get(i)) + "\n");
             }
         }
-        lblTotalCost.setText("$" + Math.round(price));
+        lblTotalCost.setText("Total cost: $" + Math.round(price));
     }
 
     @FXML

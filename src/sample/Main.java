@@ -16,8 +16,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("../FXML/Login.fxml"));
         primaryStage.setTitle("HKR Wash & Service");
         primaryStage.setScene(new Scene(root));
-        primaryStage.setMinWidth(700);
-        primaryStage.setMinHeight(500);
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 

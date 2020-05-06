@@ -4,28 +4,50 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="500.0" minWidth="650.0" prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
-   <children>
-      <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Email Address" />
-      <TextField fx:id="tfName" layoutX="231.0" layoutY="166.0" prefHeight="36.0" prefWidth="209.0" promptText="Name" />
-      <TextField fx:id="tfPhone" layoutX="231.0" layoutY="217.0" prefHeight="36.0" prefWidth="209.0" promptText="Phone number" />
-      <PasswordField fx:id="tfPass" layoutX="231.0" layoutY="271.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
-      <Button fx:id="btnSignup" layoutX="300.0" layoutY="319.0" mnemonicParsing="false" onAction="#handleButtonSignUp" prefHeight="32.0" prefWidth="72.0" text="Sign up" />
-      <Label focusTraversable="false" layoutX="268.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Label layoutX="219.0" layoutY="45.0" prefHeight="35.0" prefWidth="49.0" text="HKR">
-         <font>
-            <Font size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="btnGoBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonGoBack" text="&lt;" />
-      <Label fx:id="lblStatus" layoutX="322.0" layoutY="383.0" />
-      <Label layoutX="468.0" layoutY="281.0" text="4-15 Characters" />
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="500.0" maxWidth="760.0" minHeight="436.0" minWidth="760.0" prefHeight="436.0" prefWidth="760.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignupController">
+   <top>
+      <HBox alignment="CENTER" prefHeight="106.0" prefWidth="760.0" style="-fx-background-color: #00bdf3;">
+         <children>
+            <ImageView fitHeight="200.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../Headerv2.png" />
+               </image>
+            </ImageView>
+         </children></HBox>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="btnSignup" layoutX="331.0" layoutY="176.0" mnemonicParsing="false" onAction="#handleButtonSignUp" prefHeight="30.0" prefWidth="98.0" text="Sign up" />
+            <Button fx:id="btnGoBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonGoBack" text="&lt; Go Back" />
+            <Label layoutX="496.0" layoutY="142.0" text="4-15 Characters" />
+            <GridPane layoutX="280.0" layoutY="10.0" prefHeight="160.0" prefWidth="200.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="tfEmail" prefHeight="30.0" prefWidth="200.0" promptText="Email Address" />
+                  <TextField fx:id="tfName" prefHeight="30.0" prefWidth="200.0" promptText="Name" GridPane.rowIndex="1" />
+                  <TextField fx:id="tfPhone" prefHeight="30.0" prefWidth="200.0" promptText="Phone number" GridPane.rowIndex="2" />
+                  <PasswordField fx:id="tfPass" prefHeight="30.0" prefWidth="200.0" promptText="Password" GridPane.rowIndex="3" />
+               </children>
+            </GridPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
