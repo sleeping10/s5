@@ -9,10 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.Account;
-import sample.DBC;
-import sample.SceneSwitcher;
-import sample.Verification;
+import sample.*;
 
 import java.io.*;
 import java.net.URL;
@@ -71,7 +68,7 @@ public class LoginController extends Verification implements Initializable {
     }
     @FXML
     public void forgotPassButton(ActionEvent event) throws IOException {
-
+        //Change this...
         Node node = (Node)event.getSource();
         Stage stage = (Stage)node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ResetPass.fxml"));
