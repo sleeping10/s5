@@ -47,6 +47,7 @@
                   <PasswordField fx:id="tfPass" prefHeight="30.0" prefWidth="200.0" promptText="Password" GridPane.rowIndex="3" />
                </children>
             </GridPane>
+            <Label fx:id="lblStatus" contentDisplay="CENTER" layoutX="366.0" layoutY="236.0" />
          </children>
       </AnchorPane>
    </center>
