@@ -11,6 +11,7 @@ public class DBC {
     private Statement stmt = null;
     private Account acc;
     Connection dbConnection = null;
+    private final String database_url = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
 
     private static DBC single_instance = null;
 
@@ -28,8 +29,7 @@ public class DBC {
     public boolean connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            String URL = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
-            dbConnection = DriverManager.getConnection(URL);
+            dbConnection = DriverManager.getConnection(database_url);
             stmt = dbConnection.createStatement();
             System.out.println("DEBUG: Connected to db");
             return true;
