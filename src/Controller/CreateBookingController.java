@@ -68,7 +68,7 @@ public class CreateBookingController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        services.clear();
         availableServices = DBC.getInstance().getAvailableServices();
 
         taDesc.setVisible(false);
@@ -169,7 +169,11 @@ public class CreateBookingController implements Initializable {
         if (datePicker.getValue() == null || tfLicense.getText().isEmpty()) {
             System.out.println("inge datum eller reg nummer");
             lblStatus.setText("Status: Please select a date and Registration ID");
-        } else {
+        }
+        else if(services.isEmpty()){
+            lblStatus.setText("Status: Please select at least 1 service");
+        }
+        else{
             DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
             lblTotalCost.setText("Total cost: $" + price);
             lblStatus.setText("Status: Booking successfully added");
