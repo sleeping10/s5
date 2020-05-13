@@ -28,6 +28,8 @@ public class ResetPassController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+
     }
 
     @FXML
@@ -47,9 +49,6 @@ public class ResetPassController implements Initializable {
             alert.showAndWait();
 
         }
-
-
-
 
     }
 

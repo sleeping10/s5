@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
 import sample.DBC;
 import sample.Verification;
@@ -29,6 +30,26 @@ public class ManageAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setCurrent();
+
+        final Tooltip tooltipName = new Tooltip();
+        tooltipName.setText("Edit your name");
+        textFieldName.setTooltip(tooltipName);
+
+        final Tooltip tooltipPhone = new Tooltip();
+        tooltipPhone.setText("Number needs to be 10 digits");
+        textFieldPhone.setTooltip(tooltipPhone);
+
+        final Tooltip tooltipCurrentPass = new Tooltip();
+        tooltipCurrentPass.setText("Enter current password");
+        textFieldPassword.setTooltip(tooltipCurrentPass);
+
+        final Tooltip tooltipPass = new Tooltip();
+        tooltipPass.setText("Finalize your booking");
+        textFieldNPassword.setTooltip(tooltipPass);
+
+        final Tooltip tooltipPassRepeat = new Tooltip();
+        tooltipPassRepeat.setText("Enter your new password again");
+        textFieldRNPassword.setTooltip(tooltipPassRepeat);
 
     }
 

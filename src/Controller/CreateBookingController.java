@@ -78,6 +78,20 @@ public class CreateBookingController implements Initializable {
         txtATotal.setEditable(false);
         btnCreateBooking.setVisible(false);
 
+        final Tooltip tooltipMbService = new Tooltip();
+        tooltipMbService.setText("Please select a service that you would like us to help you with");
+        mbService.setTooltip(tooltipMbService);
+
+
+        final Tooltip tooltipClear = new Tooltip();
+        tooltipClear.setText("This will erase all your selected services");
+        btnClearSelections.setTooltip(tooltipClear);
+
+
+        final Tooltip tooltipCreateBooking = new Tooltip();
+        tooltipCreateBooking.setText("Finalize your booking");
+        btnNext.setTooltip(tooltipCreateBooking);
+
     }
 
     private double getServiceCost(String service){

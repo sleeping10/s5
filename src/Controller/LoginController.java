@@ -29,6 +29,14 @@ public class LoginController extends Verification implements Initializable {
         checkRememberMe();
         tfEmail.setStyle("-fx-text-inner-color :#a0a2ab");
         pfPass.setStyle("-fx-text-inner-color :#a0a2ab");
+
+        final Tooltip tooltipEmail = new Tooltip();
+        tooltipEmail.setText("Enter Email");
+        tfEmail.setTooltip(tooltipEmail);
+
+        final Tooltip tooltipPass = new Tooltip();
+        tooltipPass.setText("Enter Password");
+        pfPass.setTooltip(tooltipPass);
         }
 
     @FXML
