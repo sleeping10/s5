@@ -7,12 +7,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.Booking;
 import sample.DBC;
-import sample.Service;
+import sample.ServiceHandler;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class CreateBookingController implements Initializable {
+public class CreateBookingController extends ServiceHandler implements Initializable {
 
     @FXML private MenuItem mbInspection;
     @FXML private MenuItem mbRepair;
@@ -61,7 +62,6 @@ public class CreateBookingController implements Initializable {
     @FXML private GridPane gridPaneTwo;
 
     private ArrayList<String> services = new ArrayList<>();
-    private ArrayList<Service> availableServices = new ArrayList<>();
 
 
     private double price = 0;
@@ -69,7 +69,6 @@ public class CreateBookingController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         services.clear();
-        availableServices = DBC.getInstance().getAvailableServices();
 
         taDesc.setVisible(false);
         gridPaneMain.setVisible(true);
@@ -92,26 +91,6 @@ public class CreateBookingController implements Initializable {
         tooltipCreateBooking.setText("Finalize your booking");
         btnNext.setTooltip(tooltipCreateBooking);
 
-    }
-
-    private double getServiceCost(String service){
-        double cost = 0;
-        for (int i = 0; i < availableServices.size(); i++){
-            if (service.matches(availableServices.get(i).getserviceName())){
-                cost =  availableServices.get(i).getCurrentCost();
-            }
-        }
-        return cost;
-    }
-
-    private String getServiceCostAsString(String service){
-        String out = "";
-        for (int i = 0; i < availableServices.size(); i++){
-            if (service.matches(availableServices.get(i).getserviceName())){
-                out =  availableServices.get(i).getCostAndDiscountAsString();
-            }
-        }
-        return out;
     }
 
     @FXML
