@@ -9,11 +9,12 @@ import java.util.logging.Logger;
 public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
-    private Account acc;
     Connection dbConnection = null;
-    private final String database_url = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
+    private final String database_url = "jdbc:mysql://den1.mysql1.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Tx5!?DU7qD4Q&useSSL=false";
 
     private static DBC single_instance = null;
+
+    private Account acc;
 
     private DBC() {
     }
@@ -192,7 +193,7 @@ public class DBC {
                 ResultSet rs = stmt.executeQuery(query);
 
                 while (rs.next()){
-                            services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5)));
+                            services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5), rs.getInt(6)));
                         }
                 rs.close();
 
@@ -218,7 +219,7 @@ public class DBC {
             statement.setString(1, acc.getEmail());
             statement.setString(2, acc.getPassword());
             statement.setString(3, acc.getName());
-            statement.setString(4, acc.getPhone());
+            statement.setString(4, acc.getPhoneNr());
             statement.setBoolean(5, false);
             statement.setInt(6, 3);
             statement.execute();
@@ -257,7 +258,7 @@ public class DBC {
         int accessType = -1;
         int dbAccID = -1;
 
-        String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "' AND password = '" + pass + "'";
+        String queryLogin = "SELECT * FROM Account WHERE email = '" + email + "'";
         String querySignup = "SELECT * FROM Account WHERE email = '" + email + "' OR phone = '" + phone + "'";
         try {
             stmt = dbConnection.createStatement();
@@ -273,7 +274,7 @@ public class DBC {
                 }
                 rsSignup.close();
                 status = statusSignUp;
-            } else if (phone == null) {
+            } else {
                 System.out.println("DEBUG: Log in process initiated");
                 ResultSet rsLogin = stmt.executeQuery(queryLogin);
 
@@ -286,25 +287,38 @@ public class DBC {
                     dbLoginStatus = rsLogin.getBoolean(6);
                     accessType = rsLogin.getInt(7);
                 }
-                if (dbmail.matches(email) && dbpass.matches(pass)) {
+                rsLogin.close();
+                status = statusLogin;
 
-                    if (dbLoginStatus == false){
-                        statusLogin = true;
+                String part1 = "", part2 = "";
+                try {
+                    String[] parts = dbpass.split("-");
+                    part1 = parts[0];
+                    part2 = parts[1];
+                }catch (Exception e){
+                    System.out.println("nothing");
+                }
+
+                if (dbmail.equals(email) && PasswordEncryption.verifyPassword(pass, part1, part2)) {
+
+                    if (!dbLoginStatus){
+                        status = true;
                         acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, true, accessType);
                         setLoginStatus(true);
                     }else{
-                        statusLogin = false;
+                        status = false;
                         System.out.println("DEBUG: User already logged in");
                     }
+                }else if (dbmail.matches(email)){
+                    System.out.println("DEBUG: EMAIL MATCH, PW failed");
                 }else{
-                    System.out.println("DEBUG: Log in failed");
+                    System.out.println("debug fuck off");
                 }
-                rsLogin.close();
-                status = statusLogin;
             }
             stmt.close();
         } catch (Exception ex) {
             System.out.println("ERROR; " + ex.getMessage());
+            ex.printStackTrace();
         }
         return status;
     }
@@ -364,7 +378,7 @@ public class DBC {
     }
 
     //This method is not implemented yet, should be used by Admin user
-    public ArrayList<Account> seeAllUsers(){
+    public ArrayList<Account> getAllUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
@@ -376,7 +390,6 @@ public class DBC {
                 do {
                     tempAcc = new Account(rsUsers.getInt(1),rsUsers.getString(2), rsUsers.getString(3),rsUsers.getString(4),
                             rsUsers.getString(5), rsUsers.getBoolean(6),rsUsers.getInt(7));
-                    System.out.println(tempAcc.getName()+ tempAcc.getPassword()+ tempAcc.getPhone()+tempAcc.getAccountID()+ tempAcc.getEmail());
                     allUsers.add(tempAcc);
                 } while (rsUsers.next());
             }
@@ -386,13 +399,24 @@ public class DBC {
             System.out.println("DEBUG: see users");
             ex.printStackTrace();
         }
-        for (int i = 0; i <allUsers.size() ; i++) {
-            System.out.println(allUsers.get(i).toString());
-        }
         return allUsers;
     }
 
-    //This method is not implemented yet, should be used by Admin user
+    public boolean deleteUser(int accountID){
+        String query = "DELETE FROM Account WHERE accountID =" + accountID;
+        try {
+            PreparedStatement prepstmt = dbConnection.prepareStatement(query);;
+            prepstmt.executeUpdate();
+            prepstmt.close();
+            return true;
+        }catch (Exception ex){
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    //Admin user can change the cost of a service.
     public void setServiceCost(String serviceName, double price){
        String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
        try {

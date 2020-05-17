@@ -55,7 +55,7 @@ public class ManageAccountController implements Initializable {
 
     public void setCurrent() {
         textFieldName.setPromptText(DBC.getInstance().getAccount().getName());
-        textFieldPhone.setPromptText(DBC.getInstance().getAccount().getPhone());
+        textFieldPhone.setPromptText(DBC.getInstance().getAccount().getPhoneNr());
     }
 
     public void saveB() {
@@ -82,7 +82,7 @@ public class ManageAccountController implements Initializable {
             checkPass = true;
         }
         if ((textFieldPhone.getText().isEmpty() && !checkPass)) {
-            phone = DBC.getInstance().getAccount().getPhone();
+            phone = DBC.getInstance().getAccount().getPhoneNr();
         } else {
             if (verifyPhone()) {
                 if (DBC.getInstance().checkPhoneNumber(textFieldPhone.getText())) {

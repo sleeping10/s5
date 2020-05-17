@@ -19,7 +19,7 @@ public class Account implements Serializable {
     public String getName() {
         return name;
     }
-    public String getPhone() {
+    public String getPhoneNr() {
         return phoneNr;
     }
     public int getAccountID() {
