@@ -26,7 +26,7 @@ public class DetailedBookingViewController implements Initializable {
         acc =DBC.getInstance().getCompleteAccount(selectedBooking.getAccountID());
 
         tfName.setText(acc.getName());
-        tfPhone.setText(acc.getPhone());
+        tfPhone.setText(acc.getPhoneNr());
         tfEmail.setText(acc.getEmail());
         tfBookingID.setText(String.valueOf(booking.getBookingID()));
 //        tfTotalCost.setText(selectedBooking.get);

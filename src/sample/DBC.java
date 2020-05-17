@@ -126,8 +126,8 @@ public class DBC {
         return acc;
     }
     public void updateBooking(Booking booking){
-        String query
-        statement
+//        String query
+//        statement
     }
 
     //Gets all the bookings from the Database
