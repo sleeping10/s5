@@ -6,12 +6,11 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.DetailedBookingViewController">
    <children>
       <Button fx:id="buttonBack" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonBackPressed" prefHeight="25.0" prefWidth="51.0" text="Back" />
-      <Button fx:id="buttonSaveBooking" layoutX="328.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleButtonSavePressed" prefHeight="25.0" prefWidth="51.0" text="Save" />
-      <Button fx:id="buttonRemoveBooking" layoutX="200.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleButtonRemoveBookingPressed" text="Remove Booking" />
+      <Button fx:id="buttonSaveBooking" layoutX="138.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleButtonSavePressed" prefHeight="25.0" prefWidth="51.0" text="Save" />
+      <Button fx:id="buttonRemoveBooking" layoutX="22.0" layoutY="261.0" mnemonicParsing="false" onAction="#handleButtonRemoveBookingPressed" text="Remove Booking" />
       <TextField fx:id="tfEmail" editable="false" layoutX="14.0" layoutY="96.0" promptText="Email" />
       <TextField fx:id="tfName" editable="false" layoutX="14.0" layoutY="138.0" promptText="Name" />
       <TextField fx:id="tfPhone" editable="false" layoutX="14.0" layoutY="176.0" promptText="Phone" />

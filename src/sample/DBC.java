@@ -93,9 +93,40 @@ public class DBC {
         }
     }
 
-    // manageBooking (not done/implemented yet)
-    public void manageBooking(Booking booking) {
+    // gets a complete account from accountID (booking -> getAccountID -> this method
+    public Account getCompleteAccount(int accountID) {
+        Account acc = null;
+        int id = 0;
+        String email = "";
+        String password = "";
+        String name = "";
+        String phone = "";
+        boolean status = false;
+        int access = 0;
+        String query = "SELECT * FROM Account WHERE accountID = '" + accountID + "'";
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet rsDetailedAcc = stmt.executeQuery(query);
+            while (rsDetailedAcc.next()){
+               id = rsDetailedAcc.getInt(1);
+                email = rsDetailedAcc.getString(2);
+                password = rsDetailedAcc.getString(3);
+                name = rsDetailedAcc.getString(4);
+                phone = rsDetailedAcc.getString(5);
+                status = rsDetailedAcc.getBoolean(6);
+                access = rsDetailedAcc.getInt(7);
+            }
+            acc = new Account(id,email,password,name,phone,status,access);
+            rsDetailedAcc.close();
 
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return acc;
+    }
+    public void updateBooking(Booking booking){
+        String query
+        statement
     }
 
     //Gets all the bookings from the Database

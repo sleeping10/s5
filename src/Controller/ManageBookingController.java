@@ -5,8 +5,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import sample.*;
 
 import java.net.URL;
@@ -25,6 +32,7 @@ public class ManageBookingController implements Initializable {
     @FXML private TableView tvField;
     @FXML private Button buttonFilter;
     @FXML private TableColumn tcRegNR;
+
     private ArrayList<Booking> list = new ArrayList<>();
     private SceneSwitcher ss = new SceneSwitcher();
 
@@ -84,34 +92,45 @@ public class ManageBookingController implements Initializable {
         }
 
     }
-//does not work as of yet
+
+    // changes to detailed view
+    @FXML
     public void handleButtonManagePressed(ActionEvent actionEvent) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(Main.class.getResource("DetailedBookingView.fxml"));
-//            DetailedBookingViewController dbvc = new DetailedBookingViewController((Booking)tvField.getSelectionModel().getSelectedItem());
-//            loader.setController(dbvc);
-//            Stage detailedStage = new Stage();
-//            detailedStage.setTitle("Manage Booking");
-//            detailedStage.initOwner(tvField.getScene().getWindow());
-//            detailedStage.initModality(Modality.APPLICATION_MODAL);
-//            detailedStage.setScene(new Scene(loader.load()));
-//            detailedStage.showAndWait();
-//        }catch (Exception ex){
-//            ex.printStackTrace();
-//        }
+        try {
+//            Node node = (Node)actionEvent.getSource();
+//            Stage stage = (Stage)node.getScene().getWindow();
+//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/DetailedBookingView.fxml"));
+//            Parent root = loader.load();
+//            Scene scene = new Scene(root);
+//            stage.setScene(scene);
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../FXML/DetailedBookingView.fxml"));
+            Parent parent = loader.load();
+            Scene detailedScene = new Scene(parent);
+
+            DetailedBookingViewController controller = loader.getController();
+            controller.initBooking((Booking)tvField.getSelectionModel().getSelectedItem());
+
+            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            window.setScene(detailedScene);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
 
 
 
-
-
-//        ss.loginSignupSceneSwitcher(actionEvent, "DetailedBookingView");
-        //open new scene
-        // ObservableList<Booking> allList, selectedList;
-        //        allList=tvField.getItems();
-        //        selectedList = tvField.getSelectionModel().getSelectedItems();
     }
 
     public void handleButtonCancelAppointmentPressed(ActionEvent actionEvent) {
         //Delete selected row
+
+
+
+
+        //för google maps ta inte bort
+//    @FXML private WebView wv;
+//        WebEngine we = wv.getEngine();
+//        we.load("https://goo.gl/maps/38arBYM6DH9aEyYh7");
     }
 }
