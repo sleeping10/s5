@@ -4,6 +4,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
@@ -68,20 +69,21 @@
       <Label fx:id="lblStatus" layoutX="146.0" layoutY="282.0" text="Label" visible="false" />
       <Button fx:id="btnGoBack" layoutX="12.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleGoBackBtn" prefHeight="31.0" prefWidth="125.0" text="&lt; Go Back" visible="false" />
       <Label layoutX="337.0" layoutY="26.0" text="Total services added;" />
-      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="57.0" prefHeight="31.0" prefWidth="308.0" visible="false">
+      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="57.0" prefHeight="31.0" prefWidth="215.0" visible="false">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="182.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="0.0" prefWidth="126.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="118.60002441406249" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="0.0" prefWidth="96.9999755859375" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="61.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <DatePicker fx:id="datePicker" promptText="datePicker" visible="false" />
+              <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="125.0" promptText="datePicker" visible="false" />
             <TextField fx:id="tfLicense" prefHeight="25.0" prefWidth="132.0" promptText="License Number" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="100.0" prefHeight="135.0" prefWidth="308.0" promptText="Add additional description if needed" visible="false" />
+      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="97.0" prefHeight="138.0" prefWidth="215.0" promptText="Add additional description if needed" visible="false" />
       <Label fx:id="lblInfo" layoutX="16.0" layoutY="26.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
+      <ListView fx:id="lwTimes" layoutX="239.0" layoutY="49.0" prefHeight="186.0" prefWidth="82.0" visible="false" />
     </children>
 </AnchorPane>
