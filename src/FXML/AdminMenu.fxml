@@ -6,50 +6,67 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdminMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdminMenuController">
    <children>
-      <MenuButton layoutX="14.0" layoutY="14.0" mnemonicParsing="false" text="Select Service">
-        <items>
-            <MenuItem fx:id="menuItemAdvancedInspection" mnemonicParsing="false" text="Advanced Inspection" />
-          <MenuItem fx:id="menuItemBasicInspection" mnemonicParsing="false" onAction="#handleMenuItemBasicInspection" text="Basic Inspection" />
-            <MenuItem fx:id="menuItemOilChange" mnemonicParsing="false" text="Oil Change" />
-            <MenuItem fx:id="menuItemACService" mnemonicParsing="false" text="AC Service" />
-            <MenuItem fx:id="menuItemWheelChange" mnemonicParsing="false" text="Wheel Change" />
-            <MenuItem fx:id="menuItemTimingBelt" mnemonicParsing="false" text="Timing Belt Change" />
-            <MenuItem fx:id="menuItemBatteryChange" mnemonicParsing="false" text="Battery Change" />
-            <MenuItem fx:id="menuItemWheelAlignment" mnemonicParsing="false" text="Wheel Alignment" />
-            <MenuItem fx:id="menuItemBasicExtWash" mnemonicParsing="false" text="Basic Exterior Wash" />
-            <MenuItem fx:id="menuItemPremExtWash" mnemonicParsing="false" text="Premium Exterior Wash" />
-          <MenuItem mnemonicParsing="false" text="Advanced Inspection" />
-        </items>
-      </MenuButton>
-      <TabPane layoutX="14.0" layoutY="47.0" prefHeight="238.0" prefWidth="224.0" tabClosingPolicy="UNAVAILABLE">
+      <Label fx:id="lblStatus" layoutX="14.0" layoutY="271.0" />
+      <TabPane layoutX="14.0" layoutY="14.0" prefHeight="300.0" prefWidth="524.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Standard Cost">
+          <Tab text="Service Management">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="tfStandardCost" layoutX="14.0" layoutY="40.0" />
-                        <Label layoutX="36.0" layoutY="16.0" text="Set Standard Price" />
-                        <Button fx:id="btnApplyCost" layoutX="62.0" layoutY="95.0" mnemonicParsing="false" text="Apply" />
+                        <MenuButton fx:id="menuButtonServices" layoutX="14.0" layoutY="16.0" mnemonicParsing="false" text="Select Service">
+                          <items>
+                              <MenuItem fx:id="menuItemBasicInspection" mnemonicParsing="false" onAction="#handleMenuItemBasicInspection" text="Basic Inspection" />
+                              <MenuItem fx:id="menuItemAdvancedInspection" mnemonicParsing="false" onAction="#handleMenuItemAdvancedInspection" text="Advanced Inspection" />
+                              <MenuItem fx:id="menuItemOilChange" mnemonicParsing="false" onAction="#handleMenuItemOilChange" text="Oil Change" />
+                              <MenuItem fx:id="menuItemACService" mnemonicParsing="false" onAction="#handleMenuItemACService" text="AC Service" />
+                              <MenuItem fx:id="menuItemBatteryChange" mnemonicParsing="false" onAction="#handleMenuItemBatteryChange" text="Battery Change" />
+                              <MenuItem fx:id="menuItemWheelChange" mnemonicParsing="false" onAction="#handleMenuItemWheelChange" text="Wheel Change" />
+                              <MenuItem fx:id="menuItemWheelAlignment" mnemonicParsing="false" onAction="#handleMenuItemWheelAlignment" text="Wheel Alignment" />
+                              <MenuItem fx:id="menuItemTimingBelt" mnemonicParsing="false" onAction="#handleMenuItemTimingBelt" text="Timing Belt Change" />
+                              <MenuItem fx:id="menuItemBasicExtWash" mnemonicParsing="false" onAction="#handleMenuItemBasicExtWash" text="Basic Exterior Wash" />
+                              <MenuItem fx:id="menuItemPremExtWash" mnemonicParsing="false" onAction="#handleMenuItemPremiumExtWash" text="Premium Exterior Wash" />
+                              <MenuItem fx:id="menuItemBasicIntWash" mnemonicParsing="false" onAction="#handleMenuItemBasicIntWash" text="Basic Interior Wash" />
+                              <MenuItem fx:id="menuItemPremIntWash" mnemonicParsing="false" onAction="#handleMenuItemPremiumIntWash" text="Premium Interior Wash" />
+                              <MenuItem fx:id="menuItemComplBasicWash" mnemonicParsing="false" onAction="#handleMenuItemComplBasicWash" text="Complete Basic Wash" />
+                              <MenuItem fx:id="menuItemComplPremiumWash" mnemonicParsing="false" onAction="#handleMenuItemComplPremiumWash" text="Complete Premium Wash" />
+                              <MenuItem mnemonicParsing="false" text="Advanced Inspection" />
+                          </items>
+                        </MenuButton>
+                        <Label layoutX="14.0" layoutY="63.0" text="Set Standard Cost" />
+                        <TextField fx:id="tfStandardCost" layoutX="119.0" layoutY="59.0" prefHeight="25.0" prefWidth="105.0" />
+                        <Button fx:id="btnApplyCost" layoutX="233.0" layoutY="59.0" mnemonicParsing="false" onAction="#handleApplyBtnCost" text="Apply" />
+                        <Label layoutX="14.0" layoutY="112.0" text="Set Discount %" />
+                        <TextField fx:id="tfDiscount" layoutX="120.0" layoutY="108.0" prefHeight="25.0" prefWidth="104.0" />
+                        <TextField fx:id="tfStartDate" layoutX="97.0" layoutY="140.0" prefHeight="25.0" prefWidth="128.0" promptText="2020-01-01 10:00:00" />
+                        <Label layoutX="14.0" layoutY="144.0" text="Set Start Date" />
+                        <Label layoutX="14.0" layoutY="173.0" text="Set End Date" />
+                        <TextField fx:id="tfEndDate" layoutX="97.0" layoutY="169.0" prefHeight="25.0" prefWidth="128.0" />
+                        <Button fx:id="btnApplyDiscount" layoutX="71.0" layoutY="207.0" mnemonicParsing="false" text="Apply Discount" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Discount %">
+          <Tab text="User Management">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="199.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="26.0" layoutY="14.0" text="Set Discount %" />
-                        <TextField fx:id="tfDiscount" layoutX="26.0" layoutY="32.0" />
-                        <TextField fx:id="tfStartDate" layoutX="26.0" layoutY="76.0" />
-                        <TextField fx:id="tfEndDate" layoutX="26.0" layoutY="126.0" />
-                        <Label layoutX="23.0" layoutY="58.0" text="Set Start Date" />
-                        <Label layoutX="26.0" layoutY="108.0" text="Set End Date" />
-                        <Button fx:id="btnApplyDiscount" layoutX="75.0" layoutY="160.0" mnemonicParsing="false" text="Button" />
+                        <TableView fx:id="tvUserList" layoutX="-1.0" layoutY="14.0" prefHeight="211.0" prefWidth="524.0">
+                          <columns>
+                            <TableColumn fx:id="tcAccID" prefWidth="29.0" text="ID" />
+                            <TableColumn fx:id="tcEmail" prefWidth="167.0" text="Email" />
+                              <TableColumn fx:id="tcName" prefWidth="118.0" text="Name" />
+                              <TableColumn fx:id="tcPhone" prefWidth="93.0" text="Phone" />
+                              <TableColumn fx:id="tcAccess" prefWidth="89.0" text="Access Type" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnDeleteAcc" layoutY="238.0" mnemonicParsing="false" onAction="#handleDeleteAccBtn" text="Delete Account" />
                      </children>
                   </AnchorPane>
             </content>

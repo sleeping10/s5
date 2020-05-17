@@ -1,5 +1,7 @@
 package Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
@@ -10,7 +12,10 @@ import sample.DBC;
 import sample.ServiceHandler;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CreateBookingController extends ServiceHandler implements Initializable {
@@ -61,6 +66,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     @FXML private GridPane gridPaneMain;
     @FXML private GridPane gridPaneTwo;
 
+    @FXML private ListView lwTimes;
+
     private ArrayList<String> services = new ArrayList<>();
 
 
@@ -70,6 +77,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     public void initialize(URL url, ResourceBundle resourceBundle) {
         services.clear();
 
+        lwTimes.setVisible(false);
         taDesc.setVisible(false);
         gridPaneMain.setVisible(true);
         tfLicense.setVisible(false);
@@ -193,6 +201,21 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         lblStatus.setText("Status: ");
         toggleCostLabels(0);
         gridPaneTwo.setVisible(true);
+        lwTimes.setVisible(true);
+        fillTimesListView();
+    }
+
+    private void fillTimesListView(){
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        System.out.println( sdf.format(cal.getTime()) );
+
+        ObservableList<String> items = FXCollections.observableArrayList (
+                "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00");
+        lwTimes.setItems(items);
+
+
+        lwTimes.getSelectionModel().getSelectedItem();
     }
 
     @FXML
@@ -425,5 +448,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         chbWashComplete.setSelected(false);
         chbWashCompletePremium.setSelected(false);
     }
+
 }
 

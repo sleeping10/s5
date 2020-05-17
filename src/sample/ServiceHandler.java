@@ -6,12 +6,21 @@ public abstract class ServiceHandler {
 
     private ArrayList<Service> availableServices = DBC.getInstance().getAvailableServices();
 
-
     protected double getServiceCost(String service){
         double cost = 0;
         for (int i = 0; i < availableServices.size(); i++){
             if (service.matches(availableServices.get(i).getserviceName())){
                 cost =  availableServices.get(i).getCurrentCost();
+            }
+        }
+        return cost;
+    }
+
+    protected double getDefaultServiceCost(String service){
+        double cost = 0;
+        for (int i = 0; i < availableServices.size(); i++){
+            if (service.matches(availableServices.get(i).getserviceName())){
+                cost =  availableServices.get(i).getCost();
             }
         }
         return cost;

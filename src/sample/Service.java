@@ -1,5 +1,6 @@
 package sample;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -8,16 +9,18 @@ public class Service {
         private double cost;
         private double discount;
         private String serviceName;
+        private int estimatedTime;
         private Timestamp discountStart;
         private Timestamp discountEnd;
         private Timestamp current_time = new Timestamp(System.currentTimeMillis());
 
-        public Service(String serviceName, double cost, double discount, Timestamp discountStart, Timestamp discountEnd) {
+        public Service(String serviceName, double cost, double discount, Timestamp discountStart, Timestamp discountEnd, int estimatedTime) {
             this.serviceName = serviceName;
             this.cost = cost;
             this.discount = discount;
             this.discountStart = discountStart;
             this.discountEnd = discountEnd;
+            this.estimatedTime = estimatedTime;
         }
 
     public String getserviceName() { return serviceName; }
@@ -36,6 +39,10 @@ public class Service {
         return cost;
     }
 
+    public double getCost(){
+            return cost;
+    }
+
     public String getCostAndDiscountAsString() {
         double discount = this.discount / 100;
         String out = "";
@@ -48,5 +55,12 @@ public class Service {
             out = "$" + cost;
         }
         return out;
+    }
+
+    public String getEstimatedTime(){
+        int hours = estimatedTime / 60; //since both are ints, you get an int
+        int minutes = estimatedTime % 60;
+
+        return String.format("%d:%02d", hours, minutes);
     }
 }

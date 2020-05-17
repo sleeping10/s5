@@ -10,7 +10,7 @@ public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
     Connection dbConnection = null;
-    private final String database_url = "jdbc:mysql://den1.mysql2.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Wa42vuw_95M-&useSSL=false";
+    private final String database_url = "jdbc:mysql://den1.mysql1.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Tx5!?DU7qD4Q&useSSL=false";
 
     private static DBC single_instance = null;
 
@@ -162,7 +162,7 @@ public class DBC {
                 ResultSet rs = stmt.executeQuery(query);
 
                 while (rs.next()){
-                            //services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5)));
+                            services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5), rs.getInt(6)));
                         }
                 rs.close();
 
@@ -347,7 +347,7 @@ public class DBC {
     }
 
     //This method is not implemented yet, should be used by Admin user
-    public ArrayList<Account> seeAllUsers(){
+    public ArrayList<Account> getAllUsers(){
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
@@ -359,7 +359,6 @@ public class DBC {
                 do {
                     tempAcc = new Account(rsUsers.getInt(1),rsUsers.getString(2), rsUsers.getString(3),rsUsers.getString(4),
                             rsUsers.getString(5), rsUsers.getBoolean(6),rsUsers.getInt(7));
-                    System.out.println(tempAcc.getName()+ tempAcc.getPassword()+ tempAcc.getPhoneNr()+tempAcc.getAccountID()+ tempAcc.getEmail());
                     allUsers.add(tempAcc);
                 } while (rsUsers.next());
             }
@@ -369,21 +368,21 @@ public class DBC {
             System.out.println("DEBUG: see users");
             ex.printStackTrace();
         }
-        for (int i = 0; i <allUsers.size() ; i++) {
-            System.out.println(allUsers.get(i).toString());
-        }
         return allUsers;
     }
 
-    public void deleteUser(int accountID){
+    public boolean deleteUser(int accountID){
         String query = "DELETE FROM Account WHERE accountID =" + accountID;
         try {
             PreparedStatement prepstmt = dbConnection.prepareStatement(query);;
             prepstmt.executeUpdate();
             prepstmt.close();
+            return true;
         }catch (Exception ex){
             ex.printStackTrace();
+            return false;
         }
+
     }
 
     //Admin user can change the cost of a service.
