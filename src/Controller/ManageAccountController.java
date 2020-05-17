@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
 import sample.DBC;
+import sample.PasswordEncryption;
 import sample.Verification;
 
 import java.net.URL;
@@ -66,12 +67,21 @@ public class ManageAccountController implements Initializable {
 
     public void update() {
 
+        String part1 = "", part2 = "";
+        try {
+            String[] parts = DBC.getInstance().getAccount().getPassword().split("-");
+            part1 = parts[0];
+            part2 = parts[1];
+        }catch (Exception e){
+            System.out.println("nothing");
+        }
+
         String name = "", pass = "", phone = "";
         boolean checkPass = false;
         if (textFieldName.getText().isEmpty()) {
             name = DBC.getInstance().getAccount().getName();
         } else name = textFieldName.getText();
-        if (textFieldPassword.getText().matches(DBC.getInstance().getAccount().getPassword())) {
+        if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)){
             pass = verifyNewPassword();
         } else {
             System.out.println("Wrong password");
@@ -107,7 +117,9 @@ public class ManageAccountController implements Initializable {
         }
 
         if (!pass.matches("1") && !checkPass) {
-            DBC.getInstance().updateAccount(name, pass, phone, DBC.getInstance().getAccount().getAccountID());
+            String salt = PasswordEncryption.generateSalt(5);
+            String hashed = PasswordEncryption.hashPassword(pass, salt) + "-" + salt;
+            DBC.getInstance().updateAccount(name, hashed, phone, DBC.getInstance().getAccount().getAccountID());
             text.setText("saved!");
         }
     }
@@ -115,7 +127,7 @@ public class ManageAccountController implements Initializable {
 
     @FXML
     public String verifyNewPassword() {
-        final String regex = "^([a-öA-Ö0-9@*#]{8,15})$";
+        final String regex = "^([a-öA-Ö0-9@*#]{4,15})$";
         if (!textFieldNPassword.getText().isEmpty() && !textFieldRNPassword.getText().isEmpty()) { // kollar om du vill ändara lösenord
             if (textFieldNPassword.getText().matches(textFieldRNPassword.getText())) {
                 if (textFieldNPassword.getText().matches(regex) && textFieldRNPassword.getText().matches(regex)) {//kolla om det nya lösenordet matchar regex och andra gången du skriver in lösenordet
