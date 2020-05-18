@@ -203,8 +203,6 @@ public class DBC {
                                     rsService.getTimestamp(4),
                                     rsService.getTimestamp(5),
                                     rsService.getInt(6)));
-                        }else{
-                            System.out.println("DEBUG: Match not found");
                         }
                     }
                 }

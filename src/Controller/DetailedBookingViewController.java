@@ -76,8 +76,6 @@ public class DetailedBookingViewController implements Initializable {
         tfBookingID.setEditable(false);
         tfTotalCost.setEditable(false);
 
-        System.out.println(DBC.getInstance().getBooking().get(0).getServices());
-
     }
 
 
