@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -85,5 +86,8 @@
       <TextArea fx:id="taDesc" layoutX="15.0" layoutY="97.0" prefHeight="138.0" prefWidth="215.0" promptText="Add additional description if needed" visible="false" />
       <Label fx:id="lblInfo" layoutX="16.0" layoutY="26.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
       <ListView fx:id="lwTimes" layoutX="239.0" layoutY="49.0" prefHeight="186.0" prefWidth="82.0" visible="false" />
+      <RadioButton fx:id="rdB" layoutX="285.0" layoutY="281.0" mnemonicParsing="false" text="get copy" visible="false" />
+      <Button layoutX="168.0" layoutY="22.0" mnemonicParsing="false" onAction="#resetTemplate" prefHeight="17.0" prefWidth="56.0" text="reset" />
+      <Button layoutX="239.0" layoutY="22.0" mnemonicParsing="false" onAction="#test" prefHeight="17.0" prefWidth="56.0" text="print" />
     </children>
 </AnchorPane>
