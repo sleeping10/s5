@@ -10,10 +10,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import sample.*;
 
 import java.net.URL;
@@ -34,7 +36,6 @@ public class ManageBookingController implements Initializable {
     @FXML private TableColumn tcRegNR;
 
     private ArrayList<Booking> list = new ArrayList<>();
-    private SceneSwitcher ss = new SceneSwitcher();
 
 
     // för table view kanske flytta?
@@ -94,20 +95,20 @@ public class ManageBookingController implements Initializable {
     // changes to detailed view
     @FXML
     public void handleButtonManagePressed(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("../FXML/DetailedBookingView.fxml"));
-            Parent parent = loader.load();
-            Scene detailedScene = new Scene(parent);
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../FXML/DetailedBookingView.fxml"));
+                Parent root1 = fxmlLoader.load();
+                DetailedBookingViewController controller = fxmlLoader.getController();
+                controller.initBooking((Booking)tvField.getSelectionModel().getSelectedItem());
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Manage Booking");
+                stage.setScene(new Scene(root1));
+                stage.show();
+            }catch (Exception e){
+                e.printStackTrace();
+            }
 
-            DetailedBookingViewController controller = loader.getController();
-            controller.initBooking((Booking)tvField.getSelectionModel().getSelectedItem());
-
-            Stage window = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-            window.setScene(detailedScene);
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
 
 
 

@@ -93,6 +93,16 @@ public class DBC {
             e.printStackTrace();
         }
     }
+    public void removeBooking(Booking booking){
+        String query = "DELETE FROM Booking where bookingID = '" + booking.getBookingID() + "'";
+        try {
+            statement = dbConnection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
     // gets a complete account from accountID (booking -> getAccountID -> this method
     public Account getCompleteAccount(int accountID) {
