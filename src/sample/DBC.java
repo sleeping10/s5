@@ -1,6 +1,7 @@
 package sample;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -158,7 +159,9 @@ public class DBC {
     }
     // used in detailed booking view to change the date and description of booking
     public void updateBooking(Booking booking){
-        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+booking.getDate()+"' WHERE bookingID = '"+booking.getBookingID()+"'";
+        java.util.Date utilDate = booking.getDate();
+        java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
+        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+sq+"' WHERE bookingID = '"+booking.getBookingID()+"'";
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();

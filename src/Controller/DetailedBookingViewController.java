@@ -91,6 +91,7 @@ public class DetailedBookingViewController implements Initializable {
     public void handleButtonSavePressed(ActionEvent actionEvent) {
         selectedBooking.setBookingDesc(taDesc.getText());
         Date d =java.sql.Date.valueOf(dp.getValue());
+
         selectedBooking.setDate(d);
         DBC.getInstance().updateBooking(selectedBooking);
     }
