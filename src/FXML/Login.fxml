@@ -26,7 +26,7 @@
          </children></HBox>
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane fx:id="copyFileUsingChannel" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
             <CheckBox fx:id="chbRemember" layoutX="280.0" layoutY="100.0" mnemonicParsing="false" onAction="#handleRememberMeChb" prefHeight="26.0" prefWidth="119.0" text="Remember me" />
             <Button fx:id="btnLogin" layoutX="410.0" layoutY="98.0" mnemonicParsing="false" onAction="#handleLoginBtn" prefHeight="30.0" prefWidth="70.0" text="Login" />

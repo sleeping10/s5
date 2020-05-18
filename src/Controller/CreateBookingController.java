@@ -10,8 +10,11 @@ import javafx.scene.layout.GridPane;
 import sample.Booking;
 import sample.DBC;
 import sample.ServiceHandler;
+import sample.editDocument;
 
+import java.io.*;
 import java.net.URL;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -20,53 +23,94 @@ import java.util.ResourceBundle;
 
 public class CreateBookingController extends ServiceHandler implements Initializable {
 
-    @FXML private MenuItem mbInspection;
-    @FXML private MenuItem mbRepair;
-    @FXML private MenuItem mbWash;
-    @FXML private MenuButton mbService;
+    @FXML
+    private MenuItem mbInspection;
+    @FXML
+    private MenuItem mbRepair;
+    @FXML
+    private MenuItem mbWash;
+    @FXML
+    private MenuButton mbService;
 
-    @FXML private CheckBox chbInspectionBasic;
-    @FXML private CheckBox chbInspectionAdvanced;
+    @FXML
+    private CheckBox chbInspectionBasic;
+    @FXML
+    private CheckBox chbInspectionAdvanced;
 
-    @FXML private CheckBox chbRepairOil;
-    @FXML private CheckBox chbRepairAC;
-    @FXML private CheckBox chbRepairWheelChange;
-    @FXML private CheckBox chbRepairWheelAlignment;
-    @FXML private CheckBox chbRepairTimingBelt;
-    @FXML private CheckBox chbRepairChangeBattery;
+    @FXML
+    private CheckBox chbRepairOil;
+    @FXML
+    private CheckBox chbRepairAC;
+    @FXML
+    private CheckBox chbRepairWheelChange;
+    @FXML
+    private CheckBox chbRepairWheelAlignment;
+    @FXML
+    private CheckBox chbRepairTimingBelt;
+    @FXML
+    private CheckBox chbRepairChangeBattery;
 
 
-    @FXML private CheckBox chbWashBasicExt;
-    @FXML private CheckBox chbWashPremiumExt;
-    @FXML private CheckBox chbWashInterior;
-    @FXML private CheckBox chbWashInteriorPremium;
-    @FXML private CheckBox chbWashComplete;
-    @FXML private CheckBox chbWashCompletePremium;
+    @FXML
+    private CheckBox chbWashBasicExt;
+    @FXML
+    private CheckBox chbWashPremiumExt;
+    @FXML
+    private CheckBox chbWashInterior;
+    @FXML
+    private CheckBox chbWashInteriorPremium;
+    @FXML
+    private CheckBox chbWashComplete;
+    @FXML
+    private CheckBox chbWashCompletePremium;
 
-    @FXML private DatePicker datePicker;
-    @FXML private TextArea txtATotal;
-    @FXML private TextField dateField;
-    @FXML private TextField tfLicense;
-    @FXML private Button btnClearSelections;
-    @FXML private TextArea taDesc;
-    @FXML private Button btnCreateBooking;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private TextArea txtATotal;
+    @FXML
+    private TextField dateField;
+    @FXML
+    private TextField tfLicense;
+    @FXML
+    private Button btnClearSelections;
+    @FXML
+    private TextArea taDesc;
+    @FXML
+    private Button btnCreateBooking;
 
-    @FXML private Label lblCostOne;
-    @FXML private Label lblCostTwo;
-    @FXML private Label lblCostThree;
-    @FXML private Label lblCostFour;
-    @FXML private Label lblCostFive;
-    @FXML private Label lblCostSix;
-    @FXML private Label lblTotalCost;
-    @FXML private Label lblStatus;
-    @FXML private Label lblInfo;
-    @FXML private Button btnNext;
-    @FXML private Button btnGoBack;
+    @FXML
+    private Label lblCostOne;
+    @FXML
+    private Label lblCostTwo;
+    @FXML
+    private Label lblCostThree;
+    @FXML
+    private Label lblCostFour;
+    @FXML
+    private Label lblCostFive;
+    @FXML
+    private Label lblCostSix;
+    @FXML
+    private Label lblTotalCost;
+    @FXML
+    private Label lblStatus;
+    @FXML
+    private Label lblInfo;
+    @FXML
+    private Button btnNext;
+    @FXML
+    private Button btnGoBack;
 
-    @FXML private GridPane gridPaneMain;
-    @FXML private GridPane gridPaneTwo;
+    @FXML
+    private GridPane gridPaneMain;
+    @FXML
+    private GridPane gridPaneTwo;
 
-    @FXML private ListView lwTimes;
+    @FXML
+    private ListView lwTimes;
+    @FXML
+    private RadioButton rdB;
 
     private ArrayList<String> services = new ArrayList<>();
 
@@ -130,22 +174,22 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         toggleCostLabels(3);
     }
 
-    private void toggleCostLabels(int toggle){
-        if (toggle==1){
+    private void toggleCostLabels(int toggle) {
+        if (toggle == 1) {
             lblCostOne.setVisible(true);
             lblCostTwo.setVisible(true);
             lblCostThree.setVisible(false);
             lblCostFour.setVisible(false);
             lblCostFive.setVisible(false);
             lblCostSix.setVisible(false);
-        }else if (toggle==2 ||toggle == 3){
+        } else if (toggle == 2 || toggle == 3) {
             lblCostOne.setVisible(true);
             lblCostTwo.setVisible(true);
             lblCostThree.setVisible(true);
             lblCostFour.setVisible(true);
             lblCostFive.setVisible(true);
             lblCostSix.setVisible(true);
-        }else{
+        } else {
             lblCostOne.setVisible(false);
             lblCostTwo.setVisible(false);
             lblCostThree.setVisible(false);
@@ -170,11 +214,9 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         if (datePicker.getValue() == null || tfLicense.getText().isEmpty()) {
             System.out.println("inge datum eller reg nummer");
             lblStatus.setText("Status: Please select a date and Registration ID");
-        }
-        else if(services.isEmpty()){
+        } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
-        }
-        else{
+        } else {
             DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
             lblTotalCost.setText("Total cost: $" + price);
             lblStatus.setText("Status: Booking successfully added");
@@ -203,14 +245,15 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         gridPaneTwo.setVisible(true);
         lwTimes.setVisible(true);
         fillTimesListView();
+        rdB.setVisible(true);
     }
 
-    private void fillTimesListView(){
+    private void fillTimesListView() {
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        System.out.println( sdf.format(cal.getTime()) );
+        System.out.println(sdf.format(cal.getTime()));
 
-        ObservableList<String> items = FXCollections.observableArrayList (
+        ObservableList<String> items = FXCollections.observableArrayList(
                 "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00");
         lwTimes.setItems(items);
 
@@ -232,28 +275,29 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         lblInfo.setVisible(false);
         lblStatus.setText("Status: ");
         gridPaneTwo.setVisible(false);
+        rdB.setVisible(false);
     }
 
     private void toggleInspectionCheckBoxes(boolean toggle) {
         chbInspectionBasic.setVisible(toggle);
         chbInspectionAdvanced.setVisible(toggle);
-        if (toggle){
-            lblCostOne.setText( getServiceCostAsString("inspection_basic"));
-            lblCostTwo.setText( getServiceCostAsString("inspection_advanced"));
+        if (toggle) {
+            lblCostOne.setText(getServiceCostAsString("inspection_basic"));
+            lblCostTwo.setText(getServiceCostAsString("inspection_advanced"));
         }
     }
 
-    private void addServiceToCurrentBooking(boolean toggle, String service){
+    private void addServiceToCurrentBooking(boolean toggle, String service) {
         double cost = getServiceCost(service);
         if (toggle) {
             price += cost;
             txtATotal.appendText(service + ", $" + cost + " \n");
             services.add(service);
-        }else{
+        } else {
             txtATotal.clear();
             price -= cost;
             services.remove(service);
-            for (int i = 0; i < services.size(); i++){
+            for (int i = 0; i < services.size(); i++) {
                 txtATotal.appendText(services.get(i) + ", $" + getServiceCost(services.get(i)) + "\n");
             }
         }
@@ -264,7 +308,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleInspectionBasicChbox() {
         if (chbInspectionBasic.isSelected()) {
             addServiceToCurrentBooking(true, "inspection_basic");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "inspection_basic");
         }
     }
@@ -273,25 +317,25 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleInspectionAdvancedChbox() {
         if (chbInspectionAdvanced.isSelected()) {
             addServiceToCurrentBooking(true, "inspection_advanced");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "inspection_advanced");
         }
     }
 
     @FXML
-        private void handleServiceOilChbox() {
-            if (chbRepairOil.isSelected()) {
-                addServiceToCurrentBooking(true, "service_oilchange");
-            }else{
-                addServiceToCurrentBooking(false, "service_oilchange");
-            }
+    private void handleServiceOilChbox() {
+        if (chbRepairOil.isSelected()) {
+            addServiceToCurrentBooking(true, "service_oilchange");
+        } else {
+            addServiceToCurrentBooking(false, "service_oilchange");
         }
+    }
 
     @FXML
     private void handleServiceACFixChbox() {
         if (chbRepairAC.isSelected()) {
             addServiceToCurrentBooking(true, "service_ac");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "service_ac");
         }
     }
@@ -300,7 +344,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleServiceTimingBeltChbox() {
         if (chbRepairTimingBelt.isSelected()) {
             addServiceToCurrentBooking(true, "service_timingbelt");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "service_timingbelt");
         }
     }
@@ -309,7 +353,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleServiceWheelAlignChbox() {
         if (chbRepairWheelAlignment.isSelected()) {
             addServiceToCurrentBooking(true, "service_wheelalignment");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "service_wheelalignment");
         }
     }
@@ -318,7 +362,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleServiceWheelChangeChbox() {
         if (chbRepairWheelChange.isSelected()) {
             addServiceToCurrentBooking(true, "service_wheelchange");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "service_wheelchange");
         }
     }
@@ -327,7 +371,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleServiceChangeBatteryChbox() {
         if (chbRepairChangeBattery.isSelected()) {
             addServiceToCurrentBooking(true, "service_battery");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "service_battery");
         }
     }
@@ -336,7 +380,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashBasicExtChb() {
         if (chbWashBasicExt.isSelected()) {
             addServiceToCurrentBooking(true, "wash_basic_exterior");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_basic_exterior");
         }
     }
@@ -345,7 +389,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashPremiumExtChb() {
         if (chbWashPremiumExt.isSelected()) {
             addServiceToCurrentBooking(true, "wash_premium_exterior");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_premium_exterior");
         }
     }
@@ -354,7 +398,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashBasicInteriorChb() {
         if (chbWashInterior.isSelected()) {
             addServiceToCurrentBooking(true, "wash_basic_interior");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_basic_interior");
         }
     }
@@ -363,7 +407,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashInteriorPremiumChb() {
         if (chbWashInteriorPremium.isSelected()) {
             addServiceToCurrentBooking(true, "wash_premium_interior");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_premium_interior");
         }
     }
@@ -372,7 +416,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashBasicCompleteChb() {
         if (chbWashComplete.isSelected()) {
             addServiceToCurrentBooking(true, "wash_compl_basic");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_compl_basic");
         }
     }
@@ -381,7 +425,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private void handleWashPremiumCompleteChb() {
         if (chbWashCompletePremium.isSelected()) {
             addServiceToCurrentBooking(true, "wash_compl_premium");
-        }else{
+        } else {
             addServiceToCurrentBooking(false, "wash_compl_premium");
         }
     }
@@ -448,6 +492,50 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         chbWashComplete.setSelected(false);
         chbWashCompletePremium.setSelected(false);
     }
+
+
+    @FXML
+    public void fungerar() throws IOException {
+        File source = new File("s5/src/FXML/booking_confirmation.odt");
+        File dest = new File("s5/src/FXML/Out.odt");
+        FileChannel sourceChannel = null;
+        FileChannel destChannel = null;
+        try {
+            sourceChannel = new FileInputStream(source).getChannel();
+            destChannel = new FileOutputStream(dest).getChannel();
+            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+            System.out.println("test");
+        } finally {
+            sourceChannel.close();
+            destChannel.close();
+        }
+    }
+
+    File source = new File("//home//sleeping//Documents//kod//s5//src//FXML//booking_confirmation.docx");
+    File dest = new File("//home//sleeping//Documents//kod//s5//src//FXML//test.docx");
+
+    @FXML
+    public void resetTemplate() {
+        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
+            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
+    public void test() throws Exception {
+        if (rdB.isSelected()) {
+            editDocument editDocument = new editDocument();
+            editDocument.skrivaTest();
+        }
+    }
+
 
 }
 

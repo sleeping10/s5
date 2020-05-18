@@ -8,19 +8,31 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.*;
 
+import javax.swing.*;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.DefaultStyledDocument;
+import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.nio.channels.FileChannel;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController extends Verification implements Initializable {
 
-    @FXML private TextField tfEmail;
-    @FXML private PasswordField pfPass;
-    @FXML private CheckBox chbRemember;
-    @FXML private Label lblStatus;
+    @FXML
+    private TextField tfEmail;
+    @FXML
+    private PasswordField pfPass;
+    @FXML
+    private CheckBox chbRemember;
+    @FXML
+    private Label lblStatus;
 
     private SceneSwitcher sw = new SceneSwitcher();
 
@@ -37,7 +49,7 @@ public class LoginController extends Verification implements Initializable {
         final Tooltip tooltipPass = new Tooltip();
         tooltipPass.setText("Enter Password");
         pfPass.setTooltip(tooltipPass);
-        }
+    }
 
     @FXML
     public void handleSignUpBtn(ActionEvent event) {
@@ -45,26 +57,28 @@ public class LoginController extends Verification implements Initializable {
     }
 
     @FXML
-    public void onEnter(ActionEvent ae){
+    public void onEnter(ActionEvent ae) {
         handleLoginBtn(ae);
     }
 
     @FXML
     public void handleLoginBtn(ActionEvent event) {
         login(event);
-        if (chbRemember.isSelected()){
+        if (chbRemember.isSelected()) {
             try {
                 FileOutputStream fileOut =
                         new FileOutputStream("../s5/rememberme.bin");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                if (DBC.getInstance().getAccount() != null){out.writeObject(DBC.getInstance().getAccount());}
+                if (DBC.getInstance().getAccount() != null) {
+                    out.writeObject(DBC.getInstance().getAccount());
+                }
                 out.close();
                 fileOut.close();
                 System.out.println("DEBUG: Saved Remember Me Data");
             } catch (IOException i) {
                 i.printStackTrace();
             }
-        }else{
+        } else {
             try {
                 File f = new File("../s5/rememberme.bin");
                 f.delete();
@@ -74,11 +88,12 @@ public class LoginController extends Verification implements Initializable {
         }
 
     }
+
     @FXML
     public void forgotPassButton(ActionEvent event) throws IOException {
         //Change this...
-        Node node = (Node)event.getSource();
-        Stage stage = (Stage)node.getScene().getWindow();
+        Node node = (Node) event.getSource();
+        Stage stage = (Stage) node.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/ResetPass.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
@@ -86,31 +101,41 @@ public class LoginController extends Verification implements Initializable {
     }
 
     @FXML
-    public void handleRememberMeChb(){
-        if (chbRemember.isSelected()){
+    public void handleRememberMeChb() {
+        if (chbRemember.isSelected()) {
             lblStatus.setText("Email & pw will be saved for next session");
-        }else{
+        } else {
             lblStatus.setText("Saved Email & pw will be deleted for next session");
         }
     }
 
-    private void login(ActionEvent e){
+    private void login(ActionEvent e) {
         switch (verifyAccount(tfEmail.getText(), pfPass.getText(), null)) {
-            case 0: lblStatus.setText("Email or Pass is wrong or user already logged in");break;
-            case 1: sw.loginSignupSceneSwitcher(e, "Main");break;
-            case 2: lblStatus.setText("Password must be between 4-15 characters");break;
-            case 3: lblStatus.setText("Email or password is empty"); break;
-            case 4: lblStatus.setText("Input is not a valid email"); break;
+            case 0:
+                lblStatus.setText("Email or Pass is wrong or user already logged in");
+                break;
+            case 1:
+                sw.loginSignupSceneSwitcher(e, "Main");
+                break;
+            case 2:
+                lblStatus.setText("Password must be between 4-15 characters");
+                break;
+            case 3:
+                lblStatus.setText("Email or password is empty");
+                break;
+            case 4:
+                lblStatus.setText("Input is not a valid email");
+                break;
         }
     }
 
-    private void checkRememberMe(){
+    private void checkRememberMe() {
         Account tmpAcc = null;
-        try{
+        try {
             FileInputStream fileIn =
                     new FileInputStream("../s5/rememberme.bin");
             ObjectInputStream in = new ObjectInputStream(fileIn);
-            tmpAcc = (Account)in.readObject();
+            tmpAcc = (Account) in.readObject();
             in.close();
             fileIn.close();
             tfEmail.setText(tmpAcc.getEmail());
@@ -118,8 +143,9 @@ public class LoginController extends Verification implements Initializable {
             chbRemember.setSelected(true);
             System.out.println("DEBUG: Remember me info loaded");
 
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
     }
+
 }
