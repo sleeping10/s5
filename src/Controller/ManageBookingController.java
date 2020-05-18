@@ -39,7 +39,7 @@ public class ManageBookingController implements Initializable {
 
 
     // för table view kanske flytta?
-    public ObservableList<Booking> view (){
+    private ObservableList<Booking> view (){
         ObservableList<Booking> views = FXCollections.observableArrayList();
         list=DBC.getInstance().getBooking();
         for (int i = 0; i <list.size() ; i++) {

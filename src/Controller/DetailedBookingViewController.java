@@ -1,9 +1,12 @@
 package Controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import sample.*;
 
 import java.net.URL;
@@ -11,15 +14,18 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class DetailedBookingViewController extends ServiceHandler implements Initializable {
+public class DetailedBookingViewController implements Initializable {
     @FXML private TextField tfName;
     @FXML private TextField tfPhone;
     @FXML private TextField tfEmail;
     @FXML private TextField tfBookingID;
     @FXML private TextField tfTotalCost;
-    @FXML private ListView<Service> lvServices;
+    @FXML private TableColumn tcServices;
+    @FXML private TableColumn tcPrice;
+    @FXML private TableView<Service> tvServices;
     @FXML private DatePicker dp;
     private Booking selectedBooking;
     private Account acc = null;
@@ -28,7 +34,10 @@ public class DetailedBookingViewController extends ServiceHandler implements Ini
     // hämtar booking från förra sidan
     public void initBooking(Booking booking){
         selectedBooking = booking;
-        Service service = null;
+        tcServices.setCellValueFactory(new PropertyValueFactory<String, Service>("serviceName"));
+        tcPrice.setCellValueFactory(new PropertyValueFactory<Double, Service>("cost"));
+        tvServices.setItems(view());
+
         acc =DBC.getInstance().getCompleteAccount(selectedBooking.getAccountID());
 
         tfName.setText(acc.getName());
@@ -39,15 +48,24 @@ public class DetailedBookingViewController extends ServiceHandler implements Ini
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate ld = ldt.toLocalDate();
         dp.setValue(ld);
-        for (int i = 0; i < selectedBooking.getServices().size(); i++) {
-        service= new Service(selectedBooking.getServices().get(i),getServiceCost(selectedBooking.getServices().get(i)),);
+
         }
 
-//        tfTotalCost.setText(selectedBooking.get);
-
-          System.out.println(booking.getBookingDesc() +"       " + acc.getEmail());
+    private ObservableList<Service> view (){
+        Service service;
+        ArrayList<Service> list = new ArrayList<>();
+        ObservableList<Service> views = FXCollections.observableArrayList();
+        for (int i = 0; i < selectedBooking.getServices().size(); i++) {
+            service = new Service(selectedBooking.getServices().get(i).getserviceName(), selectedBooking.getServices().get(i).getCost(),
+                    selectedBooking.getServices().get(i).getDiscount(), selectedBooking.getServices().get(i).getDiscountStart(),
+                    selectedBooking.getServices().get(i).getDiscountEnd(), Integer.parseInt(selectedBooking.getServices().get(i).getEstimatedTime()));
+            list.add(service);
+        }
+        for (int i = 0; i <list.size() ; i++) {
+            views.add(list.get(i));
+        }
+        return views;
     }
-
 
 
     @Override

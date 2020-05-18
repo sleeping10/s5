@@ -2,7 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
@@ -16,7 +17,12 @@
       <TextField fx:id="tfPhone" editable="false" layoutX="14.0" layoutY="176.0" promptText="Phone" />
       <TextField fx:id="tfBookingID" editable="false" layoutX="135.0" layoutY="14.0" promptText="Booking ID" />
       <TextField fx:id="tfTotalCost" editable="false" layoutX="14.0" layoutY="218.0" promptText="Total Cost" />
-      <TextArea fx:id="taServices" editable="false" layoutX="231.0" layoutY="55.0" prefHeight="203.0" prefWidth="141.0" />
       <DatePicker fx:id="dp" layoutX="14.0" layoutY="55.0" />
+      <TableView fx:id="tvServices" layoutX="200.0" layoutY="51.0" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tcServices" prefWidth="75.0" text="C1" />
+          <TableColumn fx:id="tcPrice" prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
    </children>
 </AnchorPane>
