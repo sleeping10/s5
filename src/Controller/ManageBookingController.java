@@ -65,8 +65,6 @@ public class ManageBookingController implements Initializable {
         tcRegNR.setCellValueFactory(new PropertyValueFactory<String, Booking>("licensePlate"));
         tvField.setItems(view());
 
-        tvField.getSelectionModel().getSelectedItem();
-
 
     }
 
@@ -97,13 +95,6 @@ public class ManageBookingController implements Initializable {
     @FXML
     public void handleButtonManagePressed(ActionEvent actionEvent) {
         try {
-//            Node node = (Node)actionEvent.getSource();
-//            Stage stage = (Stage)node.getScene().getWindow();
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource("../FXML/DetailedBookingView.fxml"));
-//            Parent root = loader.load();
-//            Scene scene = new Scene(root);
-//            stage.setScene(scene);
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../FXML/DetailedBookingView.fxml"));
             Parent parent = loader.load();

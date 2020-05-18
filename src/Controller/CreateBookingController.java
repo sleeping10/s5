@@ -10,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import sample.Booking;
 import sample.DBC;
 import sample.ServiceHandler;
-import sample.editDocument;
+//import sample.editDocument;
 
 import java.io.*;
 import java.net.URL;
@@ -530,10 +530,10 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     public void test() throws Exception {
-        if (rdB.isSelected()) {
-            editDocument editDocument = new editDocument();
-            editDocument.skrivaTest();
-        }
+//        if (rdB.isSelected()) {
+//            editDocument editDocument = new editDocument();
+//            editDocument.skrivaTest();
+//        }
     }
 
 
