@@ -62,9 +62,9 @@ public class DetailedBookingViewController implements Initializable {
         ObservableList<Service> views = FXCollections.observableArrayList();
         System.out.println("view 2");
         for (int i = 0; i < selectedBooking.getServices().size(); i++) {
-            service = new Service(selectedBooking.getServices().get(i).getserviceName(), selectedBooking.getServices().get(i).getCost(),
+            service = new Service(selectedBooking.getServices().get(i).getServiceName(), selectedBooking.getServices().get(i).getCost(),
                     selectedBooking.getServices().get(i).getDiscount(), selectedBooking.getServices().get(i).getDiscountStart(),
-                    selectedBooking.getServices().get(i).getDiscountEnd(), Integer.parseInt(selectedBooking.getServices().get(i).getEstimatedTime()));
+                    selectedBooking.getServices().get(i).getDiscountEnd(), selectedBooking.getServices().get(i).getEstimatedTime());
             list.add(service);
         }
         System.out.println("view 3");

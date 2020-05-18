@@ -23,7 +23,7 @@ public class Service {
             this.estimatedTime = estimatedTime;
         }
 
-    public String getserviceName() { return serviceName; }
+    public String getServiceName() { return serviceName; }
 
     public double getDiscount(){
             return discount;
@@ -69,10 +69,11 @@ public class Service {
         return out;
     }
 
-    public String getEstimatedTime(){
+    public int getEstimatedTime(){
         int hours = estimatedTime / 60; //since both are ints, you get an int
         int minutes = estimatedTime % 60;
 
-        return String.format("%d:%02d", hours, minutes);
+        //return String.format("%d:%02d", hours, minutes);
+        return estimatedTime;
     }
 }

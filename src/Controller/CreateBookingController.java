@@ -115,6 +115,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private RadioButton rdB;
 
     private ArrayList<Service> services = new ArrayList<>();
+    //private ArrayList<Service> availableServices = DBC.getInstance().getAvailableServices();
 
 
     private double price = 0;
@@ -297,14 +298,17 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         double cost = getServiceCost(service);
         if (toggle) {
             price += cost;
-            txtATotal.appendText(service + ", $" + cost + " \n");
+            txtATotal.appendText(tempService.getServiceName() + ", $" + (tempService.getCost()) + "\n");
             services.add(tempService);
         } else {
             txtATotal.clear();
             price -= cost;
-            services.remove(service);
             for (int i = 0; i < services.size(); i++) {
-                txtATotal.appendText(services.get(i) + ", $" + (services.get(i).getCost()) + "\n");
+                if (services.get(i).getServiceName().equals(service)){
+                    services.remove(i);
+                    break;
+                }
+                txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCost()) + "\n");
             }
         }
         lblTotalCost.setText("Total cost: $" + Math.round(price));
