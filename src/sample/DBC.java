@@ -165,9 +165,11 @@ public class DBC {
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
         String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
-        String queryService = "SELECT * From Booking_has_service where Boo";
+        String queryService = "SELECT * From Booking_has_service";
+        String queryS = "SELECT * from Service";
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<Service> services = new ArrayList<>();
+        ArrayList<String> servicesString = new ArrayList<>();
         ArrayList<Integer> bookingIds = new ArrayList<>();
         try {
             if (DBC.getInstance().getAccount().getAccessType() == 3) {
@@ -177,11 +179,58 @@ public class DBC {
                 while (rsCust.next()) {
                     bookingIds.add(rsCust.getInt(1));
                 }
-                rsCust.close();
 
-                stmt = dbConnection.createStatement();
-                ResultSet rsServ = stmt.executeQuery(queryService);
+                ResultSet test = stmt.executeQuery(queryService);
 
+                while (test.next()){
+                    for (int i = 0; i < bookingIds.size(); i++){
+                        if (test.getInt(1) == bookingIds.get(i)){
+                            servicesString.add(test.getString(2));
+                        }
+                    }
+                }
+
+                test.close();
+
+                ResultSet test2 = stmt.executeQuery(queryS);
+
+                while(test2.next()){
+                    for (int i = 0; i < servicesString.size(); i++){
+                        if (test2.getString(1) == servicesString.get(i)){
+                            services.add(new Service(
+                                    test2.getString(1),
+                                    test2.getDouble(2),
+                                    test2.getDouble(3),
+                                    test2.getTimestamp(4),
+                                    test2.getTimestamp(5),
+                                    test2.getInt(6)));
+                        }
+                    }
+                }
+
+                test2.close();
+
+
+//                stmt = dbConnection.createStatement();
+//                ResultSet rsServ = stmt.executeQuery(queryService);
+//                ResultSet rsS = stmt.executeQuery(queryS);
+//
+//                while (rsServ.next() || rsS.next()){
+//                    if (rsServ.getInt(1) == bookingIds.get(0)){
+//                        if(rsServ.getString(2) == rsS.getString(1)){
+//                            services.add(new Service(
+//                                    rsS.getString(1),
+//                                    rsS.getDouble(2),
+//                                    rsS.getDouble(3),
+//                                    rsS.getTimestamp(4),
+//                                    rsS.getTimestamp(5),
+//                                    rsS.getInt(6)));
+//                        }
+//                    }
+//                }
+//                rsCust.close();
+//                rsServ.close();
+//                rsS.close();
 
                 ResultSet rs = stmt.executeQuery(queryCustomer);
 
@@ -209,7 +258,7 @@ public class DBC {
                 }
                 resultSet.close();
             }
-        }catch (Exception ex){ System.out.println(ex.getMessage()); }
+        }catch (Exception ex){ ex.printStackTrace(); }
 
         return bookings;
     }
