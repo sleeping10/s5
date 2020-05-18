@@ -9,7 +9,7 @@ public abstract class ServiceHandler {
     protected double getServiceCost(String service){
         double cost = 0;
         for (int i = 0; i < availableServices.size(); i++){
-            if (service.matches(availableServices.get(i).getserviceName())){
+            if (service.matches(availableServices.get(i).getServiceName())){
                 cost =  availableServices.get(i).getCurrentCost();
             }
         }
@@ -19,7 +19,7 @@ public abstract class ServiceHandler {
     protected double getDefaultServiceCost(String service){
         double cost = 0;
         for (int i = 0; i < availableServices.size(); i++){
-            if (service.matches(availableServices.get(i).getserviceName())){
+            if (service.matches(availableServices.get(i).getServiceName())){
                 cost =  availableServices.get(i).getCost();
             }
         }
@@ -29,7 +29,7 @@ public abstract class ServiceHandler {
     protected String getServiceCostAsString(String service){
         String out = "";
         for (int i = 0; i < availableServices.size(); i++){
-            if (service.matches(availableServices.get(i).getserviceName())){
+            if (service.matches(availableServices.get(i).getServiceName())){
                 out =  availableServices.get(i).getCostAndDiscountAsString();
             }
         }

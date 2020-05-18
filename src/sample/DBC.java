@@ -83,7 +83,7 @@ public class DBC {
             for (int i = 0; i < booking.getServices().size(); i++){
                 statement = dbConnection.prepareStatement(queryAddServicesToBooking);
                 statement.setInt(1, totalBookings+1);
-                statement.setString(2, booking.getServices().get(i).getserviceName());
+                statement.setString(2, booking.getServices().get(i).getServiceName());
                 statement.execute();
             }
             statement.close();
@@ -165,8 +165,8 @@ public class DBC {
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
         String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
-        String queryService = "SELECT * From Booking_has_service";
-        String queryS = "SELECT * from Service";
+        String queryBookingHasService = "SELECT * From Booking_has_service";
+        String queryService = "SELECT * from Service";
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<Service> services = new ArrayList<>();
         ArrayList<String> servicesString = new ArrayList<>();
@@ -180,57 +180,35 @@ public class DBC {
                     bookingIds.add(rsCust.getInt(1));
                 }
 
-                ResultSet test = stmt.executeQuery(queryService);
+                ResultSet rsBookingHasService = stmt.executeQuery(queryBookingHasService);
 
-                while (test.next()){
+                while (rsBookingHasService.next()){
                     for (int i = 0; i < bookingIds.size(); i++){
-                        if (test.getInt(1) == bookingIds.get(i)){
-                            servicesString.add(test.getString(2));
+                        if (rsBookingHasService.getInt(1) == bookingIds.get(i)){
+                            servicesString.add(rsBookingHasService.getString(2));
                         }
                     }
                 }
+                rsBookingHasService.close();
 
-                test.close();
+                ResultSet rsService = stmt.executeQuery(queryService);
 
-                ResultSet test2 = stmt.executeQuery(queryS);
-
-                while(test2.next()){
+                while(rsService.next()){
                     for (int i = 0; i < servicesString.size(); i++){
-                        if (test2.getString(1) == servicesString.get(i)){
+                        if (rsService.getString(1).equals(servicesString.get(i))){
                             services.add(new Service(
-                                    test2.getString(1),
-                                    test2.getDouble(2),
-                                    test2.getDouble(3),
-                                    test2.getTimestamp(4),
-                                    test2.getTimestamp(5),
-                                    test2.getInt(6)));
+                                    rsService.getString(1),
+                                    rsService.getDouble(2),
+                                    rsService.getDouble(3),
+                                    rsService.getTimestamp(4),
+                                    rsService.getTimestamp(5),
+                                    rsService.getInt(6)));
+                        }else{
+                            System.out.println("DEBUG: Match not found");
                         }
                     }
                 }
-
-                test2.close();
-
-
-//                stmt = dbConnection.createStatement();
-//                ResultSet rsServ = stmt.executeQuery(queryService);
-//                ResultSet rsS = stmt.executeQuery(queryS);
-//
-//                while (rsServ.next() || rsS.next()){
-//                    if (rsServ.getInt(1) == bookingIds.get(0)){
-//                        if(rsServ.getString(2) == rsS.getString(1)){
-//                            services.add(new Service(
-//                                    rsS.getString(1),
-//                                    rsS.getDouble(2),
-//                                    rsS.getDouble(3),
-//                                    rsS.getTimestamp(4),
-//                                    rsS.getTimestamp(5),
-//                                    rsS.getInt(6)));
-//                        }
-//                    }
-//                }
-//                rsCust.close();
-//                rsServ.close();
-//                rsS.close();
+                rsService.close();
 
                 ResultSet rs = stmt.executeQuery(queryCustomer);
 

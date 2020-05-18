@@ -56,9 +56,9 @@ public class DetailedBookingViewController implements Initializable {
         ArrayList<Service> list = new ArrayList<>();
         ObservableList<Service> views = FXCollections.observableArrayList();
         for (int i = 0; i < selectedBooking.getServices().size(); i++) {
-            service = new Service(selectedBooking.getServices().get(i).getserviceName(), selectedBooking.getServices().get(i).getCost(),
+            service = new Service(selectedBooking.getServices().get(i).getServiceName(), selectedBooking.getServices().get(i).getCost(),
                     selectedBooking.getServices().get(i).getDiscount(), selectedBooking.getServices().get(i).getDiscountStart(),
-                    selectedBooking.getServices().get(i).getDiscountEnd(), Integer.parseInt(selectedBooking.getServices().get(i).getEstimatedTime()));
+                    selectedBooking.getServices().get(i).getDiscountEnd(), selectedBooking.getServices().get(i).getEstimatedTime());
             list.add(service);
         }
         for (int i = 0; i <list.size() ; i++) {
@@ -75,6 +75,8 @@ public class DetailedBookingViewController implements Initializable {
         tfEmail.setEditable(false);
         tfBookingID.setEditable(false);
         tfTotalCost.setEditable(false);
+
+        System.out.println(DBC.getInstance().getBooking().get(0).getServices());
 
     }
 
