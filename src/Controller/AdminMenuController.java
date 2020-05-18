@@ -49,26 +49,31 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
     @FXML private Button btnDeleteAcc;
 
-    private ArrayList<Account> list = new ArrayList<>();
+    private ArrayList<Account> userList = new ArrayList<>();
+    private String selectedService;
 
     @FXML private Label lblStatus;
-    private String selectedService;
 
     public ObservableList<Account> view (){
         ObservableList<Account> views = FXCollections.observableArrayList();
-        list=DBC.getInstance().getAllUsers();
-        for (int i = 0; i <list.size() ; i++) {
-            views.add(list.get(i));
+        userList=DBC.getInstance().getAllUsers();
+        for (int i = 0; i <userList.size() ; i++) {
+            views.add(userList.get(i));
         }
         return views;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        updateUserTableVew();
+        updateUserTableView();
+
+        if (DBC.getInstance().getAccount().getAccessType() == 2 ||
+                DBC.getInstance().getAccount().getAccessType() == 3){
+            btnDeleteAcc.setDisable(true);
+        }
     }
 
-    private void updateUserTableVew(){
+    private void updateUserTableView(){
         tcAccID.setCellValueFactory(new PropertyValueFactory<Integer, Account>("accountID"));
         tcEmail.setCellValueFactory(new PropertyValueFactory<String, Account>("email"));
         tcName.setCellValueFactory(new PropertyValueFactory<String, Account>("name"));
@@ -202,7 +207,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
         }else{
             lblStatus.setText("User sucessfully deleted");
         }
-        updateUserTableVew();
+        updateUserTableView();
 
     }
 }

@@ -65,6 +65,7 @@ public class DetailedBookingViewController extends ServiceHandler implements Ini
         SceneSwitcher ss = new SceneSwitcher();
         ss.loginSignupSceneSwitcher(actionEvent,"ManageBooking");
 
+
     }
 
     public void handleButtonSavePressed(ActionEvent actionEvent) {

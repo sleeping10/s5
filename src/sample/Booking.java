@@ -9,7 +9,7 @@ public class Booking {
     private String bookingDesc;
     private int accountID;
     private String licensePlate;
-    private ArrayList<String> services;
+    private ArrayList<Service> services;
 
     public int getBookingID() {
         return bookingID;
@@ -29,11 +29,11 @@ public class Booking {
 
     public String getLicensePlate(){return licensePlate;}
 
-    public ArrayList<String> getServices(){
+    public ArrayList<Service> getServices(){
         return this.services;
     }
 
-    public Booking(int bookingID, Date date, String bookingDesc, int accountID, String licensePlate, ArrayList<String> services) {
+    public Booking(int bookingID, Date date, String bookingDesc, int accountID, String licensePlate, ArrayList<Service> services) {
         this.bookingID = bookingID;
         this.date = date;
         this.bookingDesc = bookingDesc;

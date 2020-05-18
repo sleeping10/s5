@@ -25,6 +25,18 @@ public class Service {
 
     public String getserviceName() { return serviceName; }
 
+    public double getDiscount(){
+            return discount;
+    }
+
+    public Timestamp getDiscountStart(){
+            return discountStart;
+    }
+
+    public Timestamp getDiscountEnd(){
+            return discountEnd;
+    }
+
     public double getCurrentCost() {
         double discount = this.discount / 100;
 
