@@ -52,6 +52,7 @@ public class DetailedBookingViewController implements Initializable {
         SceneSwitcher ss = new SceneSwitcher();
         ss.loginSignupSceneSwitcher(actionEvent,"ManageBooking");
 
+
     }
 
     public void handleButtonSavePressed(ActionEvent actionEvent) {

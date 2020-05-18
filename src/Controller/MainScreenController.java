@@ -38,7 +38,13 @@ public class MainScreenController implements Initializable {
         if (DBC.getInstance().getAccount().getAccessType() == 1){
             btnAdmin.setVisible(true);
             btnContact.setVisible(false);
-        }else{
+        } else if (DBC.getInstance().getAccount().getAccessType() == 2){
+            btnAdmin.setVisible(true);
+            btnContact.setVisible(false);
+            btnAdmin.setText("Employee Menu");
+        }
+
+        else{
             btnAdmin.setVisible(false);
         }
     }

@@ -83,7 +83,7 @@ public class DBC {
             for (int i = 0; i < booking.getServices().size(); i++){
                 statement = dbConnection.prepareStatement(queryAddServicesToBooking);
                 statement.setInt(1, totalBookings+1);
-                statement.setString(2, booking.getServices().get(i));
+                statement.setString(2, booking.getServices().get(i).getserviceName());
                 statement.execute();
             }
             statement.close();
@@ -93,6 +93,27 @@ public class DBC {
             e.printStackTrace();
         }
     }
+
+    public Service getService(String name){
+
+        String query = "SELECT * From Service where serviceName = '" + name + "'";
+        Service tempService = null;
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()){
+                tempService = new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5), rs.getInt(6));
+            }
+            rs.close();
+
+        }catch (Exception ex){
+            System.out.println(ex.getMessage());
+        }
+        return tempService;
+    }
+
+
 
     // gets a complete account from accountID (booking -> getAccountID -> this method
     public Account getCompleteAccount(int accountID) {
@@ -134,21 +155,26 @@ public class DBC {
     public ArrayList<Booking> getBooking() {
         String queryAdmin = "SELECT * From Booking";
         String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
-        String queryService = "SELECT * From Booking_has_service";
+        String queryService = "SELECT * From Booking_has_service where Boo";
         ArrayList<Booking> bookings = new ArrayList<>();
-        ArrayList<String> services = new ArrayList<>();
+        ArrayList<Service> services = new ArrayList<>();
         ArrayList<Integer> bookingIds = new ArrayList<>();
         try {
             if (DBC.getInstance().getAccount().getAccessType() == 3) {
                 stmt = dbConnection.createStatement();
-                ResultSet rsService = stmt.executeQuery(queryCustomer);
+                ResultSet rsCust = stmt.executeQuery(queryCustomer);
 
-                while (rsService.next()) {
-                    bookingIds.add(rsService.getInt(1));
-                    services.add(rsService.getString(2));
+                while (rsCust.next()) {
+                    bookingIds.add(rsCust.getInt(1));
                 }
-                rsService.close();
+                rsCust.close();
+
+                stmt = dbConnection.createStatement();
+                ResultSet rsServ = stmt.executeQuery(queryService);
+
+
                 ResultSet rs = stmt.executeQuery(queryCustomer);
+
                 while (rs.next()){
                     for(int i = 0; i < bookingIds.size(); i++){
                         if (rs.getInt(1 ) == bookingIds.get(i)){
@@ -163,7 +189,6 @@ public class DBC {
 
                 while (rsService.next()) {
                     bookingIds.add(rsService.getInt(1));
-                    services.add(rsService.getString(2));
                 }
                 rsService.close();
 

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -67,6 +68,10 @@
                           </columns>
                         </TableView>
                         <Button fx:id="btnDeleteAcc" layoutY="238.0" mnemonicParsing="false" onAction="#handleDeleteAccBtn" text="Delete Account" />
+                        <Button layoutX="361.0" layoutY="238.0" mnemonicParsing="false" text="Apply/Revoke Permissions" />
+                        <RadioButton layoutX="129.0" layoutY="242.0" mnemonicParsing="false" text="Admin" />
+                        <RadioButton layoutX="195.0" layoutY="242.0" mnemonicParsing="false" text="Employee" />
+                        <RadioButton layoutX="279.0" layoutY="242.0" mnemonicParsing="false" text="Customer" />
                      </children>
                   </AnchorPane>
             </content>

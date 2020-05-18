@@ -9,13 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.Booking;
 import sample.DBC;
+import sample.Service;
 import sample.ServiceHandler;
-import sample.editDocument;
+//import sample.editDocument;
 
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -112,10 +114,12 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     @FXML
     private RadioButton rdB;
 
-    private ArrayList<String> services = new ArrayList<>();
+    private ArrayList<Service> services = new ArrayList<>();
 
 
     private double price = 0;
+
+    //private ArrayList<Date> dates = new ArrayList<Date>(08:00, 09:00);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -249,6 +253,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
     private void fillTimesListView() {
+        String timeStamp = new SimpleDateFormat("HH:mm").format(new Date());
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
         System.out.println(sdf.format(cal.getTime()));
@@ -288,21 +293,23 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
     private void addServiceToCurrentBooking(boolean toggle, String service) {
+        Service tempService = DBC.getInstance().getService(service);
         double cost = getServiceCost(service);
         if (toggle) {
             price += cost;
             txtATotal.appendText(service + ", $" + cost + " \n");
-            services.add(service);
+            services.add(tempService);
         } else {
             txtATotal.clear();
             price -= cost;
             services.remove(service);
             for (int i = 0; i < services.size(); i++) {
-                txtATotal.appendText(services.get(i) + ", $" + getServiceCost(services.get(i)) + "\n");
+                txtATotal.appendText(services.get(i) + ", $" + (services.get(i).getCost()) + "\n");
             }
         }
         lblTotalCost.setText("Total cost: $" + Math.round(price));
     }
+
 
     @FXML
     private void handleInspectionBasicChbox() {
@@ -496,44 +503,44 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     public void fungerar() throws IOException {
-        File source = new File("s5/src/FXML/booking_confirmation.odt");
-        File dest = new File("s5/src/FXML/Out.odt");
-        FileChannel sourceChannel = null;
-        FileChannel destChannel = null;
-        try {
-            sourceChannel = new FileInputStream(source).getChannel();
-            destChannel = new FileOutputStream(dest).getChannel();
-            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-            System.out.println("test");
-        } finally {
-            sourceChannel.close();
-            destChannel.close();
-        }
+//        File source = new File("s5/src/FXML/booking_confirmation.odt");
+//        File dest = new File("s5/src/FXML/Out.odt");
+//        FileChannel sourceChannel = null;
+//        FileChannel destChannel = null;
+//        try {
+//            sourceChannel = new FileInputStream(source).getChannel();
+//            destChannel = new FileOutputStream(dest).getChannel();
+//            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+//            System.out.println("test");
+//        } finally {
+//            sourceChannel.close();
+//            destChannel.close();
+//        }
     }
 
-    File source = new File("//home//sleeping//Documents//kod//s5//src//FXML//booking_confirmation.docx");
-    File dest = new File("//home//sleeping//Documents//kod//s5//src//FXML//test.docx");
+    //File source = new File("//home//sleeping//Documents//kod//s5//src//FXML//booking_confirmation.docx");
+    //File dest = new File("//home//sleeping//Documents//kod//s5//src//FXML//test.docx");
 
     @FXML
     public void resetTemplate() {
-        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
-            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
+//            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
 
     @FXML
     public void test() throws Exception {
-        if (rdB.isSelected()) {
-            editDocument editDocument = new editDocument();
-            editDocument.skrivaTest();
-        }
+//        if (rdB.isSelected()) {
+//            editDocument editDocument = new editDocument();
+//            editDocument.skrivaTest();
+//        }
     }
 
 
