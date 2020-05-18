@@ -156,9 +156,17 @@ public class DBC {
         }
         return acc;
     }
+    // used in detailed booking view to change the date and description of booking
     public void updateBooking(Booking booking){
-//        String query
-//        statement
+        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+booking.getDate()+"' WHERE bookingID = '"+booking.getBookingID()+"'";
+        try {
+            statement = dbConnection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 
     //Gets all the bookings from the Database
@@ -239,10 +247,6 @@ public class DBC {
         return bookings;
     }
 
-    // removeBooking
-    //public void removeBooking(Booking booking) {
-//
-  //  }
 
 
     public ArrayList<Service> getAvailableServices() {

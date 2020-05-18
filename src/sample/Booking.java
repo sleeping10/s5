@@ -41,6 +41,12 @@ public class Booking {
         this.licensePlate = licensePlate;
         this.services = services;
     }
+    public void setBookingDesc(String newDesc){
+        this.bookingDesc = newDesc;
+    }
+    public void setDate(Date newDate){
+        this.date = newDate;
+    }
 
 
 }

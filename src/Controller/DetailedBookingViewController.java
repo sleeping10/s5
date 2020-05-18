@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class DetailedBookingViewController implements Initializable {
@@ -28,6 +29,7 @@ public class DetailedBookingViewController implements Initializable {
     @FXML private TableColumn tcPrice;
     @FXML private TableView<Service> tvServices;
     @FXML private DatePicker dp;
+    @FXML private TextArea taDesc;
     private Booking selectedBooking;
     private Account acc = null;
 
@@ -51,6 +53,7 @@ public class DetailedBookingViewController implements Initializable {
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
         LocalDate ld = ldt.toLocalDate();
         dp.setValue(ld);
+        taDesc.setText(selectedBooking.getBookingDesc());
         System.out.println("init booking 3");
 
         }
@@ -85,16 +88,10 @@ public class DetailedBookingViewController implements Initializable {
 
     }
 
-
-    public void handleButtonBackPressed(ActionEvent actionEvent) {
-        SceneSwitcher ss = new SceneSwitcher();
-        ss.loginSignupSceneSwitcher(actionEvent,"ManageBooking");
-
-
-    }
-
     public void handleButtonSavePressed(ActionEvent actionEvent) {
-
+        selectedBooking.setBookingDesc(taDesc.getText());
+        Date d =java.sql.Date.valueOf(dp.getValue());
+        selectedBooking.setDate(d);
         DBC.getInstance().updateBooking(selectedBooking);
     }
 
