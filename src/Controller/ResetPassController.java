@@ -67,7 +67,7 @@ public class ResetPassController implements Initializable {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(userName));
-            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse("***@gmail.com"));
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(tfEmail.getText()));
             message.setSubject("Testing Gmail");
 
             if (DBC.getInstance().checkEmailDB(tfEmail.getText())) {
