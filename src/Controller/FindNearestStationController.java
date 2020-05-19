@@ -1,5 +1,8 @@
 package Controller;
 
+
+import com.lynden.gmapsfx.GoogleMapView;
+import com.lynden.gmapsfx.MapComponentInitializedListener;
 import com.lynden.gmapsfx.javascript.object.*;
 import com.lynden.gmapsfx.service.directions.*;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
-import com.lynden.gmapsfx.*;
 
 
 
@@ -62,5 +64,5 @@ public class FindNearestStationController implements Initializable, MapComponent
         directionsService = new DirectionsService();
         directionsPane = mapView.getDirec();
     }
-
 }
+
