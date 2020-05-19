@@ -68,13 +68,13 @@ public class ResetPassController implements Initializable {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(userName));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(tfEmail.getText()));
-            message.setSubject("Testing Gmail");
+            message.setSubject("HKR Car Wash & Service - Forgot password");
 
             if (DBC.getInstance().checkEmailDB(tfEmail.getText())) {
                 Random random = new Random();
                 int randomNumber = random.nextInt(999999);
                 System.out.println("Generated number : " + randomNumber);
-                message.setText("Your new Password is = " + randomNumber);
+                message.setText("Your new recovery code is = " + randomNumber);
 
                 Transport.send(message);
                 System.out.println("Email sent successfully");
