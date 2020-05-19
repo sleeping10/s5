@@ -44,9 +44,13 @@ public class ManageBookingController implements Initializable {
         ObservableList<Booking> views = FXCollections.observableArrayList();
         list=DBC.getInstance().getBooking();
         for (int i = 0; i <list.size() ; i++) {
-            s = list.get(i).getServices().get(i).getServiceName().replace("_"," ");
-            list.get(i).getServices().get(i).setServiceName(s);
+            for (int j = 0; j < list.get(i).getServices().size() ; j++) {
+                s = list.get(i).getServices().get(j).getServiceName().replace("_", " ");
+                list.get(i).getServices().get(j).setServiceName(s);
+            }
+
             views.add(list.get(i));
+
         }
         return views;
     }

@@ -37,10 +37,8 @@ public class DetailedBookingViewController implements Initializable {
     // hämtar booking från förra sidan
     public void initBooking(Booking booking){
         selectedBooking = booking;
-        System.out.println("init booking 1");
         tcServices.setCellValueFactory(new PropertyValueFactory<String, Service>("serviceName"));
         tcPrice.setCellValueFactory(new PropertyValueFactory<Double, Service>("cost"));
-        System.out.println("init booking 2");
         tvServices.setItems(view());
 
         acc =DBC.getInstance().getCompleteAccount(selectedBooking.getAccountID());
@@ -53,6 +51,7 @@ public class DetailedBookingViewController implements Initializable {
         for (int i = 0; i <listicle.size() ; i++) {
             cost+= listicle.get(i).getCurrentCost();
         }
+        cost = Math.round(cost);
         tfTotalCost.setText(String.valueOf(cost));
         tfBookingID.setText(String.valueOf(selectedBooking.getBookingID()));
         Instant instant = Instant.ofEpochMilli(selectedBooking.getDate().getTime());
@@ -60,23 +59,19 @@ public class DetailedBookingViewController implements Initializable {
         LocalDate ld = ldt.toLocalDate();
         dp.setValue(ld);
         taDesc.setText(selectedBooking.getBookingDesc());
-        System.out.println("init booking 3");
 
         }
 
     private ObservableList<Service> view (){
         Service service;
-        System.out.println("view 1");
         ArrayList<Service> list = new ArrayList<>();
         ObservableList<Service> views = FXCollections.observableArrayList();
-        System.out.println("view 2");
         for (int i = 0; i < selectedBooking.getServices().size(); i++) {
             service = new Service(selectedBooking.getServices().get(i).getServiceName(), selectedBooking.getServices().get(i).getCost(),
                     selectedBooking.getServices().get(i).getDiscount(), selectedBooking.getServices().get(i).getDiscountStart(),
                     selectedBooking.getServices().get(i).getDiscountEnd(), selectedBooking.getServices().get(i).getEstimatedTime());
             list.add(service);
         }
-        System.out.println("view 3");
         for (int i = 0; i <list.size() ; i++) {
             views.add(list.get(i));
         }
