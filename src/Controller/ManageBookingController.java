@@ -84,8 +84,10 @@ public class ManageBookingController implements Initializable {
                 }
             }
         } else if (!tfPhone.getText().isEmpty()){
+            Account tempAcc;
             for(Booking b : list) {
-                if (tfPhone.getText().matches(DBC.getInstance().getPhoneFilter(b.getAccountID()))) {
+                tempAcc = DBC.getInstance().getCompleteAccount(b.getAccountID());
+                if (tempAcc.getPhoneNr().startsWith(tfPhone.getText())) {
                     tvField.getItems().add(b);
                 }
             }
