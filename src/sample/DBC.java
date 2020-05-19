@@ -235,35 +235,33 @@ public class DBC {
                 String query2 = "SELECT * FROM Booking";
                 String countBookingHasService = "SELECT COUNT(bookingID) FROM Booking";
                 int total = 0;
+                Booking tempBooking = null;
                 if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
                     stmt = dbConnection.createStatement();
 
-                    ResultSet rs3 = stmt.executeQuery(querytest2);
                     lastId = -1;
 
+                try{
+                    ResultSet rs3 = stmt.executeQuery(querytest2);
                     while (rs3.next()) {
 
                         if (lastId != -1 && lastId != rs3.getInt(1)) {
-                            //System.out.println("last id: " + lastId);
-                            if (rs3.getInt(1) != 1) {
-                                bookings.add(new Booking(lastId, rs3.getDate(2), rs3.getString(3), rs3.getInt(4), rs3.getString(6), new ArrayList(tempArray)));
-                            } else if (rs3.getInt(1) == 1) {
-                                bookings.add(new Booking(rs3.getInt(1), rs3.getDate(2), rs3.getString(3), rs3.getInt(4), rs3.getString(6), new ArrayList(tempArray)));
-                            }
+                            bookings.add(tempBooking);
                             tempArray.clear();
-
-                        } else if (lastId == -1 || lastId == rs3.getInt(1)) {
-                            tempArray.add(new Service(rs3.getString(7), rs3.getDouble(8), rs3.getDouble(9),
-                                    rs3.getTimestamp(10), rs3.getTimestamp(11), rs3.getInt(12)));
-
-                        } else if(rs3.isLast()){
-                            bookings.add(new Booking(lastId, rs3.getDate(2), "", 5, "FEG123", (ArrayList) tempArray.clone()));
                         }
 
+                        tempArray.add(new Service(rs3.getString(7), rs3.getDouble(8), rs3.getDouble(9),
+                                rs3.getTimestamp(10), rs3.getTimestamp(11), rs3.getInt(12)));
+                        tempBooking = new Booking(rs3.getInt(1), rs3.getDate(2), rs3.getString(3), rs3.getInt(4), rs3.getString(6), new ArrayList(tempArray));
                         lastId = rs3.getInt(1);
-
                     }
+
+                    bookings.add(tempBooking);
                     stmt.close();
+
+                }catch (Exception e){
+                e.printStackTrace();
+            }
                     //Add last booking to list
 
                 }else{
@@ -273,50 +271,21 @@ public class DBC {
 
                             try {
                                 ResultSet rs4 = stmt.executeQuery(querytest3);
+
                                 while (rs4.next()) {
 
-
-                                    // -1 Först gör denna
-                                    if (lastId == -1){
-                                        System.out.println("Creating first service to first booking, " + rs4.getString(7));
-                                        tempArray.add(new Service(rs4.getString(7), rs4.getDouble(8), rs4.getDouble(9),
-                                                rs4.getTimestamp(10), rs4.getTimestamp(11), rs4.getInt(12)));
-                                        Booking tempbooking = new Booking(rs4.getInt(1), rs4.getDate(2), rs4.getString(3), rs4.getInt(4), rs4.getString(6), new ArrayList(tempArray));
-                                        bookings.add(tempbooking);
+                                    if (lastId != -1 && lastId != rs4.getInt(1)) {
+                                        bookings.add(tempBooking);
                                         tempArray.clear();
-                                        System.out.println(tempbooking.getBookingID());
                                     }
 
-
-                                    else {
-                                        System.out.println("DEBUG: Adding service to temparray, " + rs4.getString(7));
                                         tempArray.add(new Service(rs4.getString(7), rs4.getDouble(8), rs4.getDouble(9),
                                                 rs4.getTimestamp(10), rs4.getTimestamp(11), rs4.getInt(12)));
-                                        System.out.println("SERVICES TO BE ADDED: ");
-                                        for (int i = 0; i < tempArray.size(); i++){
-
-                                            System.out.print(tempArray.get(i).getServiceName() + ", ");
-                                            System.out.println();
-                                        }
-
-                                    }
-
-
-                                    // efter första steg, la = 1 gör, denna 2
-                                   if (lastId != -1 && lastId == rs4.getInt(1) && !rs4.isLast()) {
-                                        System.out.println("last id: " + lastId);
-                                        System.out.println("rs4 id: " + rs4.getInt(1));
-                                        Booking tempbooking = new Booking(rs4.getInt(1), rs4.getDate(2), rs4.getString(3), rs4.getInt(4), rs4.getString(6), new ArrayList(tempArray));
-                                            bookings.add(tempbooking);
-                                            tempArray.clear();
-                                        System.out.println(tempbooking.getBookingID());
-
-                                        }
-
+                                    tempBooking = new Booking(rs4.getInt(1), rs4.getDate(2), rs4.getString(3), rs4.getInt(4), rs4.getString(6), new ArrayList(tempArray));
                                     lastId = rs4.getInt(1);
-                                    System.out.println("DEBUG: new ID/last ---> " + lastId);
-                                    }
+                                }
 
+                                bookings.add(tempBooking);
                                 stmt.close();
 
                             }catch (Exception e){
