@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ContactUsController">
    <children>
-      <Label fx:id="labelAddress" layoutX="183.0" layoutY="74.0" text="sdadwa">
+      <Label fx:id="labelAddress" layoutX="28.0" layoutY="75.0" text="sdadwa">
          <font>
-            <Font size="17.0" />
+            <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelPhone" layoutX="183.0" layoutY="109.0" text="asdawds">
+      <Label fx:id="labelPhone" layoutX="28.0" layoutY="109.0" text="asdawds">
          <font>
-            <Font size="17.0" />
+            <Font size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelHours" layoutX="181.0" layoutY="194.0" text="wadsda">
+      <Label fx:id="labelHours" layoutX="28.0" layoutY="190.0" text="wadsda">
          <font>
-            <Font size="17.0" />
+            <Font size="15.0" />
          </font>
       </Label>
       <Label layoutX="187.0" layoutY="20.0" text="Contact us">
@@ -26,10 +28,14 @@
             <Font size="27.0" />
          </font>
       </Label>
-      <Label fx:id="labelEmail" layoutX="183.0" layoutY="150.0" text="sdawd">
+      <Label fx:id="labelEmail" layoutX="28.0" layoutY="150.0" text="sdawd">
          <font>
-            <Font size="17.0" />
+            <Font size="15.0" />
          </font>
       </Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="251.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../hkr%20bild.jpg" />
+         </image></ImageView>
    </children>
 </AnchorPane>
