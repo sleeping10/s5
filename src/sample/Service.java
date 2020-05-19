@@ -24,6 +24,9 @@ public class Service {
         }
 
     public String getServiceName() { return serviceName; }
+    public void setServiceName(String s){
+            this.serviceName =s;
+    }
 
     public double getDiscount(){
             return discount;

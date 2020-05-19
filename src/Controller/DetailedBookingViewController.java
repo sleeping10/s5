@@ -11,12 +11,12 @@ import org.w3c.dom.ls.LSOutput;
 import sample.*;
 
 import java.net.URL;
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 public class DetailedBookingViewController implements Initializable {
@@ -89,10 +89,11 @@ public class DetailedBookingViewController implements Initializable {
     }
 
     public void handleButtonSavePressed(ActionEvent actionEvent) {
+        java.util.Date date;
         selectedBooking.setBookingDesc(taDesc.getText());
-        Date d =java.sql.Date.valueOf(dp.getValue());
-
-        selectedBooking.setDate(d);
+        java.sql.Date dpDate = java.sql.Date.valueOf(dp.getValue());
+        date = new java.util.Date(dpDate.getTime());
+        selectedBooking.setDate(date);
         DBC.getInstance().updateBooking(selectedBooking);
     }
 

@@ -95,7 +95,7 @@ public class DBC {
         }
     }
     public void removeBooking(Booking booking){
-        String query = "DELETE FROM Booking where bookingID = '" + booking.getBookingID() + "'";
+        String query = "DELETE FROM Booking,Booking_has_service USING Booking INNER JOIN Booking_has_service WHERE bookingID = '"+booking.getBookingID()+"' AND Booking_bookingID = bookingID";
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
@@ -161,7 +161,8 @@ public class DBC {
     public void updateBooking(Booking booking){
         java.util.Date utilDate = booking.getDate();
         java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
-        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+sq+"' WHERE bookingID = '"+booking.getBookingID()+"'";
+        System.out.println(sq);
+        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+sq+"' WHERE bookingID = "+booking.getBookingID();
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
