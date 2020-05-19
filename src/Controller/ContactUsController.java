@@ -11,7 +11,7 @@ import java.awt.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-//This class is not done/implemented yet
+
 public class ContactUsController implements Initializable {
     @FXML private Label labelAddress;
     @FXML private Label labelEmail;
@@ -29,7 +29,6 @@ public class ContactUsController implements Initializable {
         labelPhone.setText("Phone: 133769420");
 
     }
-
 
     public void linkPressed(ActionEvent actionEvent) {
         try {

@@ -19,10 +19,10 @@
       <TextField fx:id="tfBookingID" editable="false" layoutX="14.0" layoutY="14.0" promptText="Booking ID" />
       <TextField fx:id="tfTotalCost" editable="false" layoutX="437.0" layoutY="261.0" promptText="Total Cost" />
       <DatePicker fx:id="dp" layoutX="14.0" layoutY="55.0" />
-      <TableView fx:id="tvServices" layoutX="342.0" layoutY="52.0" prefHeight="200.0" prefWidth="244.0">
+      <TableView fx:id="tvServices" layoutX="329.0" layoutY="52.0" prefHeight="200.0" prefWidth="257.0">
         <columns>
           <TableColumn fx:id="tcServices" prefWidth="156.0" text="Service" />
-          <TableColumn fx:id="tcPrice" prefWidth="87.0" text="Price" />
+          <TableColumn fx:id="tcPrice" prefWidth="100.0" text="Price" />
         </columns>
       </TableView>
       <TextArea fx:id="taDesc" layoutX="197.0" layoutY="91.0" prefHeight="121.0" prefWidth="125.0" />

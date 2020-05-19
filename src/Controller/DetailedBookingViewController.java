@@ -7,11 +7,8 @@ import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.w3c.dom.ls.LSOutput;
 import sample.*;
-
 import java.net.URL;
-import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
