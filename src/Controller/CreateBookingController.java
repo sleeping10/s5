@@ -311,6 +311,12 @@ public class CreateBookingController extends ServiceHandler implements Initializ
                 txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCost()) + "\n");
             }
         }
+
+        System.out.println("Services:");
+
+        for (int i = 0; i < services.size(); i++){
+            System.out.println(services.get(i).getServiceName());
+        }
         lblTotalCost.setText("Total cost: $" + Math.round(price));
     }
 
