@@ -45,8 +45,8 @@ public class ResetPassController implements Initializable {
 
         //Det funkar med min mail , men ger exception med andra va snäll och kolla om du kan lösa de
         //testa också om du kan göra så att man kan skicka till alla mail
-        final String userName = "*****@gmail.com";
-        final String password = "*****";
+        final String userName = "projektkurs2hkr@gmail.com";
+        final String password = "Swagyolo123";
 
         Properties prop = new Properties();
         prop.put("mail.smtp.host", "smtp.gmail.com");
