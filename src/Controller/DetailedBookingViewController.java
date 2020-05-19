@@ -48,6 +48,12 @@ public class DetailedBookingViewController implements Initializable {
         tfName.setText(acc.getName());
         tfPhone.setText(acc.getPhoneNr());
         tfEmail.setText(acc.getEmail());
+        ArrayList<Service> listicle = booking.getServices();
+        double cost = 0;
+        for (int i = 0; i <listicle.size() ; i++) {
+            cost+= listicle.get(i).getCurrentCost();
+        }
+        tfTotalCost.setText(String.valueOf(cost));
         tfBookingID.setText(String.valueOf(selectedBooking.getBookingID()));
         Instant instant = Instant.ofEpochMilli(selectedBooking.getDate().getTime());
         LocalDateTime ldt = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
