@@ -12,15 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.*;
-
-import javax.swing.*;
-import javax.swing.text.AbstractDocument;
-import javax.swing.text.DefaultStyledDocument;
-import java.awt.*;
 import java.io.*;
 import java.net.URL;
-import java.nio.channels.FileChannel;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class LoginController extends Verification implements Initializable {
@@ -70,7 +63,9 @@ public class LoginController extends Verification implements Initializable {
                         new FileOutputStream("../s5/rememberme.bin");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 if (DBC.getInstance().getAccount() != null) {
-                    out.writeObject(DBC.getInstance().getAccount());
+                    out.writeObject(new Account(0,
+                            DBC.getInstance().getAccount().getEmail(),
+                            pfPass.getText(), null, null, false, 0));
                 }
                 out.close();
                 fileOut.close();
@@ -130,7 +125,7 @@ public class LoginController extends Verification implements Initializable {
     }
 
     private void checkRememberMe() {
-        Account tmpAcc = null;
+        Account tmpAcc;
         try {
             FileInputStream fileIn =
                     new FileInputStream("../s5/rememberme.bin");
