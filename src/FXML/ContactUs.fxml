@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -37,5 +38,6 @@
          <image>
             <Image url="@../hkr%20bild.jpg" />
          </image></ImageView>
+      <Hyperlink fx:id="hlWebsite" layoutX="27.0" layoutY="223.0" onAction="#linkPressed" text="Hyperlink" />
    </children>
 </AnchorPane>
