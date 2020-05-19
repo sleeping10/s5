@@ -19,14 +19,14 @@
       <TextField fx:id="tfBookingID" editable="false" layoutX="14.0" layoutY="14.0" promptText="Booking ID" />
       <TextField fx:id="tfTotalCost" editable="false" layoutX="437.0" layoutY="261.0" promptText="Total Cost" />
       <DatePicker fx:id="dp" layoutX="14.0" layoutY="55.0" />
-      <TableView fx:id="tvServices" layoutX="437.0" layoutY="51.0" prefHeight="200.0" prefWidth="149.0">
+      <TableView fx:id="tvServices" layoutX="381.0" layoutY="51.0" prefHeight="200.0" prefWidth="205.0">
         <columns>
-          <TableColumn fx:id="tcServices" prefWidth="75.0" text="Service" />
-          <TableColumn fx:id="tcPrice" prefWidth="75.0" text="Price" />
+          <TableColumn fx:id="tcServices" prefWidth="116.0" text="Service" />
+          <TableColumn fx:id="tcPrice" prefWidth="88.0" text="Price" />
         </columns>
       </TableView>
-      <TextArea fx:id="taDesc" layoutX="220.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
-      <Label layoutX="288.0" layoutY="24.0" text="Description" />
+      <TextArea fx:id="taDesc" layoutX="238.0" layoutY="91.0" prefHeight="121.0" prefWidth="125.0" />
+      <Label layoutX="270.0" layoutY="59.0" text="Description" />
       <Label layoutX="376.0" layoutY="265.0" text="Total cost:" />
    </children>
 </AnchorPane>
