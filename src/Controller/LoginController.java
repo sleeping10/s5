@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import sample.*;
 import java.io.*;
 import java.net.URL;
@@ -65,7 +66,7 @@ public class LoginController extends Verification implements Initializable {
                 if (DBC.getInstance().getAccount() != null) {
                     out.writeObject(new Account(0,
                             DBC.getInstance().getAccount().getEmail(),
-                            pfPass.getText(), null, null, false, 0));
+                            pfPass.getText(), null, null, 0));
                 }
                 out.close();
                 fileOut.close();

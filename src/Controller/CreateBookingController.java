@@ -7,10 +7,7 @@ import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import sample.Booking;
-import sample.DBC;
-import sample.Service;
-import sample.ServiceHandler;
+import sample.*;
 //import sample.editDocument;
 
 import java.io.*;
@@ -233,7 +230,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
             System.out.println("ERROR: Not able to get date");
         }
 
-        if (datePicker.getValue() == null || tfLicense.getText().isEmpty()) {
+        if (datePicker.getValue() == null || !Verification.validateLicensePlate(tfLicense.getText())) {
             lblStatus.setText("Status: Please select a date and Registration ID");
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
@@ -315,6 +312,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         lblStatus.setText("Status: ");
         gridPaneTwo.setVisible(false);
         rdB.setVisible(false);
+        lwTimes.setVisible(false);
     }
 
     private void toggleInspectionCheckBoxes(boolean toggle) {

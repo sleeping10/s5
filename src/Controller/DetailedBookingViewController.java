@@ -78,7 +78,7 @@ public class DetailedBookingViewController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        tfName.setEditable(false);
+        tfName.setEditable(true);
         tfPhone.setEditable(false);
         tfEmail.setEditable(false);
         tfBookingID.setEditable(false);

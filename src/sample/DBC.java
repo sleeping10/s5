@@ -169,7 +169,7 @@ public class DBC {
                 status = rsDetailedAcc.getBoolean(6);
                 access = rsDetailedAcc.getInt(7);
             }
-            acc = new Account(id, email, password, name, phone, status, access);
+            acc = new Account(id, email, password, name, phone, access);
             rsDetailedAcc.close();
 
         } catch (Exception ex) {
@@ -362,7 +362,7 @@ public class DBC {
 
                     if (!dbLoginStatus) {
                         status = true;
-                        acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, true, accessType);
+                        acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, accessType);
                         setLoginStatus(true);
                     } else {
                         status = false;
@@ -448,7 +448,7 @@ public class DBC {
             } else {
                 do {
                     tempAcc = new Account(rsUsers.getInt(1), rsUsers.getString(2), rsUsers.getString(3), rsUsers.getString(4),
-                            rsUsers.getString(5), rsUsers.getBoolean(6), rsUsers.getInt(7));
+                            rsUsers.getString(5), rsUsers.getInt(7));
                     allUsers.add(tempAcc);
                 } while (rsUsers.next());
             }
@@ -522,10 +522,9 @@ public class DBC {
         return false;
     }
 
-    public void setRecoveryCode(String recoveryCode, String email) {
+    public void setRecoveryCode(int recoveryCode, String email) {
         int accID = 0;
         String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
-        String query = "UPDATE Account SET recoveryCode= '" + recoveryCode + "' WHERE accountID='" + accID + "'";
 
 
         try {
@@ -535,6 +534,7 @@ public class DBC {
                 accID = resultSet.getInt(1);
                 System.out.println(accID + "   set recoverycode");
             }
+            String query = "UPDATE Account SET recoveryCode= '" + recoveryCode + "' WHERE accountID='" + accID + "'";
 
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
@@ -566,13 +566,15 @@ public class DBC {
     public void setRecoveryPassword(String hash, String email) {
         int accID = 0;
         String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
-        String query = "UPDATE Account SET password='" + hash + "' WHERE accountID='" + accID + "'";
         try {
             stmt = dbConnection.createStatement();
             ResultSet resultSet = stmt.executeQuery(queryAccID);
             accID = resultSet.getInt(1);
             System.out.println(accID + "   set recoveryPassword");
+            stmt.close();
+            resultSet.close();
 
+            String query = "UPDATE Account SET password='" + hash + "' WHERE accountID='" + accID + "'";
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();
