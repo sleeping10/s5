@@ -55,8 +55,8 @@ public class ManageAccountController implements Initializable {
     }
 
     public void setCurrent() {
-        textFieldName.setPromptText(DBC.getInstance().getAccount().getName());
-        textFieldPhone.setPromptText(DBC.getInstance().getAccount().getPhoneNr());
+        textFieldName.setPromptText(DBC.getInstance().getCurrentAcc().getName());
+        textFieldPhone.setPromptText(DBC.getInstance().getCurrentAcc().getPhoneNr());
     }
 
     public void saveB() {
@@ -69,7 +69,7 @@ public class ManageAccountController implements Initializable {
 
         String part1 = "", part2 = "";
         try {
-            String[] parts = DBC.getInstance().getAccount().getPassword().split("-");
+            String[] parts = DBC.getInstance().getCurrentAcc().getPassword().split("-");
             part1 = parts[0];
             part2 = parts[1];
         }catch (Exception e){
@@ -79,7 +79,7 @@ public class ManageAccountController implements Initializable {
         String name = "", pass = "", phone = "";
         boolean checkPass = false;
         if (textFieldName.getText().isEmpty()) {
-            name = DBC.getInstance().getAccount().getName();
+            name = DBC.getInstance().getCurrentAcc().getName();
         } else name = textFieldName.getText();
         if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)){
             pass = verifyNewPassword();
@@ -92,7 +92,7 @@ public class ManageAccountController implements Initializable {
             checkPass = true;
         }
         if ((textFieldPhone.getText().isEmpty() && !checkPass)) {
-            phone = DBC.getInstance().getAccount().getPhoneNr();
+            phone = DBC.getInstance().getCurrentAcc().getPhoneNr();
         } else {
             if (verifyPhone()) {
                 if (DBC.getInstance().checkPhoneNumber(textFieldPhone.getText())) {
@@ -119,7 +119,7 @@ public class ManageAccountController implements Initializable {
         if (!pass.matches("1") && !checkPass) {
             String salt = PasswordEncryption.generateSalt(5);
             String hashed = PasswordEncryption.hashPassword(pass, salt) + "-" + salt;
-            DBC.getInstance().updateAccount(name, hashed, phone, DBC.getInstance().getAccount().getAccountID());
+            DBC.getInstance().updateAccount(name, hashed, phone, DBC.getInstance().getCurrentAcc().getAccountID());
             text.setText("saved!");
         }
     }
@@ -151,7 +151,7 @@ public class ManageAccountController implements Initializable {
         } else {
             if (textFieldNPassword.getText().isEmpty()) {
                 if (textFieldRNPassword.getText().isEmpty()) {
-                    return DBC.getInstance().getAccount().getPassword();
+                    return DBC.getInstance().getCurrentAcc().getPassword();
                 } else {
                     System.out.println("Wrong password.");
                     Alert alert = new Alert(Alert.AlertType.ERROR);

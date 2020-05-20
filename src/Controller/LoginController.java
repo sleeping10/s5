@@ -63,9 +63,9 @@ public class LoginController extends Verification implements Initializable {
                 FileOutputStream fileOut =
                         new FileOutputStream("../s5/rememberme.bin");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                if (DBC.getInstance().getAccount() != null) {
+                if (DBC.getInstance().getCurrentAcc() != null) {
                     out.writeObject(new Account(0,
-                            DBC.getInstance().getAccount().getEmail(),
+                            DBC.getInstance().getCurrentAcc().getEmail(),
                             pfPass.getText(), null, null, 0));
                 }
                 out.close();

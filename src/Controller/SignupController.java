@@ -36,7 +36,7 @@ public class SignupController extends Verification implements Initializable {
 
         switch (verifyAccount(tfEmail.getText(), tfPass.getText(), tfPhone.getText())) {
             case 0: lblStatus.setText("Email or Phone number already in use");break;
-            case 1: DBC.getInstance().setAcc(new Account(0,tfEmail.getText(), hashedPass, tfName.getText(), tfPhone.getText(), 3));DBC.getInstance().saveAccount();lblStatus.setText("Account created");break;
+            case 1: DBC.getInstance().setCurrentAcc(new Account(0,tfEmail.getText(), hashedPass, tfName.getText(), tfPhone.getText(), 3));DBC.getInstance().saveAccount();lblStatus.setText("Account created");break;
             case 2: lblStatus.setText("Password must be between 4-15 characters");break;
             case 3: lblStatus.setText("Type something into email"); break;
             case 4: lblStatus.setText("Not an valid email"); break;

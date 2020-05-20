@@ -25,7 +25,7 @@ public class MainScreenController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblSignedInInfo.setText("Signed in as: " + DBC.getInstance().getAccount().getEmail());
+        lblSignedInInfo.setText("Signed in as: " + DBC.getInstance().getCurrentAcc().getEmail());
         checkIfAdmin();
         try {
             sw.mainScreenSceneSwitcher(anchorInfo, "CreateBooking");
@@ -35,10 +35,10 @@ public class MainScreenController implements Initializable {
     }
 
     private void checkIfAdmin(){
-        if (DBC.getInstance().getAccount().getAccessType() == 1){
+        if (DBC.getInstance().getCurrentAcc().getAccessType() == 1){
             btnAdmin.setVisible(true);
             btnContact.setVisible(false);
-        } else if (DBC.getInstance().getAccount().getAccessType() == 2){
+        } else if (DBC.getInstance().getCurrentAcc().getAccessType() == 2){
             btnAdmin.setVisible(true);
             btnContact.setVisible(false);
             btnAdmin.setText("Employee Menu");

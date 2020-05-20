@@ -118,12 +118,10 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private ProgressBar progressBar;
 
     private ArrayList<Service> services = new ArrayList<>();
-    //private ArrayList<Service> availableServices = DBC.getInstance().getAvailableServices();
 
 
-    private double price = 0;
+    private double totalCost = 0;
 
-    //private ArrayList<Date> dates = new ArrayList<Date>(08:00, 09:00);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -236,8 +234,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
             lblStatus.setText("Status: Please select at least 1 service");
         } else {
             progressBar.setProgress(1.0);
-            DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
-            lblTotalCost.setText("Total cost: $" + price);
+            DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(), tfLicense.getText(), services));
+            lblTotalCost.setText("Total cost: $" + totalCost);
             lblStatus.setText("Status: Booking successfully added");
             btnCreateBooking.setDisable(true);
         }
@@ -270,7 +268,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     private void fillTimesListView() {
         progressBar.setProgress(0.6);
-        ArrayList<Booking> bookingsToCheck = DBC.getInstance().getBookings();
+        ArrayList<Booking> bookingsToCheck = DBC.getInstance().getAllBookings();
         String timeStamp = new SimpleDateFormat("HH:mm").format(new Date());
         ArrayList<String> times = new ArrayList<String>();
         Calendar cal = Calendar.getInstance();
@@ -329,12 +327,12 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         Service tempService = DBC.getInstance().getService(service);
         double cost = getServiceCost(service);
         if (toggle) {
-            price += cost;
+            totalCost += cost;
             txtATotal.appendText(tempService.getServiceName() + ", $" + (tempService.getCost()) + "\n");
             services.add(tempService);
         } else {
             txtATotal.clear();
-            price -= cost;
+            totalCost -= cost;
             for (int i = 0; i < services.size(); i++) {
                 if (services.get(i).getServiceName().equals(service)){
                     services.remove(i);
@@ -343,7 +341,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
                 txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCost()) + "\n");
             }
         }
-        lblTotalCost.setText("Total cost: $" + Math.round(price));
+        lblTotalCost.setText("Total cost: $" + Math.round(totalCost));
     }
 
 
@@ -516,7 +514,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     public void handleClearSelectionsBtn() {
         progressBar.setProgress(0.1);
         txtATotal.setText(null);
-        price = 0;
+        totalCost = 0;
         services.clear();
         chbRepairOil.setSelected(false);
         chbRepairAC.setSelected(false);

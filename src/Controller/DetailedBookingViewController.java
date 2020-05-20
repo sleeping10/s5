@@ -38,7 +38,7 @@ public class DetailedBookingViewController implements Initializable {
         tcPrice.setCellValueFactory(new PropertyValueFactory<Double, Service>("cost"));
         tvServices.setItems(view());
 
-        acc =DBC.getInstance().getCompleteAccount(selectedBooking.getAccountID());
+        acc =DBC.getInstance().getAccount(selectedBooking.getAccountID());
 
         tfName.setText(acc.getName());
         tfPhone.setText(acc.getPhoneNr());

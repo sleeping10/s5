@@ -73,8 +73,8 @@ public class AdminMenuController extends ServiceHandler implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle) {
         updateUserTableView();
 
-        if (DBC.getInstance().getAccount().getAccessType() == 2 ||
-                DBC.getInstance().getAccount().getAccessType() == 3){
+        if (DBC.getInstance().getCurrentAcc().getAccessType() == 2 ||
+                DBC.getInstance().getCurrentAcc().getAccessType() == 3){
             btnDeleteAcc.setDisable(true);
         }
 
@@ -82,17 +82,6 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
 
     }
-
-    private void setCheckBoxes(Account acc){
-
-        switch(acc.getAccessType()){
-            case 1: chbAdmin.setSelected(true);
-            case 2: chbEmployee.setSelected(true);
-            case 3: chbCustomer.setSelected(true);
-        }
-
-    }
-
 
     private void updateUserTableView(){
         tcAccID.setCellValueFactory(new PropertyValueFactory<Integer, Account>("accountID"));
