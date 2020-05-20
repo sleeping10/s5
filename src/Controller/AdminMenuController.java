@@ -1,5 +1,6 @@
 package Controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -47,6 +48,11 @@ public class AdminMenuController extends ServiceHandler implements Initializable
     @FXML private TableColumn tcPhone;
     @FXML private TableColumn tcAccess;
 
+    @FXML private RadioButton chbAdmin;
+    @FXML private RadioButton chbEmployee;
+    @FXML private RadioButton chbCustomer;
+    @FXML private Button btnApplyPermissions;
+
     @FXML private Button btnDeleteAcc;
 
     private ArrayList<Account> userList = new ArrayList<>();
@@ -71,7 +77,22 @@ public class AdminMenuController extends ServiceHandler implements Initializable
                 DBC.getInstance().getAccount().getAccessType() == 3){
             btnDeleteAcc.setDisable(true);
         }
+
+        //tvUserList.getSelectionModel().selectedIndexProperty().addListener((num) -> setCheckBoxes((Account)tvUserList.getSelectionModel().getSelectedItem()));
+
+
     }
+
+    private void setCheckBoxes(Account acc){
+
+        switch(acc.getAccessType()){
+            case 1: chbAdmin.setSelected(true);
+            case 2: chbEmployee.setSelected(true);
+            case 3: chbCustomer.setSelected(true);
+        }
+
+    }
+
 
     private void updateUserTableView(){
         tcAccID.setCellValueFactory(new PropertyValueFactory<Integer, Account>("accountID"));
@@ -188,13 +209,15 @@ public class AdminMenuController extends ServiceHandler implements Initializable
             cost = Double.parseDouble(tfStandardCost.getText());
         }catch (NumberFormatException e){
             System.out.println("Not a number");
-            lblStatus.setText("Status: Please input only numbers");
+            lblStatus.setText("Status: Error, only numbers allowed");
         }
 
         if (cost != 0 && selectedService != null){
                 DBC.getInstance().setServiceCost(selectedService, cost);
                 lblStatus.setText("Status: Service Cost changed successfully");
+                tfStandardCost.setPromptText(String.valueOf(cost));
         }
+        tfStandardCost.setText("");
 
     }
 
@@ -203,9 +226,9 @@ public class AdminMenuController extends ServiceHandler implements Initializable
         Account tempacc;
         tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
         if(!DBC.getInstance().deleteUser(tempacc.getAccountID())){
-        lblStatus.setText("Error, user has bookings cannot delete");
+        lblStatus.setText("Status: Error, user has bookings cannot delete");
         }else{
-            lblStatus.setText("User sucessfully deleted");
+            lblStatus.setText("Status: User sucessfully deleted");
         }
         updateUserTableView();
 

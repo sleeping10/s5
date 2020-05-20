@@ -7,6 +7,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -17,7 +18,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
     <children>
-        <GridPane fx:id="gridPaneMain" alignment="CENTER" layoutX="14.0" layoutY="57.0" prefHeight="196.0" prefWidth="308.0" visible="false">
+        <GridPane fx:id="gridPaneMain" alignment="CENTER" layoutX="15.0" layoutY="76.0" prefHeight="185.0" prefWidth="308.0" visible="false">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="164.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="144.0" />
@@ -55,22 +56,22 @@
             <Label fx:id="lblCostSix" text="Label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
             </children>
         </GridPane>
-        <MenuButton fx:id="mbService" layoutX="14.0" layoutY="19.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" text="Select Service">
+        <MenuButton fx:id="mbService" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="134.0" text="Select Service">
             <items>
                 <MenuItem fx:id="mbInspection" mnemonicParsing="false" onAction="#handleMbInspection" text="Inspection" />
                 <MenuItem fx:id="mbRepair" mnemonicParsing="false" onAction="#handleMbRepair" text="Repair" />
                 <MenuItem fx:id="mbWash" mnemonicParsing="false" onAction="#handleMbWash" text="Wash" />
             </items>
         </MenuButton>
-        <TextArea fx:id="txtATotal" layoutX="337.0" layoutY="50.0" prefHeight="185.0" prefWidth="199.0" />
-        <Button fx:id="btnClearSelections" layoutX="12.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleClearSelectionsBtn" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
-        <Button fx:id="btnNext" layoutX="412.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="31.0" prefWidth="124.0" text="Next &gt;" />
-      <Button fx:id="btnCreateBooking" layoutX="412.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="31.0" prefWidth="124.0" text="Create new Booking" visible="false" />
-      <Label fx:id="lblTotalCost" layoutX="340.0" layoutY="245.0" text="Total cost: " />
-      <Label fx:id="lblStatus" layoutX="146.0" layoutY="282.0" text="Label" visible="false" />
-      <Button fx:id="btnGoBack" layoutX="12.0" layoutY="275.0" mnemonicParsing="false" onAction="#handleGoBackBtn" prefHeight="31.0" prefWidth="125.0" text="&lt; Go Back" visible="false" />
-      <Label layoutX="337.0" layoutY="26.0" text="Total services added;" />
-      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="57.0" prefHeight="31.0" prefWidth="215.0" visible="false">
+        <TextArea fx:id="txtATotal" layoutX="337.0" layoutY="76.0" prefHeight="171.0" prefWidth="199.0" />
+        <Button fx:id="btnClearSelections" layoutX="13.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleClearSelectionsBtn" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
+        <Button fx:id="btnNext" layoutX="413.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="31.0" prefWidth="124.0" text="Next &gt;" />
+      <Button fx:id="btnCreateBooking" layoutX="413.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="31.0" prefWidth="124.0" text="Create new Booking" visible="false" />
+      <Label fx:id="lblTotalCost" layoutX="338.0" layoutY="251.0" text="Total cost: " />
+      <Label fx:id="lblStatus" layoutX="147.0" layoutY="288.0" text="Label" visible="false" />
+      <Button fx:id="btnGoBack" layoutX="13.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleGoBackBtn" prefHeight="31.0" prefWidth="125.0" text="&lt; Go Back" visible="false" />
+      <Label layoutX="337.0" layoutY="48.0" text="Total services added;" />
+      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="215.0" visible="false">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="118.60002441406249" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="0.0" prefWidth="96.9999755859375" />
@@ -79,15 +80,16 @@
           <RowConstraints maxHeight="61.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <DatePicker fx:id="datePicker" prefHeight="26.0" prefWidth="125.0" promptText="datePicker" visible="false" />
+              <DatePicker fx:id="datePicker" onAction="#handleDatePicker" prefHeight="26.0" prefWidth="125.0" promptText="datePicker" visible="false" />
             <TextField fx:id="tfLicense" prefHeight="25.0" prefWidth="132.0" promptText="License Number" visible="false" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="97.0" prefHeight="138.0" prefWidth="215.0" promptText="Add additional description if needed" visible="false" />
-      <Label fx:id="lblInfo" layoutX="16.0" layoutY="26.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
-      <ListView fx:id="lwTimes" layoutX="239.0" layoutY="49.0" prefHeight="186.0" prefWidth="82.0" visible="false" />
-      <RadioButton fx:id="rdB" layoutX="285.0" layoutY="281.0" mnemonicParsing="false" text="get copy" visible="false" />
-      <Button layoutX="168.0" layoutY="22.0" mnemonicParsing="false" onAction="#resetTemplate" prefHeight="17.0" prefWidth="56.0" text="reset" />
-      <Button layoutX="239.0" layoutY="22.0" mnemonicParsing="false" onAction="#test" prefHeight="17.0" prefWidth="56.0" text="print" />
+      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="116.0" prefHeight="138.0" prefWidth="215.0" promptText="Add additional description if needed" visible="false" />
+      <Label fx:id="lblInfo" layoutX="13.0" layoutY="48.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
+      <ListView fx:id="lwTimes" layoutX="244.0" layoutY="76.0" prefHeight="171.0" prefWidth="82.0" visible="false" />
+      <RadioButton fx:id="rdB" layoutX="271.0" layoutY="288.0" mnemonicParsing="false" text="get copy" visible="false" />
+      <Button layoutX="243.0" layoutY="44.0" mnemonicParsing="false" onAction="#resetTemplate" prefHeight="25.0" prefWidth="42.0" text="reset" />
+      <Button layoutX="287.0" layoutY="44.0" mnemonicParsing="false" onAction="#test" prefHeight="25.0" prefWidth="42.0" text="print" />
+      <ProgressBar fx:id="progressBar" layoutX="13.0" layoutY="17.0" prefHeight="18.0" prefWidth="525.0" progress="0.0" />
     </children>
 </AnchorPane>

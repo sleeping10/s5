@@ -17,6 +17,7 @@ public abstract class ServiceHandler {
     }
 
     protected double getDefaultServiceCost(String service){
+        availableServices = DBC.getInstance().getAvailableServices(); //Updates arraylist with new costs
         double cost = 0;
         for (int i = 0; i < availableServices.size(); i++){
             if (service.matches(availableServices.get(i).getServiceName())){

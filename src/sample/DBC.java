@@ -197,116 +197,51 @@ public class DBC {
 
 
     //Gets all the bookings from the Database
-    public ArrayList<Booking> getBooking() {
-        String queryAdmin = "SELECT * From Booking";
-        String queryCustomer = "SELECT * From Booking where Account_accountID = '" + acc.getAccountID() + "'";
-        String queryBookingHasService = "SELECT * From Booking_has_service";
-        String queryService = "SELECT * from Service";
+    public ArrayList<Booking> getBookings() {
+        ResultSet rs;
         ArrayList<Booking> bookings = new ArrayList<>();
-        ArrayList<Service> services = new ArrayList<>();
-        ArrayList<String> servicesString = new ArrayList<>();
-        ArrayList<Integer> bookingIds = new ArrayList<>();
-        ArrayList<Service> tempArray = new ArrayList<>();
-        int totalBookingHasServices = 0;
-        int selectedBookingID = 0;
+        ArrayList<Service> tempServices = new ArrayList<>();
+        Booking tempBooking = null;
+        String queryAdmin = "SELECT bookingID, date, bookingDesc, account_accountID, serviceCompleted, " +
+                "licenseID, service_ServiceName, serviceCost" +
+                ", discount, discountStart, discountEnd, estimatedTime " +
+                "FROM booking INNER join booking_has_service " +
+                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName = service_serviceName";
+        String queryCustomer = "SELECT bookingID, date, bookingDesc, account_accountID, serviceCompleted, " +
+                "licenseID, service_ServiceName, serviceCost" +
+                ", discount, discountStart, discountEnd, estimatedTime " +
+                "FROM booking INNER JOIN booking_has_service " +
+                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName" +
+                " = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "'";
         int lastId = -1;
-        ArrayList<Integer> bookingHasService = new ArrayList<>();
+
         try {
-
-
-                String query = "SELECT * FROM Booking INNER JOIN booking_has_service on bookingID = booking_bookingID " +
-                        "INNER JOIN service on Service_serviceName = serviceName";
-
-                String querytest = "select * " +
-                        "from booking_has_service " +
-                        "INNER JOIN service " +
-                        "on service_serviceName = serviceName; ";
-
-                String querytest2 = "select bookingID, date, bookingDesc, account_accountID, serviceCompleted, licenseID, service_ServiceName, serviceCost" +
-                        ", discount, discountStart, discountEnd, estimatedTime " +
-                        "from booking INNER join booking_has_service " +
-                        "on bookingID = booking_bookingID inner join service on serviceName = service_serviceName";
-
-                String querytest3 = "select bookingID, date, bookingDesc, account_accountID, serviceCompleted, licenseID, service_ServiceName, serviceCost" +
-                        ", discount, discountStart, discountEnd, estimatedTime " +
-                        "from booking INNER join booking_has_service " +
-                        "on bookingID = booking_bookingID inner join service on serviceName = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "'";
-
-                String query2 = "SELECT * FROM Booking";
-                String countBookingHasService = "SELECT COUNT(bookingID) FROM Booking";
-                int total = 0;
-                Booking tempBooking = null;
-                if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
-                    stmt = dbConnection.createStatement();
-
-                    lastId = -1;
-
-                try{
-                    ResultSet rs3 = stmt.executeQuery(querytest2);
-                    while (rs3.next()) {
-
-                        if (lastId != -1 && lastId != rs3.getInt(1)) {
-                            bookings.add(tempBooking);
-                            tempArray.clear();
-                        }
-
-                        tempArray.add(new Service(rs3.getString(7), rs3.getDouble(8), rs3.getDouble(9),
-                                rs3.getTimestamp(10), rs3.getTimestamp(11), rs3.getInt(12)));
-                        tempBooking = new Booking(rs3.getInt(1), rs3.getDate(2), rs3.getString(3), rs3.getInt(4), rs3.getString(6), new ArrayList(tempArray));
-                        lastId = rs3.getInt(1);
-                    }
-
-                    bookings.add(tempBooking);
-                    stmt.close();
-
-                }catch (Exception e){
-                e.printStackTrace();
+            stmt = dbConnection.createStatement();
+            if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
+                rs = stmt.executeQuery(queryAdmin);
             }
-                    //Add last booking to list
+            else {
+                rs = stmt.executeQuery(queryCustomer);
+            }
 
-                }else{
-                            stmt = dbConnection.createStatement();
-                            lastId = -1;
-                            System.out.println("DEBUG: entered service getter");
-
-                            try {
-                                ResultSet rs4 = stmt.executeQuery(querytest3);
-
-                                while (rs4.next()) {
-
-                                    if (lastId != -1 && lastId != rs4.getInt(1)) {
-                                        bookings.add(tempBooking);
-                                        tempArray.clear();
-                                    }
-
-                                        tempArray.add(new Service(rs4.getString(7), rs4.getDouble(8), rs4.getDouble(9),
-                                                rs4.getTimestamp(10), rs4.getTimestamp(11), rs4.getInt(12)));
-                                    tempBooking = new Booking(rs4.getInt(1), rs4.getDate(2), rs4.getString(3), rs4.getInt(4), rs4.getString(6), new ArrayList(tempArray));
-                                    lastId = rs4.getInt(1);
-                                }
-
-                                bookings.add(tempBooking);
-                                stmt.close();
-
-                            }catch (Exception e){
-                                e.printStackTrace();
-                            }
-
-                            //Add last booking to list
-                        }
-
-
-                }catch (Exception e) {
+            while (rs.next()) {
+                if (lastId != -1 && lastId != rs.getInt(1)) {
+                    bookings.add(tempBooking);
+                    tempServices.clear();
+                }
+                tempServices.add(new Service(rs.getString(7), rs.getDouble(8), rs.getDouble(9),
+                        rs.getTimestamp(10), rs.getTimestamp(11), rs.getInt(12)));
+                tempBooking = new Booking(rs.getInt(1), rs.getTimestamp(2), rs.getString(3),
+                        rs.getInt(4), rs.getString(6), new ArrayList(tempServices));
+                lastId = rs.getInt(1);
+            }
+                bookings.add(tempBooking);
+                stmt.close();
+        }catch (Exception e) {
             e.printStackTrace();
         }
         return bookings;
     }
-
-    // removeBooking
-    //public void removeBooking(Booking booking) {
-//
-  //  }
-
 
     public ArrayList<Service> getAvailableServices() {
         String query = "SELECT * From Service";
@@ -533,7 +468,7 @@ public class DBC {
             prepstmt.close();
             return true;
         }catch (Exception ex){
-            ex.printStackTrace();
+            System.out.println(ex.getMessage());
             return false;
         }
 

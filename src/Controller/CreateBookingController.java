@@ -14,14 +14,17 @@ import sample.ServiceHandler;
 //import sample.editDocument;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.stream.Stream;
 
 public class CreateBookingController extends ServiceHandler implements Initializable {
 
@@ -114,6 +117,9 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     @FXML
     private RadioButton rdB;
 
+    @FXML
+    private ProgressBar progressBar;
+
     private ArrayList<Service> services = new ArrayList<>();
     //private ArrayList<Service> availableServices = DBC.getInstance().getAvailableServices();
 
@@ -126,6 +132,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     public void initialize(URL url, ResourceBundle resourceBundle) {
         services.clear();
 
+        progressBar.setProgress(0.0);
         lwTimes.setVisible(false);
         taDesc.setVisible(false);
         gridPaneMain.setVisible(true);
@@ -179,6 +186,11 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         toggleCostLabels(3);
     }
 
+    @FXML
+    private void handleDatePicker(){
+        progressBar.setProgress(0.8);
+    }
+
     private void toggleCostLabels(int toggle) {
         if (toggle == 1) {
             lblCostOne.setVisible(true);
@@ -207,21 +219,26 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     private void handleCreateBookingBtn() {
+        Calendar cal = Calendar.getInstance();
         java.util.Date date = null;
         txtATotal.clear();
         try {
-            java.sql.Date gettedDatePickerDate = java.sql.Date.valueOf(datePicker.getValue());
-            date = new java.util.Date(gettedDatePickerDate.getTime());
+            date = java.sql.Date.valueOf(datePicker.getValue());
+            cal.setTime(date);
+            cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(0, 2)));
+            cal.set(Calendar.MINUTE, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(3, 5)));
+            date = cal.getTime();
+            System.out.println("date: "+ date);
         } catch (NullPointerException e) {
             System.out.println("ERROR: Not able to get date");
         }
 
         if (datePicker.getValue() == null || tfLicense.getText().isEmpty()) {
-            System.out.println("inge datum eller reg nummer");
             lblStatus.setText("Status: Please select a date and Registration ID");
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
         } else {
+            progressBar.setProgress(1.0);
             DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getAccount().getAccountID(), tfLicense.getText(), services));
             lblTotalCost.setText("Total cost: $" + price);
             lblStatus.setText("Status: Booking successfully added");
@@ -232,6 +249,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     private void handleNextBtn() {
+        progressBar.setProgress(0.3);
         toggleRepairCheckBoxes(false);
         toggleInspectionCheckBoxes(false);
         toggleWashCheckBoxes(false);
@@ -254,17 +272,32 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
     private void fillTimesListView() {
+        progressBar.setProgress(0.6);
+        ArrayList<Booking> bookingsToCheck = DBC.getInstance().getBookings();
         String timeStamp = new SimpleDateFormat("HH:mm").format(new Date());
+        ArrayList<String> times = new ArrayList<String>();
         Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         System.out.println(sdf.format(cal.getTime()));
+        Date first, second;
 
-        ObservableList<String> items = FXCollections.observableArrayList(
-                "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00");
+        java.text.SimpleDateFormat format = new java.text.SimpleDateFormat("HH:mm");
+        try {
+            first = format.parse("08:00");
+            second = format.parse("20:00");
+
+        Date next = first;
+        do {
+            times.add(format.format(next));
+        } while ((next = new Date(next.getTime() + 30*60*1000)).before(second));
+
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        ObservableList<String> items = FXCollections.observableArrayList(times);
         lwTimes.setItems(items);
 
-
-        lwTimes.getSelectionModel().getSelectedItem();
     }
 
     @FXML
@@ -294,6 +327,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
     private void addServiceToCurrentBooking(boolean toggle, String service) {
+        progressBar.setProgress(0.2);
         Service tempService = DBC.getInstance().getService(service);
         double cost = getServiceCost(service);
         if (toggle) {
@@ -310,12 +344,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
                 }
                 txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCost()) + "\n");
             }
-        }
-
-        System.out.println("Services:");
-
-        for (int i = 0; i < services.size(); i++){
-            System.out.println(services.get(i).getServiceName());
         }
         lblTotalCost.setText("Total cost: $" + Math.round(price));
     }
@@ -488,10 +516,10 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     public void handleClearSelectionsBtn() {
+        progressBar.setProgress(0.1);
         txtATotal.setText(null);
         price = 0;
         services.clear();
-        System.out.println(services);
         chbRepairOil.setSelected(false);
         chbRepairAC.setSelected(false);
         chbRepairWheelChange.setSelected(false);
