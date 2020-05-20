@@ -193,8 +193,6 @@ public class DBC {
 
     }
 
-    //public Booking getBookingDetails(){}
-
 
     //Gets all the bookings from the Database
     public ArrayList<Booking> getBookings() {
