@@ -9,13 +9,10 @@ public class Account implements Serializable {
     private String phoneNr;
     private int accountID;
     private int accessType;
-    private boolean loginStatus;
 
     public String getEmail() {
         return email;
     }
-
-
     public String getName() {
         return name;
     }
@@ -35,14 +32,12 @@ public class Account implements Serializable {
         return this.password;
     }
 
-    public Account(int accountID, String email, String password, String name, String phoneNr,boolean loginStatus, int accessType) {
+    public Account(int accountID, String email, String password, String name, String phoneNr, int accessType) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.phoneNr = phoneNr;
         this.accountID = accountID;
         this.accessType = accessType;
-        this.loginStatus = loginStatus;
-
     }
 }
