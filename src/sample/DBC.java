@@ -147,14 +147,13 @@ public class DBC {
 
 
     // gets a complete account from accountID (booking -> getAccountID -> this method
-    public Account getCompleteAccount(int accountID) {
+    public Account getAccount(int accountID) {
         Account acc = null;
         int id = 0;
         String email = "";
         String password = "";
         String name = "";
         String phone = "";
-        boolean status = false;
         int access = 0;
         String query = "SELECT * FROM Account WHERE accountID = '" + accountID + "'";
         try {
@@ -166,7 +165,6 @@ public class DBC {
                 password = rsDetailedAcc.getString(3);
                 name = rsDetailedAcc.getString(4);
                 phone = rsDetailedAcc.getString(5);
-                status = rsDetailedAcc.getBoolean(6);
                 access = rsDetailedAcc.getInt(7);
             }
             acc = new Account(id, email, password, name, phone, access);
@@ -196,7 +194,7 @@ public class DBC {
 
 
     //Gets all the bookings from the Database
-    public ArrayList<Booking> getBookings() {
+    public ArrayList<Booking> getAllBookings() {
         ResultSet rs;
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<Service> tempServices = new ArrayList<>();
@@ -216,7 +214,7 @@ public class DBC {
 
         try {
             stmt = dbConnection.createStatement();
-            if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
+            if (DBC.getInstance().getCurrentAcc().getAccessType() == 1 || DBC.getInstance().getCurrentAcc().getAccessType() == 2) {
                 rs = stmt.executeQuery(queryAdmin);
             } else {
                 rs = stmt.executeQuery(queryCustomer);
@@ -259,11 +257,11 @@ public class DBC {
         return services;
     }
 
-    public Account getAccount() {
+    public Account getCurrentAcc() {
         return acc;
     }
 
-    public void setAcc(Account acc) {
+    public void setCurrentAcc(Account acc) {
         this.acc = acc;
     }
 
@@ -419,22 +417,7 @@ public class DBC {
         return status;
     }
 
-    public String getPhoneFilter(int accID) {
-        String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
-        String phone = "";
-        try {
-            stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(queryPhone);
-            if (rs.next()) {
-                phone = rs.getString(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return phone;
-    }
-
-    //This method is not implemented yet, should be used by Admin user
+    //felix
     public ArrayList<Account> getAllUsers() {
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;

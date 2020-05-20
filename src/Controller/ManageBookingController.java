@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ManageBookingController implements Initializable {
-    Account acc = DBC.getInstance().getAccount();
+    Account acc = DBC.getInstance().getCurrentAcc();
     @FXML private TextField tfPhone;
     @FXML private TextField tfBookingID;
     @FXML private TableColumn tcBookingID;
@@ -38,7 +38,7 @@ public class ManageBookingController implements Initializable {
     private ObservableList<Booking> view (){
         String s ="";
         ObservableList<Booking> views = FXCollections.observableArrayList();
-        list=DBC.getInstance().getBookings();
+        list=DBC.getInstance().getAllBookings();
 
         try{
 
@@ -88,7 +88,7 @@ public class ManageBookingController implements Initializable {
         } else if (!tfPhone.getText().isEmpty()){
             Account tempAcc;
             for(Booking b : list) {
-                tempAcc = DBC.getInstance().getCompleteAccount(b.getAccountID());
+                tempAcc = DBC.getInstance().getAccount(b.getAccountID());
                 if (tempAcc.getPhoneNr().startsWith(tfPhone.getText())) {
                     tvField.getItems().add(b);
                 }

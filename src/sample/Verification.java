@@ -5,6 +5,10 @@ import java.util.regex.Pattern;
 
 public abstract class Verification {
 
+    private final static Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    private final static Pattern PHONE_REGEX = Pattern.compile("^[0-9]{9,10}$");
+    private final static Pattern LICENSE_REGEX = Pattern.compile("(?=.{6}$)([A-Z]{3}(\\d{3}))");
+
     public static int verifyAccount(String email, String pass, String phone){
         int status;
 
@@ -28,7 +32,6 @@ public abstract class Verification {
     }
 
     public static boolean validateEmail(String emailStr) {
-        final Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
         Matcher matcher = EMAIL_REGEX.matcher(emailStr);
         return matcher.find();
     }
@@ -37,15 +40,13 @@ public abstract class Verification {
         if (phone == null){
             return true;
         }else{
-            final Pattern PHONE_REGEX = Pattern.compile("^[0-9]{9,10}$");
             Matcher matcher = PHONE_REGEX.matcher(phone);
             return matcher.find();
         }
     }
 
     public static boolean validateLicensePlate(String licensePlate){
-        final Pattern PHONE_REGEX = Pattern.compile("(?=.{6}$)([A-Z]{3}(\\d{3}))");
-        Matcher matcher = PHONE_REGEX.matcher(licensePlate);
+        Matcher matcher = LICENSE_REGEX.matcher(licensePlate);
         return matcher.find();
     }
 }

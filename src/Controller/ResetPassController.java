@@ -76,7 +76,9 @@ public class ResetPassController implements Initializable {
 
                 Transport.send(message);
                 System.out.println("Email sent successfully...");
-                DBC.getInstance().setRecoveryCode(Integer.valueOf(randomNumber), tfEmail.getText());
+
+
+                DBC.getInstance().setRecoveryCode(randomNumber, tfEmail.getText());
             } else {
                 System.out.println("Invalid Email");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
