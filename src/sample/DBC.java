@@ -14,7 +14,7 @@ public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
     Connection dbConnection = null;
-    private final String database_url = "jdbc:mysql://den1.mysql4.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Vt5YI?qGI~dj&useSSL=false";
+    private final String database_url = "jdbc:mysql://den1.mysql4.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Rj7jS-ahBhu-&useSSL=false";
 
     private static DBC single_instance = null;
 
