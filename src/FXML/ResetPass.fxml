@@ -2,17 +2,15 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPassController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ResetPassController">
     <children>
         <Button fx:id="btnBack" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#backButton" text="&lt;" />
-        <Button fx:id="btnReset" layoutX="300.0" layoutY="391.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="32.0" prefWidth="72.0" text="Reset" />
-        <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Username" text="Email" />
-        <PasswordField fx:id="pfPass" layoutX="232.0" layoutY="330.0" prefHeight="36.0" prefWidth="209.0" promptText="Password" />
+        <Button fx:id="btnReset" layoutX="305.0" layoutY="403.0" mnemonicParsing="false" onAction="#resetButton" prefHeight="32.0" prefWidth="72.0" text="Reset" />
+        <TextField fx:id="tfEmail" layoutX="231.0" layoutY="118.0" prefHeight="36.0" prefWidth="209.0" promptText="Email" />
         <Label layoutX="275.0" layoutY="37.0" prefHeight="51.0" prefWidth="237.0" text="Car Wash &amp; Service" textAlignment="JUSTIFY">
             <font>
                 <Font size="24.0" />
@@ -24,6 +22,7 @@
             </font>
         </Label>
         <Button fx:id="btnGenerate" layoutX="300.0" layoutY="199.0" mnemonicParsing="false" onAction="#generateButton" text="Generate" />
-        <Label fx:id="lblMessage" layoutX="232.0" layoutY="260.0" prefHeight="36.0" prefWidth="209.0" style="-fx-text-fill: #FFFFFF;" />
+      <TextField fx:id="tfNewPassword" layoutX="231.0" layoutY="336.0" prefHeight="36.0" prefWidth="209.0" promptText="New password" />
+      <TextField fx:id="pfPass" layoutX="231.0" layoutY="270.0" prefHeight="36.0" prefWidth="209.0" promptText="Recoverycode" />
     </children>
 </AnchorPane>

@@ -88,7 +88,7 @@ public class DBC {
             }
             stmt.close();
 
-            System.out.println("DEBUG total booking: "+ totalBookings);
+            System.out.println("DEBUG total booking: " + totalBookings);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,13 +109,14 @@ public class DBC {
             }
             statement.close();
             System.out.println("DEBUG: Booking connected to Services");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
-    public void removeBooking(Booking booking){
-        String query = "DELETE FROM Booking,Booking_has_service USING Booking INNER JOIN Booking_has_service WHERE bookingID = '"+booking.getBookingID()+"' AND Booking_bookingID = bookingID";
+
+    public void removeBooking(Booking booking) {
+        String query = "DELETE FROM Booking,Booking_has_service USING Booking INNER JOIN Booking_has_service WHERE bookingID = '" + booking.getBookingID() + "' AND Booking_bookingID = bookingID";
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
@@ -178,16 +179,16 @@ public class DBC {
     }
 
     // used in detailed booking view to change the date and description of booking
-    public void updateBooking(Booking booking){
+    public void updateBooking(Booking booking) {
         java.util.Date utilDate = booking.getDate();
         java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
         System.out.println(sq);
-        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc()+"', date = '"+sq+"' WHERE bookingID = "+booking.getBookingID();
+        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc() + "', date = '" + sq + "' WHERE bookingID = " + booking.getBookingID();
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
             statement.close();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -217,8 +218,7 @@ public class DBC {
             stmt = dbConnection.createStatement();
             if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
                 rs = stmt.executeQuery(queryAdmin);
-            }
-            else {
+            } else {
                 rs = stmt.executeQuery(queryCustomer);
             }
 
@@ -233,9 +233,9 @@ public class DBC {
                         rs.getInt(4), rs.getString(6), new ArrayList(tempServices));
                 lastId = rs.getInt(1);
             }
-                bookings.add(tempBooking);
-                stmt.close();
-        }catch (Exception e) {
+            bookings.add(tempBooking);
+            stmt.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return bookings;
@@ -245,15 +245,15 @@ public class DBC {
         String query = "SELECT * From Service";
         ArrayList<Service> services = new ArrayList<>();
         try {
-                stmt = dbConnection.createStatement();
-                ResultSet rs = stmt.executeQuery(query);
+            stmt = dbConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
 
-                while (rs.next()){
-                            services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5), rs.getInt(6)));
-                        }
-                rs.close();
+            while (rs.next()) {
+                services.add(new Service(rs.getString(1), rs.getDouble(2), rs.getDouble(3), rs.getTimestamp(4), rs.getTimestamp(5), rs.getInt(6)));
+            }
+            rs.close();
 
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         return services;
@@ -285,18 +285,19 @@ public class DBC {
             ex.printStackTrace();
         }
     }
+
     //update the information in the DB
-    public void updateAccount(String name,String pass,String phone,int accountID) {
+    public void updateAccount(String name, String pass, String phone, int accountID) {
         int resultSet;
-        String updateQuery = "UPDATE projektkurs2hkr.account set password='"+pass+"', name='"+name+"',phone='"+phone+"'  where accountID='"+accountID+"' ";
+        String updateQuery = "UPDATE projektkurs2hkr.account set password='" + pass + "', name='" + name + "',phone='" + phone + "'  where accountID='" + accountID + "' ";
         try {
-            stmt=dbConnection.createStatement();
+            stmt = dbConnection.createStatement();
             resultSet = stmt.executeUpdate(updateQuery);
-            if (resultSet>0){
+            if (resultSet > 0) {
                 //System.out.println("gick: "+resultSet);
-            }else //System.out.println("gick ej: "+resultSet);
-            System.out.println(resultSet);
-        }catch (Exception e){
+            } else //System.out.println("gick ej: "+resultSet);
+                System.out.println(resultSet);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -351,23 +352,23 @@ public class DBC {
                     String[] parts = dbpass.split("-");
                     part1 = parts[0];
                     part2 = parts[1];
-                }catch (Exception e){
+                } catch (Exception e) {
                     System.out.println("nothing");
                 }
 
                 if (dbmail.equals(email) && PasswordEncryption.verifyPassword(pass, part1, part2)) {
 
-                    if (!dbLoginStatus){
+                    if (!dbLoginStatus) {
                         status = true;
                         acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, true, accessType);
                         setLoginStatus(true);
-                    }else{
+                    } else {
                         status = false;
                         System.out.println("DEBUG: User already logged in");
                     }
-                }else if (dbmail.matches(email)){
+                } else if (dbmail.matches(email)) {
                     System.out.println("DEBUG: EMAIL MATCH, PW failed");
-                }else{
+                } else {
                     System.out.println("debug fuck off");
                 }
             }
@@ -387,9 +388,9 @@ public class DBC {
             statement.setInt(2, acc.getAccountID());
             statement.executeUpdate();
             statement.close();
-            if (!toggle){
+            if (!toggle) {
                 System.out.println("DEBUG: User logged out");
-            }else{
+            } else {
                 System.out.println("DEBUG: User logged in");
             }
         } catch (Exception e) {
@@ -418,23 +419,23 @@ public class DBC {
         return status;
     }
 
-    public String getPhoneFilter(int accID){
+    public String getPhoneFilter(int accID) {
         String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
         String phone = "";
         try {
             stmt = dbConnection.createStatement();
             ResultSet rs = stmt.executeQuery(queryPhone);
-            if(rs.next()) {
+            if (rs.next()) {
                 phone = rs.getString(1);
             }
-        }catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return phone;
     }
 
     //This method is not implemented yet, should be used by Admin user
-    public ArrayList<Account> getAllUsers(){
+    public ArrayList<Account> getAllUsers() {
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;
         try {
@@ -444,28 +445,29 @@ public class DBC {
             if (!rsUsers.next()) {
             } else {
                 do {
-                    tempAcc = new Account(rsUsers.getInt(1),rsUsers.getString(2), rsUsers.getString(3),rsUsers.getString(4),
-                            rsUsers.getString(5), rsUsers.getBoolean(6),rsUsers.getInt(7));
+                    tempAcc = new Account(rsUsers.getInt(1), rsUsers.getString(2), rsUsers.getString(3), rsUsers.getString(4),
+                            rsUsers.getString(5), rsUsers.getBoolean(6), rsUsers.getInt(7));
                     allUsers.add(tempAcc);
                 } while (rsUsers.next());
             }
             stmt.close();
 
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println("DEBUG: see users");
             ex.printStackTrace();
         }
         return allUsers;
     }
 
-    public boolean deleteUser(int accountID){
+    public boolean deleteUser(int accountID) {
         String query = "DELETE FROM Account WHERE accountID =" + accountID;
         try {
-            PreparedStatement prepstmt = dbConnection.prepareStatement(query);;
+            PreparedStatement prepstmt = dbConnection.prepareStatement(query);
+            ;
             prepstmt.executeUpdate();
             prepstmt.close();
             return true;
-        }catch (Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return false;
         }
@@ -473,20 +475,20 @@ public class DBC {
     }
 
     //Admin user can change the cost of a service.
-    public void setServiceCost(String serviceName, double price){
-       String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
-       try {
-           PreparedStatement prepstmt = dbConnection.prepareStatement(queryPrice);
-           prepstmt.setDouble(1,price);
-           prepstmt.executeUpdate();
-           prepstmt.close();
-       }catch (Exception ex){
-           ex.printStackTrace();
-       }
+    public void setServiceCost(String serviceName, double price) {
+        String queryPrice = "UPDATE Service SET serviceCost = ? WHERE serviceName = '" + serviceName + "'";
+        try {
+            PreparedStatement prepstmt = dbConnection.prepareStatement(queryPrice);
+            prepstmt.setDouble(1, price);
+            prepstmt.executeUpdate();
+            prepstmt.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     //This method is not implemented yet, should be used by Admin user
-    public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate){
+    public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate) {
         discount = discount / 100;
 
         String queryDiscount = "UPDATE Service SET discount = ?, discountStart = ?, discountEnd = ? WHERE serviceName = '" + serviceName + "'";
@@ -497,25 +499,83 @@ public class DBC {
             statement.setTimestamp(3, endDate);
             statement.executeUpdate();
             statement.close();
-            System.out.println("DEBUG: " + discount +", " + startDate);
-        }catch (Exception ex){
+            System.out.println("DEBUG: " + discount + ", " + startDate);
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public boolean checkPhoneNumber(String phone){
-        String query="Select phone from Account where phone= '"+phone+"' ";
+    public boolean checkPhoneNumber(String phone) {
+        String query = "Select phone from Account where phone= '" + phone + "' ";
         try {
-            stmt=dbConnection.createStatement();
-            ResultSet resultSet=stmt.executeQuery(query);
+            stmt = dbConnection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
 
-            if (resultSet.next()){// check if the phone number is in the DB already if it is returns false otherwise true
+            if (resultSet.next()) {// check if the phone number is in the DB already if it is returns false otherwise true
                 return false;
-            }else return true;
+            } else return true;
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void setRecoveryCode(String recoveryCode, String email) {
+        int accID = 0;
+        String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
+        String query = "UPDATE Account SET recoveryCode= '" + recoveryCode + "' WHERE accountID='" + accID + "'";
+
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(queryAccID);
+            while (resultSet.next()) {
+                accID = resultSet.getInt(1);
+                System.out.println(accID + "   set recoverycode");
+            }
+
+            statement = dbConnection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getRecoveryCode(String email) {
+        String recoveryCode = "";
+        String query = "SELECT recoveryCode FROM Account WHERE email = '" + email + "'";
+
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                recoveryCode = resultSet.getString(1);
+                System.out.println(recoveryCode + "   get recoverycode");
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return recoveryCode;
+    }
+
+    public void setRecoveryPassword(String hash, String email) {
+        int accID = 0;
+        String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
+        String query = "UPDATE Account SET password='" + hash + "' WHERE accountID='" + accID + "'";
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet resultSet = stmt.executeQuery(queryAccID);
+            accID = resultSet.getInt(1);
+            System.out.println(accID + "   set recoveryPassword");
+
+            statement = dbConnection.prepareStatement(query);
+            statement.executeUpdate();
+            statement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

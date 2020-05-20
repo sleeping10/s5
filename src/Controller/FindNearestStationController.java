@@ -16,7 +16,6 @@ import java.util.ResourceBundle;
 
 
 
-//This class is not done/implemented yet
 public class FindNearestStationController implements Initializable, MapComponentInitializedListener, DirectionsServiceCallback {
     protected DirectionsService directionsService;
     protected DirectionsPane directionsPane;

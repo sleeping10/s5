@@ -35,12 +35,10 @@ public class ManageBookingController implements Initializable {
     private ArrayList<Booking> list = new ArrayList<>();
 
 
-    // för table view kanske flytta?
     private ObservableList<Booking> view (){
         String s ="";
         ObservableList<Booking> views = FXCollections.observableArrayList();
         list=DBC.getInstance().getBookings();
-
 
         try{
 

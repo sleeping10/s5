@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.DBC;
+import sample.PasswordEncryption;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -22,14 +23,13 @@ import java.util.ResourceBundle;
 
 public class ResetPassController implements Initializable {
 
-    @FXML
-    private Button btnGenerate;
-    @FXML
-    private Label lblMessage;
+
     @FXML
     private TextField tfEmail;
     @FXML
-    private PasswordField pfPass;
+    private TextField pfPass;
+    @FXML
+    private TextField tfNewPassword;
 
 
     @Override
@@ -41,10 +41,8 @@ public class ResetPassController implements Initializable {
     @FXML
     private void generateButton() {
 
-        System.out.println("Preparing to send Email");
+        System.out.println("Preparing to send Email...");
 
-        //Det funkar med min mail , men ger exception med andra va snäll och kolla om du kan lösa de
-        //testa också om du kan göra så att man kan skicka till alla mail
         final String userName = "projektkurs2hkr@gmail.com";
         final String password = "Swagyolo123";
 
@@ -77,8 +75,9 @@ public class ResetPassController implements Initializable {
                 message.setText("Your new recovery code is = " + randomNumber);
 
                 Transport.send(message);
-                System.out.println("Email sent successfully");
-            }else {
+                System.out.println("Email sent successfully...");
+                DBC.getInstance().setRecoveryCode(String.valueOf(randomNumber), tfEmail.getText());
+            } else {
                 System.out.println("Invalid Email");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setHeaderText(null);
@@ -95,16 +94,19 @@ public class ResetPassController implements Initializable {
     @FXML
     public void resetButton() {
 
-        if (pfPass.equals(lblMessage)) {
 
-            //vill ändra det till databasen
-            //behöver hjälp med detta vet inte hur man ska ändra i Db
+        String recoveryCode = DBC.getInstance().getRecoveryCode(tfEmail.getText());
+        System.out.println(recoveryCode);
+        if (!tfNewPassword.getText().isEmpty() && pfPass.getText().equals(recoveryCode)) {
+            String salt = PasswordEncryption.generateSalt(5);
+            String hash = PasswordEncryption.hashPassword(tfNewPassword.getText(), salt) + "-" + salt;
+            DBC.getInstance().setRecoveryPassword(hash, tfEmail.getText());
 
         } else {
             System.out.println("Invalid");
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setHeaderText(null);
-            alert.setContentText("password does not match the given one...");
+            alert.setContentText("The recovery code does not match the one provided...");
             alert.showAndWait();
 
         }
