@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ManageBookingController implements Initializable {
-    Account acc = DBC.getInstance().getCurrentAcc();
+   private Account acc = DBC.getInstance().getCurrentAcc();
     @FXML private TextField tfPhone;
     @FXML private TextField tfBookingID;
     @FXML private TableColumn tcBookingID;
