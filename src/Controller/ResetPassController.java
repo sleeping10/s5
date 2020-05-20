@@ -96,6 +96,9 @@ public class ResetPassController implements Initializable {
     public void resetButton() {
 
         if (pfPass.equals(lblMessage)) {
+
+
+
             //vill ändra det till databasen
             //behöver hjälp med detta vet inte hur man ska ändra i Db
 
