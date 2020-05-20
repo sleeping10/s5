@@ -62,8 +62,6 @@ public class ManageBookingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(acc.getAccessType()==3) {
             tfPhone.setVisible(false);
-            tfBookingID.setVisible(false);
-            buttonFilter.setVisible(false);
             tcAccID.setVisible(false);
         }
 
@@ -126,13 +124,5 @@ public class ManageBookingController implements Initializable {
 
     public void handleButtonCancelAppointmentPressed(ActionEvent actionEvent) {
         //Delete selected row
-
-
-
-
-        //för google maps ta inte bort
-//    @FXML private WebView wv;
-//        WebEngine we = wv.getEngine();
-//        we.load("https://goo.gl/maps/38arBYM6DH9aEyYh7");
     }
 }
