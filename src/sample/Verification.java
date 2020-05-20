@@ -42,4 +42,10 @@ public abstract class Verification {
             return matcher.find();
         }
     }
+
+    public static boolean validateLicensePlate(String licensePlate){
+        final Pattern PHONE_REGEX = Pattern.compile("(?=.{6}$)([A-Z]{3}(\\d{3}))");
+        Matcher matcher = PHONE_REGEX.matcher(licensePlate);
+        return matcher.find();
+    }
 }
