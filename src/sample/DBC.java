@@ -569,8 +569,9 @@ public class DBC {
         try {
             stmt = dbConnection.createStatement();
             ResultSet resultSet = stmt.executeQuery(queryAccID);
+            while (resultSet.next())
             accID = resultSet.getInt(1);
-            System.out.println(accID + "   set recoveryPassword");
+            System.out.println(accID + "    set recoveryPassword");
             stmt.close();
             resultSet.close();
 

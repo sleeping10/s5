@@ -32,9 +32,24 @@ public class ResetPassController implements Initializable {
     private TextField tfNewPassword;
 
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+        final Tooltip tooltipEmail = new Tooltip();
+        tooltipEmail.setText("Enter the email used when signing up");
+        tfEmail.setTooltip(tooltipEmail);
+
+
+        final Tooltip tooltipRecoveryPass = new Tooltip();
+        tooltipRecoveryPass.setText("Enter the recovery code provided on your email");
+        pfPass.setTooltip(tooltipRecoveryPass);
+
+
+        final Tooltip tooltipNewPass = new Tooltip();
+        tooltipNewPass.setText("Create a new password");
+        tfNewPassword.setTooltip(tooltipNewPass);
 
     }
 
@@ -76,7 +91,7 @@ public class ResetPassController implements Initializable {
 
                 Transport.send(message);
                 System.out.println("Email sent successfully...");
-                DBC.getInstance().setRecoveryCode(String.valueOf(randomNumber), tfEmail.getText());
+                DBC.getInstance().setRecoveryCode(Integer.parseInt(String.valueOf(randomNumber)), tfEmail.getText());
             } else {
                 System.out.println("Invalid Email");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
