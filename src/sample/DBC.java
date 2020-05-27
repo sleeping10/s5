@@ -207,21 +207,25 @@ public class DBC {
                 "licenseID, service_ServiceName, serviceCost" +
                 ", discount, discountStart, discountEnd, estimatedTime " +
                 "FROM booking INNER join booking_has_service " +
-                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName = service_serviceName";
+                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName = service_serviceName " +
+                "ORDER BY BookingID";
         String queryCustomer = "SELECT bookingID, date, bookingDesc, account_accountID, serviceCompleted, " +
                 "licenseID, service_ServiceName, serviceCost" +
                 ", discount, discountStart, discountEnd, estimatedTime " +
                 "FROM booking INNER JOIN booking_has_service " +
                 "ON bookingID = booking_bookingID INNER JOIN service ON serviceName" +
-                " = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "'";
+                " = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "' " +
+                "ORDER BY BookingID";
         int lastId = -1;
 
         try {
             stmt = dbConnection.createStatement();
             if (DBC.getInstance().getCurrentAcc().getAccessType() == 1 || DBC.getInstance().getCurrentAcc().getAccessType() == 2) {
                 rs = stmt.executeQuery(queryAdmin);
-            } else {
+            } else if (DBC.getInstance().getCurrentAcc().getAccessType() == 3){
                 rs = stmt.executeQuery(queryCustomer);
+            }else{
+                rs = null;
             }
 
             while (rs.next()) {
