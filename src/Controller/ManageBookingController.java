@@ -125,6 +125,7 @@ public class ManageBookingController implements Initializable {
     public void handleButtonCancelAppointmentPressed(ActionEvent actionEvent) {
         try {
             DBC.getInstance().removeBooking((Booking) tvField.getSelectionModel().getSelectedItem());
+            tvField.setItems(view());
         }catch(Exception ex){
             ex.printStackTrace();
         }
