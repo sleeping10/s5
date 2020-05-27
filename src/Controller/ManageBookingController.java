@@ -123,6 +123,11 @@ public class ManageBookingController implements Initializable {
     }
 
     public void handleButtonCancelAppointmentPressed(ActionEvent actionEvent) {
-        //Delete selected row
+        try {
+            DBC.getInstance().removeBooking((Booking) tvField.getSelectionModel().getSelectedItem());
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 }

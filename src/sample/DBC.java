@@ -116,9 +116,13 @@ public class DBC {
     }
 
     public void removeBooking(Booking booking) {
-        String query = "DELETE FROM Booking,Booking_has_service USING Booking INNER JOIN Booking_has_service WHERE bookingID = '" + booking.getBookingID() + "' AND Booking_bookingID = bookingID";
+        String query1 = "DELETE FROM booking_has_service WHERE booking_bookingid ='"+booking.getBookingID()+"'";
+        String query2 = "DELETE FROM Booking WHERE bookingID ='" +booking.getBookingID()+"'";
         try {
-            statement = dbConnection.prepareStatement(query);
+            statement = dbConnection.prepareStatement(query1);
+            statement.executeUpdate();
+            statement.close();
+            statement=dbConnection.prepareStatement(query2);
             statement.executeUpdate();
             statement.close();
         } catch (Exception ex) {
