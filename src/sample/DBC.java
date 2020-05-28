@@ -522,10 +522,10 @@ public class DBC {
         return false;
     }
 
+    // Metoden för att skriva in den slumpmässiga återställningskoden till databasen
     public void setRecoveryCode(int recoveryCode, String email) {
         int accID = 0;
         String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
-
 
         try {
             stmt = dbConnection.createStatement();
@@ -545,6 +545,7 @@ public class DBC {
         }
     }
 
+    // Metoden för att hämta återställningskoden
     public String getRecoveryCode(String email) {
         String recoveryCode = "";
         String query = "SELECT recoveryCode FROM Account WHERE email = '" + email + "'";
@@ -563,6 +564,7 @@ public class DBC {
         return recoveryCode;
     }
 
+    // Ställer in det nysa lösenordet i databasen
     public void setRecoveryPassword(String hash, String email) {
         int accID = 0;
         String queryAccID = "SELECT accountID FROM Account WHERE email = '" + email + "'";
