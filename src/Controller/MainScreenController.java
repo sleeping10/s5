@@ -75,7 +75,7 @@ public class MainScreenController implements Initializable {
     private void handleNearestStationBtn(ActionEvent e) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../FXML/FindNearestStation.fxml"));
         Parent root1 = fxmlLoader.load();
-        FindNearestStationController controller = fxmlLoader.getController();
+//        FindNearestStationController controller = fxmlLoader.getController();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setTitle("Find Us");

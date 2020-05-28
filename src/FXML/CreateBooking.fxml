@@ -88,8 +88,6 @@
       <Label fx:id="lblInfo" layoutX="13.0" layoutY="48.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
       <ListView fx:id="lwTimes" layoutX="244.0" layoutY="76.0" prefHeight="171.0" prefWidth="82.0" visible="false" />
       <RadioButton fx:id="rdB" layoutX="271.0" layoutY="288.0" mnemonicParsing="false" text="get copy" visible="false" />
-      <Button layoutX="243.0" layoutY="44.0" mnemonicParsing="false" onAction="#resetTemplate" prefHeight="25.0" prefWidth="42.0" text="reset" />
-      <Button layoutX="287.0" layoutY="44.0" mnemonicParsing="false" onAction="#test" prefHeight="25.0" prefWidth="42.0" text="print" />
       <ProgressBar fx:id="progressBar" layoutX="13.0" layoutY="17.0" prefHeight="18.0" prefWidth="525.0" progress="0.0" />
     </children>
 </AnchorPane>

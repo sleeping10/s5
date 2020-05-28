@@ -11,17 +11,13 @@ import sample.*;
 //import sample.editDocument;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.stream.Stream;
 
 public class CreateBookingController extends ServiceHandler implements Initializable {
 
@@ -118,6 +114,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private ProgressBar progressBar;
 
     private ArrayList<Service> services = new ArrayList<>();
+    private Booking tempB;
+    private CreatePdf editD = new CreatePdf();
 
 
     private double totalCost = 0;
@@ -214,7 +212,9 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     private void handleCreateBookingBtn() {
+
         Calendar cal = Calendar.getInstance();
+
         java.util.Date date = null;
         txtATotal.clear();
         try {
@@ -233,11 +233,14 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
         } else {
+            tempB = new Booking( 0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(), tfLicense.getText(), services);
+            System.out.println(tempB);
+            DBC.getInstance().addBooking(tempB);
             progressBar.setProgress(1.0);
-            DBC.getInstance().addBooking(new Booking(0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(), tfLicense.getText(), services));
             lblTotalCost.setText("Total cost: $" + totalCost);
             lblStatus.setText("Status: Booking successfully added");
             btnCreateBooking.setDisable(true);
+            startCreatePdf();
         }
     }
 
@@ -281,10 +284,10 @@ public class CreateBookingController extends ServiceHandler implements Initializ
             first = format.parse("08:00");
             second = format.parse("20:00");
 
-        Date next = first;
-        do {
-            times.add(format.format(next));
-        } while ((next = new Date(next.getTime() + 30*60*1000)).before(second));
+            Date next = first;
+            do {
+                times.add(format.format(next));
+            } while ((next = new Date(next.getTime() + 30*60*1000)).before(second));
 
 
         }catch (Exception e){
@@ -535,46 +538,35 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
 
-    @FXML
-    public void fungerar() throws IOException {
-//        File source = new File("s5/src/FXML/booking_confirmation.odt");
-//        File dest = new File("s5/src/FXML/Out.odt");
-//        FileChannel sourceChannel = null;
-//        FileChannel destChannel = null;
-//        try {
-//            sourceChannel = new FileInputStream(source).getChannel();
-//            destChannel = new FileOutputStream(dest).getChannel();
-//            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-//            System.out.println("test");
-//        } finally {
-//            sourceChannel.close();
-//            destChannel.close();
-//        }
-    }
-
-    //File source = new File("//home//sleeping//Documents//kod//s5//src//FXML//booking_confirmation.docx");
-    //File dest = new File("//home//sleeping//Documents//kod//s5//src//FXML//test.docx");
+    File source = new File("s5//src//FXML//booking_confirmation.docx");
+    File dest = new File("s5//src//FXML//test.docx");
 
     @FXML
     public void resetTemplate() {
-//        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
-//            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
+            destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
     @FXML
-    public void test() throws Exception {
-//        if (rdB.isSelected()) {
-//            editDocument editDocument = new editDocument();
-//            editDocument.skrivaTest();
-//        }
+    public void startCreatePdf()  {
+        if (rdB.isSelected()) {
+            CreatePdf CreatePdf = new CreatePdf();
+            try {
+                resetTemplate();
+                CreatePdf.createDocument(tempB);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
