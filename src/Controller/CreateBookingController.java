@@ -116,6 +116,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private ArrayList<Service> services = new ArrayList<>();
     private Booking tempB;
     private CreatePdf editD = new CreatePdf();
+    File source = new File("s5//src//FXML//booking_confirmation.docx");
+    File dest = new File("s5//src//FXML//test.docx");
 
 
     private double totalCost = 0;
@@ -233,7 +235,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
         } else {
-            tempB = new Booking( 0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(), tfLicense.getText(), services);
+            tempB = new Booking( 0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
+                    tfLicense.getText(), services, false);
             System.out.println(tempB);
             DBC.getInstance().addBooking(tempB);
             progressBar.setProgress(1.0);
@@ -537,10 +540,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         chbWashCompletePremium.setSelected(false);
     }
 
-
-    File source = new File("s5//src//FXML//booking_confirmation.docx");
-    File dest = new File("s5//src//FXML//test.docx");
-
     @FXML
     public void resetTemplate() {
         try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
@@ -571,4 +570,3 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
 
 }
-

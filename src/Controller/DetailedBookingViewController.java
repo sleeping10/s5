@@ -8,6 +8,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.*;
+
+import javax.swing.*;
 import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,6 +29,7 @@ public class DetailedBookingViewController implements Initializable {
     @FXML private TableView<Service> tvServices;
     @FXML private DatePicker dp;
     @FXML private TextArea taDesc;
+    @FXML private CheckBox chbCompleted;
     private Booking selectedBooking;
     private Account acc = null;
 
@@ -43,6 +46,12 @@ public class DetailedBookingViewController implements Initializable {
         tfName.setText(acc.getName());
         tfPhone.setText(acc.getPhoneNr());
         tfEmail.setText(acc.getEmail());
+        chbCompleted.setSelected(selectedBooking.getServiceCompleted());
+
+        if (DBC.getInstance().getCurrentAcc().getAccessType() == 3){
+            chbCompleted.setDisable(true);
+        }
+
         ArrayList<Service> listicle = booking.getServices();
         double cost = 0;
         for (int i = 0; i <listicle.size() ; i++) {
@@ -92,6 +101,12 @@ public class DetailedBookingViewController implements Initializable {
         java.sql.Date dpDate = java.sql.Date.valueOf(dp.getValue());
         date = new java.util.Date(dpDate.getTime());
         selectedBooking.setDate(date);
+
+        if (chbCompleted.isSelected()) {
+            selectedBooking.setServiceCompleted(true);
+        }else{
+            selectedBooking.setServiceCompleted(false);
+        }
         DBC.getInstance().updateBooking(selectedBooking);
     }
 
