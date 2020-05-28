@@ -37,7 +37,7 @@ public class CreatePdf {
             Date myDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeStamp = sdf.format(myDate); //home//sleeping//IdeaProjects//pj2//s5//src//FXML/
-            XWPFDocument doc = new XWPFDocument(OPCPackage.open("s5//src//FXML//test.docx"));
+            XWPFDocument doc = new XWPFDocument(OPCPackage.open("./s5//src//FXML//test.docx"));
             for (XWPFParagraph p : doc.getParagraphs()) {
                 List<XWPFRun> runs = p.getRuns();
                 if (runs != null) {
@@ -173,18 +173,18 @@ public class CreatePdf {
                 }
             }
 
-            doc.write(new FileOutputStream("s5//src//FXML//test1.docx"));
+            doc.write(new FileOutputStream("./s5//src//FXML//test1.docx"));
 
             //api to covert from Docx to pdf.
             Config.setDefaultSecret("GTV4WT1bbidv7rUV");
             ConvertApi.convert("docx", "pdf",
-                    new Param("File", Paths.get("s5//src//FXML//test1.docx"))
-            ).get().saveFilesSync(Paths.get("s5//src//FXML"));
+                    new Param("File", Paths.get("./s5//src//FXML//test1.docx"))
+            ).get().saveFilesSync(Paths.get("./s5//src//FXML"));
 
             String homeDir = System.getProperty("user.home");
-            Files.move(Path.of("s5//src//FXML//test1.pdf") , Path.of(homeDir+"//booking confirmation.pdf"),REPLACE_EXISTING);
-            Files.deleteIfExists(Path.of("s5//src//FXML//test.docx"));
-            Files.deleteIfExists(Path.of("s5//src//FXML//test1.docx"));
+            Files.move(Path.of("./s5//src//FXML//test1.pdf") , Path.of(homeDir+"//booking confirmation.pdf"),REPLACE_EXISTING);
+            Files.deleteIfExists(Path.of("./s5//src//FXML//test.docx"));
+            Files.deleteIfExists(Path.of("./s5//src//FXML//test1.docx"));
             System.out.println("done");
 
 
