@@ -30,7 +30,8 @@ public class ContactUsController implements Initializable {
 
     }
 
-    public void linkPressed(ActionEvent actionEvent) {
+    @FXML
+    private void linkPressed(ActionEvent actionEvent) {
         try {
             Desktop.getDesktop().browse(new URL("https://hkr.se").toURI());
         } catch (Exception ex){

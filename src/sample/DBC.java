@@ -116,9 +116,13 @@ public class DBC {
     }
 
     public void removeBooking(Booking booking) {
-        String query = "DELETE FROM Booking,Booking_has_service USING Booking INNER JOIN Booking_has_service WHERE bookingID = '" + booking.getBookingID() + "' AND Booking_bookingID = bookingID";
+        String query1 = "DELETE FROM booking_has_service WHERE booking_bookingid ='"+booking.getBookingID()+"'";
+        String query2 = "DELETE FROM Booking WHERE bookingID ='" +booking.getBookingID()+"'";
         try {
-            statement = dbConnection.prepareStatement(query);
+            statement = dbConnection.prepareStatement(query1);
+            statement.executeUpdate();
+            statement.close();
+            statement=dbConnection.prepareStatement(query2);
             statement.executeUpdate();
             statement.close();
         } catch (Exception ex) {
@@ -147,14 +151,13 @@ public class DBC {
 
 
     // gets a complete account from accountID (booking -> getAccountID -> this method
-    public Account getCompleteAccount(int accountID) {
+    public Account getAccount(int accountID) {
         Account acc = null;
         int id = 0;
         String email = "";
         String password = "";
         String name = "";
         String phone = "";
-        boolean status = false;
         int access = 0;
         String query = "SELECT * FROM Account WHERE accountID = '" + accountID + "'";
         try {
@@ -166,7 +169,6 @@ public class DBC {
                 password = rsDetailedAcc.getString(3);
                 name = rsDetailedAcc.getString(4);
                 phone = rsDetailedAcc.getString(5);
-                status = rsDetailedAcc.getBoolean(6);
                 access = rsDetailedAcc.getInt(7);
             }
             acc = new Account(id, email, password, name, phone, access);
@@ -194,11 +196,9 @@ public class DBC {
 
     }
 
-    //public Booking getBookingDetails(){}
-
 
     //Gets all the bookings from the Database
-    public ArrayList<Booking> getBookings() {
+    public ArrayList<Booking> getAllBookings() {
         ResultSet rs;
         ArrayList<Booking> bookings = new ArrayList<>();
         ArrayList<Service> tempServices = new ArrayList<>();
@@ -207,21 +207,25 @@ public class DBC {
                 "licenseID, service_ServiceName, serviceCost" +
                 ", discount, discountStart, discountEnd, estimatedTime " +
                 "FROM booking INNER join booking_has_service " +
-                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName = service_serviceName";
+                "ON bookingID = booking_bookingID INNER JOIN service ON serviceName = service_serviceName " +
+                "ORDER BY BookingID";
         String queryCustomer = "SELECT bookingID, date, bookingDesc, account_accountID, serviceCompleted, " +
                 "licenseID, service_ServiceName, serviceCost" +
                 ", discount, discountStart, discountEnd, estimatedTime " +
                 "FROM booking INNER JOIN booking_has_service " +
                 "ON bookingID = booking_bookingID INNER JOIN service ON serviceName" +
-                " = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "'";
+                " = service_serviceName WHERE account_accountid = '" + acc.getAccountID() + "' " +
+                "ORDER BY BookingID";
         int lastId = -1;
 
         try {
             stmt = dbConnection.createStatement();
-            if (DBC.getInstance().getAccount().getAccessType() == 1 || DBC.getInstance().getAccount().getAccessType() == 2) {
+            if (DBC.getInstance().getCurrentAcc().getAccessType() == 1 || DBC.getInstance().getCurrentAcc().getAccessType() == 2) {
                 rs = stmt.executeQuery(queryAdmin);
-            } else {
+            } else if (DBC.getInstance().getCurrentAcc().getAccessType() == 3){
                 rs = stmt.executeQuery(queryCustomer);
+            }else{
+                rs = null;
             }
 
             while (rs.next()) {
@@ -261,11 +265,11 @@ public class DBC {
         return services;
     }
 
-    public Account getAccount() {
+    public Account getCurrentAcc() {
         return acc;
     }
 
-    public void setAcc(Account acc) {
+    public void setCurrentAcc(Account acc) {
         this.acc = acc;
     }
 
@@ -421,22 +425,7 @@ public class DBC {
         return status;
     }
 
-    public String getPhoneFilter(int accID) {
-        String queryPhone = "SELECT phone FROM Account WHERE accountID = '" + accID + "'";
-        String phone = "";
-        try {
-            stmt = dbConnection.createStatement();
-            ResultSet rs = stmt.executeQuery(queryPhone);
-            if (rs.next()) {
-                phone = rs.getString(1);
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return phone;
-    }
-
-    //This method is not implemented yet, should be used by Admin user
+    //felix
     public ArrayList<Account> getAllUsers() {
         ArrayList<Account> allUsers = new ArrayList<>();
         Account tempAcc = null;

@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.ResourceBundle;
 
 public class ManageBookingController implements Initializable {
-    Account acc = DBC.getInstance().getAccount();
+   private Account acc = DBC.getInstance().getCurrentAcc();
     @FXML private TextField tfPhone;
     @FXML private TextField tfBookingID;
     @FXML private TableColumn tcBookingID;
@@ -35,11 +35,10 @@ public class ManageBookingController implements Initializable {
     private ArrayList<Booking> list = new ArrayList<>();
 
 
-    // för table view kanske flytta?
     private ObservableList<Booking> view (){
         String s ="";
         ObservableList<Booking> views = FXCollections.observableArrayList();
-        list=DBC.getInstance().getBookings();
+        list=DBC.getInstance().getAllBookings();
 
         try{
 
@@ -63,8 +62,6 @@ public class ManageBookingController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if(acc.getAccessType()==3) {
             tfPhone.setVisible(false);
-            tfBookingID.setVisible(false);
-            buttonFilter.setVisible(false);
             tcAccID.setVisible(false);
         }
 
@@ -91,7 +88,7 @@ public class ManageBookingController implements Initializable {
         } else if (!tfPhone.getText().isEmpty()){
             Account tempAcc;
             for(Booking b : list) {
-                tempAcc = DBC.getInstance().getCompleteAccount(b.getAccountID());
+                tempAcc = DBC.getInstance().getAccount(b.getAccountID());
                 if (tempAcc.getPhoneNr().startsWith(tfPhone.getText())) {
                     tvField.getItems().add(b);
                 }
@@ -126,14 +123,12 @@ public class ManageBookingController implements Initializable {
     }
 
     public void handleButtonCancelAppointmentPressed(ActionEvent actionEvent) {
-        //Delete selected row
+        try {
+            DBC.getInstance().removeBooking((Booking) tvField.getSelectionModel().getSelectedItem());
+            tvField.setItems(view());
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
 
-
-
-
-        //för google maps ta inte bort
-//    @FXML private WebView wv;
-//        WebEngine we = wv.getEngine();
-//        we.load("https://goo.gl/maps/38arBYM6DH9aEyYh7");
     }
 }

@@ -113,8 +113,13 @@ public class ResetPassController implements Initializable {
                 // För att kunna skicka mailet behöver vi Transport klassen
                 Transport.send(message);
                 System.out.println("Email sent successfully...");
+
                 // Skriver den unika återställningskoden till databasen
                 DBC.getInstance().setRecoveryCode(Integer.parseInt(String.valueOf(randomNumber)), tfEmail.getText());
+
+
+                DBC.getInstance().setRecoveryCode(randomNumber, tfEmail.getText());
+
             } else {
                 System.out.println("Invalid Email");
                 // Enkelt varningsmeddelande om villkoren för If-statments inte är uppfyllda
@@ -133,7 +138,9 @@ public class ResetPassController implements Initializable {
     @FXML
     public void resetButton() {
 
+
         // Hämtar återställningskoden från databasen
+
         String recoveryCode = DBC.getInstance().getRecoveryCode(tfEmail.getText());
         System.out.println(recoveryCode);
         // If-statement för att se till att återställningskoden skriven av användaren är densamma som den som
@@ -144,6 +151,7 @@ public class ResetPassController implements Initializable {
             String hash = PasswordEncryption.hashPassword(tfNewPassword.getText(), salt) + "-" + salt;
             // Ställer in det nya lösenordet i databasen
             DBC.getInstance().setRecoveryPassword(hash, tfEmail.getText());
+
         } else {
             System.out.println("Invalid");
             // Enkelt varningsmeddelande om villkoren för If-statments inte är uppfyllda

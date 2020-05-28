@@ -4,9 +4,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.*;
 import javafx.fxml.Initializable;
 
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import sample.Booking;
 import sample.DBC;
 import sample.SceneSwitcher;
 
@@ -21,11 +26,11 @@ public class MainScreenController implements Initializable {
     @FXML private AnchorPane anchorInfo;
     @FXML private Label lblSignedInInfo;
 
-    SceneSwitcher sw = new SceneSwitcher();
+    private SceneSwitcher sw = new SceneSwitcher();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblSignedInInfo.setText("Signed in as: " + DBC.getInstance().getAccount().getEmail());
+        lblSignedInInfo.setText("Signed in as: " + DBC.getInstance().getCurrentAcc().getEmail());
         checkIfAdmin();
         try {
             sw.mainScreenSceneSwitcher(anchorInfo, "CreateBooking");
@@ -35,10 +40,10 @@ public class MainScreenController implements Initializable {
     }
 
     private void checkIfAdmin(){
-        if (DBC.getInstance().getAccount().getAccessType() == 1){
+        if (DBC.getInstance().getCurrentAcc().getAccessType() == 1){
             btnAdmin.setVisible(true);
             btnContact.setVisible(false);
-        } else if (DBC.getInstance().getAccount().getAccessType() == 2){
+        } else if (DBC.getInstance().getCurrentAcc().getAccessType() == 2){
             btnAdmin.setVisible(true);
             btnContact.setVisible(false);
             btnAdmin.setText("Employee Menu");
@@ -68,7 +73,14 @@ public class MainScreenController implements Initializable {
     }
     @FXML
     private void handleNearestStationBtn(ActionEvent e) throws IOException {
-        sw.mainScreenSceneSwitcher( anchorInfo, "FindNearestStation");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../FXML/FindNearestStation.fxml"));
+        Parent root1 = fxmlLoader.load();
+//        FindNearestStationController controller = fxmlLoader.getController();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setTitle("Find Us");
+        stage.setScene(new Scene(root1));
+        stage.show();
     }
     @FXML
     private void handleContactUsBtn(ActionEvent e) throws IOException {
