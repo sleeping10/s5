@@ -66,7 +66,7 @@ public class DBC {
         try {
             String queryAddBooking = "INSERT INTO Booking (date, bookingDesc, Account_AccountID, serviceCompleted, licenseID)" +
                     "VALUES (?, ?, ?, ?, ?)";
-            String queryGetTotalBookings = "select count(bookingID) from Booking;";
+            String queryGetTotalBookings = "SELECT bookingID FROM Booking ORDER BY bookingID DESC LIMIT 1";
 
             stmt = dbConnection.createStatement();
 
@@ -107,6 +107,7 @@ public class DBC {
                 statement.execute();
                 System.out.println("Service ADD: " + booking.getServices().get(i).getServiceName());
             }
+
             statement.close();
             System.out.println("DEBUG: Booking connected to Services");
         } catch (Exception e) {
@@ -180,12 +181,14 @@ public class DBC {
         return acc;
     }
 
-    // used in detailed booking view to change the date and description of booking
+    // used in detailed booking view to change the date and description of booking, and setting ocmpletion
     public void updateBooking(Booking booking) {
         java.util.Date utilDate = booking.getDate();
         java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
+
         System.out.println(sq);
-        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc() + "', date = '" + sq + "' WHERE bookingID = " + booking.getBookingID();
+        String query = "UPDATE Booking SET bookingDesc = '" + booking.getBookingDesc() + "', date = '" + sq +
+                "', serviceCompleted = " + booking.getServiceCompleted() + " WHERE bookingID = " + booking.getBookingID();
         try {
             statement = dbConnection.prepareStatement(query);
             statement.executeUpdate();
@@ -222,10 +225,8 @@ public class DBC {
             stmt = dbConnection.createStatement();
             if (DBC.getInstance().getCurrentAcc().getAccessType() == 1 || DBC.getInstance().getCurrentAcc().getAccessType() == 2) {
                 rs = stmt.executeQuery(queryAdmin);
-            } else if (DBC.getInstance().getCurrentAcc().getAccessType() == 3){
+            } else {
                 rs = stmt.executeQuery(queryCustomer);
-            }else{
-                rs = null;
             }
 
             while (rs.next()) {
@@ -236,7 +237,7 @@ public class DBC {
                 tempServices.add(new Service(rs.getString(7), rs.getDouble(8), rs.getDouble(9),
                         rs.getTimestamp(10), rs.getTimestamp(11), rs.getInt(12)));
                 tempBooking = new Booking(rs.getInt(1), rs.getTimestamp(2), rs.getString(3),
-                        rs.getInt(4), rs.getString(6), new ArrayList(tempServices));
+                        rs.getInt(4), rs.getString(6), new ArrayList(tempServices),rs.getBoolean(5));
                 lastId = rs.getInt(1);
             }
             bookings.add(tempBooking);
