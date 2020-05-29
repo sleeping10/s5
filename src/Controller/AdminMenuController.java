@@ -243,6 +243,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
         if(!DBC.getInstance().deleteUser(tempacc.getAccountID())){
         lblStatus.setText("Status: Error, user has bookings cannot delete yet");
         }else{
+
             lblStatus.setText("Status: User sucessfully deleted");
         }
         updateUserTableView();

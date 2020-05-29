@@ -115,6 +115,28 @@ public class DBC {
         }
 
     }
+    public void removeAllBookings(Account acc){
+        int bookingID = 0;
+        String query1 = "SELECT bookingID from Booking WHERE account_accountID ='"+acc.getAccountID()+"'";
+        String query2 = "DELETE FROM booking_has_service WHERE booking_bookingID ='"+bookingID+"'";
+        String query3 = "DELETE FROM Booking where bookingID ='"+bookingID+"'";
+        try{
+            stmt=dbConnection.createStatement();
+            ResultSet rs = stmt.executeQuery(query1);
+            while(rs.next()) {
+                bookingID = rs.getInt(1);
+                statement = dbConnection.prepareStatement(query2);
+                statement.executeUpdate();
+                statement.close();
+                statement = dbConnection.prepareStatement(query3);
+                statement.executeUpdate();
+                statement.close();
+            }
+            stmt.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
 
     public void removeBooking(Booking booking) {
         String query1 = "DELETE FROM booking_has_service WHERE booking_bookingid ='"+booking.getBookingID()+"'";

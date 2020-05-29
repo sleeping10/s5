@@ -112,5 +112,6 @@ public class DetailedBookingViewController implements Initializable {
 
     public void handleButtonRemoveBookingPressed(ActionEvent actionEvent) {
         DBC.getInstance().removeBooking(selectedBooking);
+
     }
 }

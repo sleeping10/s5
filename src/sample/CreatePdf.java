@@ -23,7 +23,7 @@ public class CreatePdf {
 
     private ArrayList<String> service = new ArrayList<>();
     private ArrayList<String> price = new ArrayList<>();
-    // Putting in all the information in the Docx file.
+//     Putting in all the information in the Docx file.
     private String osType = "";
     public void createDocument(Booking booking) throws Exception {
         DecimalFormat decimalFormat = new DecimalFormat(".##");
@@ -99,7 +99,7 @@ public class CreatePdf {
             }
 
             System.out.println("allt är klart ");
-            // Andra delen
+//             Andra delen
             double totalP = 0;
             for (XWPFParagraph p : doc.getParagraphs()) {
                 java.util.List<XWPFRun> runs = p.getRuns();
@@ -115,8 +115,7 @@ public class CreatePdf {
                                 r.setText(price.get(a));
                                 totalP += booking.getServices().get(a).getCurrentCost();
                             }
-                        }
-                    }
+                        } }
                 }
             }
 
@@ -182,7 +181,7 @@ public class CreatePdf {
             fos.close();
             doc.close();
 
-            //api to covert from Docx to pdf.
+//            api to covert from Docx to pdf.
             Config.setDefaultSecret("GTV4WT1bbidv7rUV");
             ConvertApi.convert("docx", "pdf",
                     new Param("File", Paths.get(osType +"src/FXML/test1.docx"))
