@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import sample.*;
 
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -207,6 +209,30 @@ public class AdminMenuController extends ServiceHandler implements Initializable
                 tfStandardCost.setPromptText(String.valueOf(cost));
         }
         tfStandardCost.setText("");
+
+    }
+
+    @FXML
+    private void handleBtnApplyDiscount(){
+        double discount = 0;
+        try {
+            discount = Double.parseDouble(tfDiscount.getText());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            if (!tfStartDate.getText().isEmpty() && !tfEndDate.getText().isEmpty() && selectedService != null){
+                Date parsedStartDate = dateFormat.parse(tfStartDate.getText());
+                Date parsedEndDate = dateFormat.parse(tfEndDate.getText());
+                Timestamp timestampStart = new java.sql.Timestamp(parsedStartDate.getTime());
+                Timestamp timestampEnd = new java.sql.Timestamp(parsedEndDate.getTime());
+
+                DBC.getInstance().setDiscount(selectedService, discount, timestampStart, timestampEnd);
+                lblStatus.setText("Status: Discount Cost changed successfully");
+            }else if (selectedService != null){
+                DBC.getInstance().setDiscount(selectedService, 0, null, null);
+            }
+
+        } catch(Exception e) { //this generic but you can control another types of exception
+            lblStatus.setText("Status: Date format wrong, YYYY-MM-DD HH:MM");
+        }
 
     }
 
