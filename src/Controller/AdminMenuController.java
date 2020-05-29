@@ -238,13 +238,13 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
     @FXML
     private void handleDeleteAccBtn(){
-        Account tempacc;
-        tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
-        if(!DBC.getInstance().deleteUser(tempacc.getAccountID())){
-        lblStatus.setText("Status: Error, user has bookings cannot delete yet");
-        }else{
-
-            lblStatus.setText("Status: User sucessfully deleted");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the user and all of their bookings?",ButtonType.YES,ButtonType.NO);
+        alert.showAndWait();
+        if(alert.getResult()==ButtonType.YES) {
+            Account tempacc;
+            tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+            DBC.getInstance().removeAllBookings(tempacc);
+            DBC.getInstance().deleteUser(tempacc.getAccountID());
         }
         updateUserTableView();
 

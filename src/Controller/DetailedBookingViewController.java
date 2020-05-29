@@ -7,6 +7,7 @@ import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import sample.*;
 
 import javax.swing.*;
@@ -19,6 +20,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class DetailedBookingViewController implements Initializable {
+    @FXML private Button buttonRemoveBooking;
+    @FXML private Button buttonSaveBooking;
     @FXML private TextField tfName;
     @FXML private TextField tfPhone;
     @FXML private TextField tfEmail;
@@ -108,10 +111,14 @@ public class DetailedBookingViewController implements Initializable {
             selectedBooking.setServiceCompleted(false);
         }
         DBC.getInstance().updateBooking(selectedBooking);
+        Stage stage = (Stage)buttonSaveBooking.getScene().getWindow();
+        stage.close();
     }
 
     public void handleButtonRemoveBookingPressed(ActionEvent actionEvent) {
         DBC.getInstance().removeBooking(selectedBooking);
+        Stage stage = (Stage)buttonRemoveBooking.getScene().getWindow();
+        stage.close();
 
     }
 }
