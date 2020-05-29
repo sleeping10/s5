@@ -61,7 +61,7 @@ public class Service {
     public String getCostAndDiscountAsString() {
         double discount = this.discount / 100;
         String out = "";
-        if (discountStart != null && discountEnd != null) {
+        if (discountStart != null && discountEnd != null && discount > 0) {
             if (current_time.after(discountStart) && current_time.before(discountEnd)) {
                 System.out.println("DEBUG: Discount applied");
                 out = "$" + cost + "(-" + this.discount + "%) , NOW: $" + Math.round(cost * (1 - discount)) ;

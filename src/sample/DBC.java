@@ -481,12 +481,15 @@ public class DBC {
 
     //This method is not implemented yet, should be used by Admin user
     public void setDiscount(String serviceName, double discount, Timestamp startDate, Timestamp endDate) {
-        discount = discount / 100;
+        Double discountD = discount;
+        if (discount <= 0){
+            discountD = null;
+        }
 
         String queryDiscount = "UPDATE Service SET discount = ?, discountStart = ?, discountEnd = ? WHERE serviceName = '" + serviceName + "'";
         try {
             statement = dbConnection.prepareStatement(queryDiscount);
-            statement.setDouble(1, discount);
+            statement.setObject(1, discountD, Types.DOUBLE);
             statement.setTimestamp(2, startDate);
             statement.setTimestamp(3, endDate);
             statement.executeUpdate();
