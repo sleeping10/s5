@@ -3,6 +3,7 @@ package Controller;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -238,7 +239,8 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
     @FXML
     private void handleDeleteAccBtn(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the user and all of their bookings?",ButtonType.YES,ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to delete the user and" +
+                " all of their bookings?",ButtonType.YES,ButtonType.NO);
         alert.showAndWait();
         if(alert.getResult()==ButtonType.YES) {
             Account tempacc;
@@ -263,6 +265,19 @@ public class AdminMenuController extends ServiceHandler implements Initializable
             tempacc.setAccessType(3);
         }
         DBC.getInstance().updateAccount(tempacc);
+
+    }
+    @FXML
+    private void handleButtonRemoveBookingsPressed(ActionEvent actionEvent) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to remove all of the selected user's bookings?",ButtonType.YES,ButtonType.NO);
+        alert.showAndWait();
+        if(alert.getResult()==ButtonType.YES) {
+            Account tempacc;
+            tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+            DBC.getInstance().removeAllBookings(tempacc);
+            lblStatus.setText("STATUS: All bookings removed successfully");
+        }
+        updateUserTableView();
 
     }
 }
