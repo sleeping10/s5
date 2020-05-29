@@ -24,9 +24,13 @@ public class CreatePdf {
     private ArrayList<String> service = new ArrayList<>();
     private ArrayList<String> price = new ArrayList<>();
     // Putting in all the information in the Docx file.
+    private String osType = null;
     public void createDocument(Booking booking) throws Exception {
         DecimalFormat decimalFormat = new DecimalFormat(".##");
         try {
+            if (System.getProperty("os.name").equalsIgnoreCase("linux")){
+                osType ="s5/";
+            }
             for (int i = 0; i < booking.getServices().size(); i++) {
                 service.add(booking.getServices().get(i).getServiceName());
                 price.add(booking.getServices().get(i).getCostAndDiscountAsString());
@@ -36,8 +40,8 @@ public class CreatePdf {
 
             Date myDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String timeStamp = sdf.format(myDate); //home//sleeping//IdeaProjects//pj2//s5//src//FXML/
-            XWPFDocument doc = new XWPFDocument(OPCPackage.open("src//FXML/test.docx"));
+            String timeStamp = sdf.format(myDate);
+            XWPFDocument doc = new XWPFDocument(OPCPackage.open(osType +"src//FXML/test.docx"));
             for (XWPFParagraph p : doc.getParagraphs()) {
                 List<XWPFRun> runs = p.getRuns();
                 if (runs != null) {
@@ -173,18 +177,18 @@ public class CreatePdf {
                 }
             }
 
-            doc.write(new FileOutputStream("src/FXML/test1.docx"));
+            doc.write(new FileOutputStream(osType +"src/FXML/test1.docx"));
 
             //api to covert from Docx to pdf.
             Config.setDefaultSecret("GTV4WT1bbidv7rUV");
             ConvertApi.convert("docx", "pdf",
-                    new Param("File", Paths.get("src/FXML/test1.docx"))
-            ).get().saveFilesSync(Paths.get("src/FXML"));
+                    new Param("File", Paths.get(osType +"src/FXML/test1.docx"))
+            ).get().saveFilesSync(Paths.get(osType +"src/FXML"));
 
             String homeDir = System.getProperty("user.home");
-            Files.move(Path.of("src/FXML/test1.pdf") , Path.of(homeDir+"/booking confirmation.pdf"),REPLACE_EXISTING);
-            Files.deleteIfExists(Path.of("src/FXML/test.docx"));
-            Files.deleteIfExists(Path.of("src/FXML/test1.docx"));
+            Files.move(Path.of(osType +"src/FXML/test1.pdf") , Path.of(homeDir+"/booking confirmation.pdf"),REPLACE_EXISTING);
+            Files.deleteIfExists(Path.of(osType +"src/FXML/test.docx"));
+            Files.deleteIfExists(Path.of(osType +"src/FXML/test1.docx"));
             System.out.println("done");
 
 

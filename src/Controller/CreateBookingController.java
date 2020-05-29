@@ -116,6 +116,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private ArrayList<Service> services = new ArrayList<>();
     private Booking tempB;
     private CreatePdf editD = new CreatePdf();
+    private String osType = null;
+
     File source = new File("src/FXML/booking_confirmation.docx");
     File dest = new File("src//FXML/test.docx");
 
@@ -542,8 +544,12 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     public void resetTemplate() {
-        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
+        if (System.getProperty("os.name").equalsIgnoreCase("linux")){
+            osType ="s5/";
+        }
+        try (FileChannel sourceChannel = new FileInputStream(osType+source).getChannel(); FileChannel destChannel = new FileOutputStream(osType+dest).getChannel()) {
             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
