@@ -24,7 +24,7 @@ public class CreatePdf {
     private ArrayList<String> service = new ArrayList<>();
     private ArrayList<String> price = new ArrayList<>();
     // Putting in all the information in the Docx file.
-    private String osType = null;
+    private String osType = "";
     public void createDocument(Booking booking) throws Exception {
         DecimalFormat decimalFormat = new DecimalFormat(".##");
         try {
