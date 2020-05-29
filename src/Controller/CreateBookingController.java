@@ -116,8 +116,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private ArrayList<Service> services = new ArrayList<>();
     private Booking tempB;
     private CreatePdf editD = new CreatePdf();
-    File source = new File("./s5/src/FXML/booking_confirmation.docx");
-    File dest = new File("./s5/src//FXML/test.docx");
+    File source = new File("src/FXML/booking_confirmation.docx");
+    File dest = new File("src//FXML/test.docx");
 
 
     private double totalCost = 0;
