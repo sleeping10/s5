@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
+import sample.Account;
 import sample.DBC;
 import sample.PasswordEncryption;
 import sample.Verification;
@@ -119,7 +120,9 @@ public class ManageAccountController implements Initializable {
         if (!pass.matches("1") && !checkPass) {
             String salt = PasswordEncryption.generateSalt(5);
             String hashed = PasswordEncryption.hashPassword(pass, salt) + "-" + salt;
-            DBC.getInstance().updateAccount(name, hashed, phone, DBC.getInstance().getCurrentAcc().getAccountID());
+            DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
+                    DBC.getInstance().getCurrentAcc().getEmail(), hashed,
+                    name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));
             text.setText("saved!");
         }
     }

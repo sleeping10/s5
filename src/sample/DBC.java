@@ -294,9 +294,12 @@ public class DBC {
     }
 
     //update the information in the DB
-    public void updateAccount(String name, String pass, String phone, int accountID) {
+    public void updateAccount(Account account) {
         int resultSet;
-        String updateQuery = "UPDATE projektkurs2hkr.account set password='" + pass + "', name='" + name + "',phone='" + phone + "'  where accountID='" + accountID + "' ";
+        String updateQuery = "UPDATE projektkurs2hkr.account set password='" + account.getPassword()
+                + "', name='" + account.getName() + "',phone='" + account.getPhoneNr()
+                + "', access_AccessID = '" + account.getAccessType() + "'" +
+                "  where accountID='" + account.getAccountID() + "' ";
         try {
             stmt = dbConnection.createStatement();
             resultSet = stmt.executeUpdate(updateQuery);

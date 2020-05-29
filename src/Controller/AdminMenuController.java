@@ -241,11 +241,27 @@ public class AdminMenuController extends ServiceHandler implements Initializable
         Account tempacc;
         tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
         if(!DBC.getInstance().deleteUser(tempacc.getAccountID())){
-        lblStatus.setText("Status: Error, user has bookings cannot delete");
+        lblStatus.setText("Status: Error, user has bookings cannot delete yet");
         }else{
             lblStatus.setText("Status: User sucessfully deleted");
         }
         updateUserTableView();
+
+    }
+
+    @FXML
+    private void handlePrivilegiesBtn(){
+        Account tempacc;
+        tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+
+        if (chbAdmin.isSelected()){
+            tempacc.setAccessType(1);
+        }else if(chbEmployee.isSelected()){
+            tempacc.setAccessType(2);
+        }else if(chbCustomer.isSelected()){
+            tempacc.setAccessType(3);
+        }
+        DBC.getInstance().updateAccount(tempacc);
 
     }
 }

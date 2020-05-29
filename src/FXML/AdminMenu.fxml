@@ -68,7 +68,7 @@
                           </columns>
                         </TableView>
                         <Button fx:id="btnDeleteAcc" layoutY="217.0" mnemonicParsing="false" onAction="#handleDeleteAccBtn" text="Delete Account" />
-                        <Button fx:id="btnApplyPermissions" layoutX="367.0" layoutY="217.0" mnemonicParsing="false" text="Apply/Revoke Permissions" />
+                        <Button fx:id="btnApplyPermissions" onAction="#handlePrivilegiesBtn" layoutX="367.0" layoutY="217.0" mnemonicParsing="false" text="Apply/Revoke Permissions" />
                         <RadioButton fx:id="chbAdmin" layoutX="131.0" layoutY="221.0" mnemonicParsing="false" text="Admin" />
                         <RadioButton fx:id="chbEmployee" layoutX="196.0" layoutY="221.0" mnemonicParsing="false" text="Employee" />
                         <RadioButton fx:id="chbCustomer" layoutX="278.0" layoutY="221.0" mnemonicParsing="false" text="Customer" />

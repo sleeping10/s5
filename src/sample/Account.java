@@ -25,6 +25,7 @@ public class Account implements Serializable {
     public int getAccessType() {
         return accessType;
     }
+    public void setAccessType(int accessType){this.accessType = accessType;}
     public void setPassword(String password) {
         this.password = password;
     }
