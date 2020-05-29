@@ -176,8 +176,11 @@ public class CreatePdf {
                     }
                 }
             }
+            FileOutputStream fos = new FileOutputStream(osType + "src/FXML/test1.docx");
 
-            doc.write(new FileOutputStream(osType +"src/FXML/test1.docx"));
+            doc.write(fos);
+            fos.close();
+            doc.close();
 
             //api to covert from Docx to pdf.
             Config.setDefaultSecret("GTV4WT1bbidv7rUV");
@@ -187,6 +190,7 @@ public class CreatePdf {
 
             String homeDir = System.getProperty("user.home");
             Files.move(Path.of(osType +"src/FXML/test1.pdf") , Path.of(homeDir+"/booking confirmation.pdf"),REPLACE_EXISTING);
+
             Files.deleteIfExists(Path.of(osType +"src/FXML/test.docx"));
             Files.deleteIfExists(Path.of(osType +"src/FXML/test1.docx"));
             System.out.println("done");
