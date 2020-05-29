@@ -18,10 +18,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CreateBookingController">
     <children>
-        <GridPane fx:id="gridPaneMain" alignment="CENTER" layoutX="15.0" layoutY="76.0" prefHeight="185.0" prefWidth="308.0" visible="false">
+        <GridPane fx:id="gridPaneMain" alignment="CENTER" layoutX="15.0" layoutY="76.0" prefHeight="186.0" prefWidth="354.0">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="172.0" minWidth="10.0" prefWidth="164.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="158.0" minWidth="10.0" prefWidth="144.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="228.79998779296875" minWidth="10.0" prefWidth="175.20003662109374" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.80002441406248" minWidth="10.0" prefWidth="179.99996337890622" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -63,15 +63,15 @@
                 <MenuItem fx:id="mbWash" mnemonicParsing="false" onAction="#handleMbWash" text="Wash" />
             </items>
         </MenuButton>
-        <TextArea fx:id="txtATotal" layoutX="337.0" layoutY="76.0" prefHeight="171.0" prefWidth="199.0" />
+        <TextArea fx:id="txtATotal" layoutX="363.0" layoutY="76.0" prefHeight="171.0" prefWidth="174.0" />
         <Button fx:id="btnClearSelections" layoutX="13.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleClearSelectionsBtn" prefHeight="31.0" prefWidth="125.0" text="Clear Selections" />
         <Button fx:id="btnNext" layoutX="413.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleNextBtn" prefHeight="31.0" prefWidth="124.0" text="Next &gt;" />
       <Button fx:id="btnCreateBooking" layoutX="413.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleCreateBookingBtn" prefHeight="31.0" prefWidth="124.0" text="Create new Booking" visible="false" />
-      <Label fx:id="lblTotalCost" layoutX="338.0" layoutY="251.0" text="Total cost: " />
-      <Label fx:id="lblStatus" layoutX="147.0" layoutY="288.0" text="Label" visible="false" />
+      <Label fx:id="lblTotalCost" layoutX="363.0" layoutY="251.0" text="Total cost: " />
+      <Label fx:id="lblStatus" layoutX="147.0" layoutY="288.0" text="Status:" />
       <Button fx:id="btnGoBack" layoutX="13.0" layoutY="281.0" mnemonicParsing="false" onAction="#handleGoBackBtn" prefHeight="31.0" prefWidth="125.0" text="&lt; Go Back" visible="false" />
-      <Label layoutX="337.0" layoutY="48.0" text="Total services added;" />
-      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="215.0" visible="false">
+      <Label layoutX="363.0" layoutY="57.0" text="Total services added" />
+      <GridPane fx:id="gridPaneTwo" layoutX="14.0" layoutY="76.0" prefHeight="31.0" prefWidth="246.0" visible="false">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="118.60002441406249" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="0.0" prefWidth="96.9999755859375" />
@@ -80,14 +80,14 @@
           <RowConstraints maxHeight="61.0" minHeight="0.0" prefHeight="31.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-              <DatePicker fx:id="datePicker" onAction="#handleDatePicker" prefHeight="26.0" prefWidth="125.0" promptText="datePicker" visible="false" />
-            <TextField fx:id="tfLicense" prefHeight="25.0" prefWidth="132.0" promptText="License Number" visible="false" GridPane.columnIndex="1" />
+              <DatePicker fx:id="datePicker" onAction="#handleDatePicker" prefHeight="26.0" prefWidth="125.0" promptText="Select Date" />
+            <TextField fx:id="tfLicense" prefHeight="26.0" prefWidth="110.0" promptText="License Number" GridPane.columnIndex="1" />
          </children>
       </GridPane>
-      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="116.0" prefHeight="138.0" prefWidth="215.0" promptText="Add additional description if needed" visible="false" />
+      <TextArea fx:id="taDesc" layoutX="15.0" layoutY="116.0" prefHeight="131.0" prefWidth="245.0" promptText="Add additional description if needed" visible="false" />
       <Label fx:id="lblInfo" layoutX="13.0" layoutY="48.0" prefHeight="17.0" prefWidth="288.0" text="Please select a date and type in your car license plate" visible="false" />
-      <ListView fx:id="lwTimes" layoutX="244.0" layoutY="76.0" prefHeight="171.0" prefWidth="82.0" visible="false" />
-      <RadioButton fx:id="rdB" layoutX="271.0" layoutY="288.0" mnemonicParsing="false" text="get copy" visible="false" />
+      <ListView fx:id="lwTimes" layoutX="268.0" layoutY="76.0" prefHeight="171.0" prefWidth="82.0" visible="false" />
+      <RadioButton fx:id="rdB" layoutX="15.0" layoutY="253.0" mnemonicParsing="false" text="Get Booking info as PDF" visible="false" />
       <ProgressBar fx:id="progressBar" layoutX="13.0" layoutY="17.0" prefHeight="18.0" prefWidth="525.0" progress="0.0" />
     </children>
 </AnchorPane>

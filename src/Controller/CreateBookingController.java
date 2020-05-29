@@ -252,26 +252,30 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     private void handleNextBtn() {
-        progressBar.setProgress(0.3);
-        toggleRepairCheckBoxes(false);
-        toggleInspectionCheckBoxes(false);
-        toggleWashCheckBoxes(false);
-        mbService.setVisible(false);
-        btnClearSelections.setVisible(false);
-        btnGoBack.setVisible(true);
-        taDesc.setVisible(true);
-        btnCreateBooking.setVisible(true);
-        btnNext.setVisible(false);
-        datePicker.setVisible(true);
-        tfLicense.setVisible(true);
-        lblStatus.setVisible(true);
-        lblInfo.setVisible(true);
-        lblStatus.setText("Status: ");
-        toggleCostLabels(0);
-        gridPaneTwo.setVisible(true);
-        lwTimes.setVisible(true);
-        fillTimesListView();
-        rdB.setVisible(true);
+        if (services.isEmpty()){
+            lblStatus.setText("Status: Select at least one service");
+        }else {
+            progressBar.setProgress(0.3);
+            toggleRepairCheckBoxes(false);
+            toggleInspectionCheckBoxes(false);
+            toggleWashCheckBoxes(false);
+            mbService.setVisible(false);
+            btnClearSelections.setVisible(false);
+            btnGoBack.setVisible(true);
+            taDesc.setVisible(true);
+            btnCreateBooking.setVisible(true);
+            btnNext.setVisible(false);
+            datePicker.setVisible(true);
+            tfLicense.setVisible(true);
+            lblStatus.setVisible(true);
+            lblInfo.setVisible(true);
+            lblStatus.setText("Status: ");
+            toggleCostLabels(0);
+            gridPaneTwo.setVisible(true);
+            lwTimes.setVisible(true);
+            fillTimesListView();
+            rdB.setVisible(true);
+        }
     }
 
     private void fillTimesListView() {
@@ -336,7 +340,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         double cost = getServiceCost(service);
         if (toggle) {
             totalCost += cost;
-            txtATotal.appendText(tempService.getServiceName() + ", $" + (tempService.getCost()) + "\n");
+            txtATotal.appendText(tempService.getServiceName() + ", $" + (tempService.getCurrentCost()) + "\n");
             services.add(tempService);
         } else {
             txtATotal.clear();
@@ -346,7 +350,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
                     services.remove(i);
                     break;
                 }
-                txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCost()) + "\n");
+                txtATotal.appendText(services.get(i).getServiceName() + ", $" + (services.get(i).getCurrentCost()) + "\n");
             }
         }
         lblTotalCost.setText("Total cost: $" + Math.round(totalCost));
@@ -520,10 +524,11 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     @FXML
     public void handleClearSelectionsBtn() {
-        progressBar.setProgress(0.1);
+        progressBar.setProgress(0.05);
         txtATotal.setText(null);
         totalCost = 0;
         services.clear();
+        lblTotalCost.setText("Total cost: 0");
         chbRepairOil.setSelected(false);
         chbRepairAC.setSelected(false);
         chbRepairWheelChange.setSelected(false);
