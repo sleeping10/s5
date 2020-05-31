@@ -65,6 +65,8 @@ public class Service {
             if (current_time.after(discountStart) && current_time.before(discountEnd)) {
                 System.out.println("DEBUG: Discount applied");
                 out = "$" + cost + "(-" + this.discount + "%) , NOW: $" + Math.round(cost * (1 - discount)) ;
+            }else{
+                out = "$" + cost;
             }
         }else{
             out = "$" + cost;

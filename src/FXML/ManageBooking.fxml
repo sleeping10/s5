@@ -6,7 +6,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageBookingController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ManageBookingController">
    <children>
       <TextField fx:id="tfPhone" layoutX="10.0" layoutY="19.0" prefHeight="25.0" prefWidth="121.0" promptText="Phone" />
       <TextField fx:id="tfBookingID" layoutX="158.0" layoutY="19.0" promptText="Booking ID" />
@@ -14,9 +14,9 @@
         <columns>
           <TableColumn fx:id="tcBookingID" prefWidth="87.0" text="Booking ID" />
             <TableColumn fx:id="tcAccID" prefWidth="54.0" text="Acc ID" />
-          <TableColumn fx:id="tcStartDate" prefWidth="89.0" text="Date" />
-            <TableColumn fx:id="tcBookingDesc" prefWidth="214.0" text="Description" />
-            <TableColumn fx:id="tcRegNR" prefWidth="91.0" text="License Plate" />
+          <TableColumn fx:id="tcStartDate" prefWidth="149.0" text="Date" />
+            <TableColumn fx:id="tcBookingDesc" prefWidth="132.0" text="Description" />
+            <TableColumn fx:id="tcRegNR" prefWidth="113.0" text="License Plate" />
         </columns>
       </TableView>
       <Button fx:id="buttonFilter" layoutX="325.0" layoutY="19.0" mnemonicParsing="false" onAction="#filterButtonPressed" text="Filter" />

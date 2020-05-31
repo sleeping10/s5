@@ -13,6 +13,7 @@ import sample.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -215,36 +216,51 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
 
     @FXML
-    private void handleCreateBookingBtn() {
+    private void handleCreateBookingBtn() throws ParseException {
 
         Calendar cal = Calendar.getInstance();
 
+        long millis=System.currentTimeMillis();
+        java.util.Date currentDate =new java.util.Date(millis);
         java.util.Date date = null;
-        txtATotal.clear();
+        ArrayList<Booking> bookingsToCheck = DBC.getInstance().getAllBookings();
+        boolean dateNotAvailable = false;
+
         try {
             date = java.sql.Date.valueOf(datePicker.getValue());
             cal.setTime(date);
             cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(0, 2)));
             cal.set(Calendar.MINUTE, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(3, 5)));
             date = cal.getTime();
-            System.out.println("date: "+ date);
         } catch (NullPointerException e) {
             System.out.println("ERROR: Not able to get date");
         }
 
+        for (int i = 0; i < bookingsToCheck.size(); i++){
+            if (bookingsToCheck.get(i).getDate().compareTo(date) == 0){
+                dateNotAvailable = true;
+            }
+        }
+
         if (datePicker.getValue() == null || !Verification.validateLicensePlate(tfLicense.getText())) {
-            lblStatus.setText("Status: Please select a date and Registration ID");
+            lblStatus.setText("Status: Select a date and Registration ID");
         } else if (services.isEmpty()) {
-            lblStatus.setText("Status: Please select at least 1 service");
-        } else {
+            lblStatus.setText("Status: Select at least 1 service");
+        } else if (date.before(currentDate)){
+            lblStatus.setText("Status: You cannot book a date before today's date");
+        } else if (dateNotAvailable){
+            lblStatus.setText("Status: This time is not available, try another date");
+        }
+        else {
             tempB = new Booking( DBC.getInstance().getLeatesBookingId(), date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
-                    tfLicense.getText(), services, false);
+                    tfLicense.getText().toUpperCase(), services, false);
             System.out.println(tempB);
             DBC.getInstance().addBooking(tempB);
             progressBar.setProgress(1.0);
             lblTotalCost.setText("Total cost: $" + totalCost);
             lblStatus.setText("Status: Booking successfully added");
             btnCreateBooking.setDisable(true);
+            btnGoBack.setDisable(true);
             startCreatePdf();
         }
     }
@@ -280,8 +296,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     private void fillTimesListView() {
         progressBar.setProgress(0.6);
-        ArrayList<Booking> bookingsToCheck = DBC.getInstance().getAllBookings();
-        String timeStamp = new SimpleDateFormat("HH:mm").format(new Date());
         ArrayList<String> times = new ArrayList<String>();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
