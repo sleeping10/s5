@@ -7,7 +7,7 @@ public abstract class Verification {
 
     private final static Pattern EMAIL_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     private final static Pattern PHONE_REGEX = Pattern.compile("^[0-9]{9,10}$");
-    private final static Pattern LICENSE_REGEX = Pattern.compile("[A-öa-ö]{3}[0-9]{2}[A-öa-ö0-9]{1}");
+    private final static Pattern LICENSE_REGEX = Pattern.compile("(?=.{6}$)[A-öa-ö]{3}[0-9]{2}[A-öa-ö0-9]");
 
     public static int verifyAccount(String email, String pass, String phone){
         int status;
