@@ -1,11 +1,7 @@
 package sample;
 
-import com.mysql.cj.protocol.Resultset;
-
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,15 +9,11 @@ import java.util.logging.Logger;
 public class DBC {
     private PreparedStatement statement = null;
     private Statement stmt = null;
-    Connection dbConnection = null;
+    private Connection dbConnection = null;
     private final String database_url = "jdbc:mysql://den1.mysql4.gear.host:3306/projektkurs2hkr?user=projektkurs2hkr&password=Rj7jS-ahBhu-&useSSL=false";
 
     private static DBC single_instance = null;
-
     private Account acc;
-
-    private DBC() {
-    }
 
     public static DBC getInstance() {
         if (single_instance == null) {
@@ -31,7 +23,7 @@ public class DBC {
     }
 
 
-    public boolean connect() {
+    boolean connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             dbConnection = DriverManager.getConnection(database_url);
@@ -44,7 +36,7 @@ public class DBC {
         }
     }
 
-    public void disconnect() {
+    void disconnect() {
         if (dbConnection != null) {
             try {
                 System.out.println("DEBUG: Closing db connection");
@@ -116,7 +108,7 @@ public class DBC {
 
     }
     public void removeAllBookings(Account acc){
-        int bookingID = 0;
+        int bookingID;
         String query1 = "SELECT bookingID from Booking WHERE account_accountID ='"+acc.getAccountID()+"'";
         try{
             stmt=dbConnection.createStatement();
@@ -279,7 +271,7 @@ public class DBC {
                 tempServices.add(new Service(rs.getString(7), rs.getDouble(8), rs.getDouble(9),
                         rs.getTimestamp(10), rs.getTimestamp(11), rs.getInt(12)));
                 tempBooking = new Booking(rs.getInt(1), rs.getTimestamp(2), rs.getString(3),
-                        rs.getInt(4), rs.getString(6), new ArrayList(tempServices),rs.getBoolean(5));
+                        rs.getInt(4), rs.getString(6), new ArrayList<>(tempServices),rs.getBoolean(5));
                 lastId = rs.getInt(1);
             }
             bookings.add(tempBooking);
@@ -290,7 +282,7 @@ public class DBC {
         return bookings;
     }
 
-    public ArrayList<Service> getAvailableServices() {
+    ArrayList<Service> getAvailableServices() {
         String query = "SELECT * From Service";
         ArrayList<Service> services = new ArrayList<>();
         try {
@@ -377,7 +369,7 @@ public class DBC {
 
     }
 
-    public boolean verifyAccount(String email, String pass, String phone) {
+    boolean verifyAccount(String email, String pass, String phone) {
         boolean statusLogin = false;
         boolean statusSignUp;
         boolean status = false;
@@ -436,9 +428,6 @@ public class DBC {
                         status = true;
                         acc = new Account(dbAccID, dbmail, dbpass, dbname, dbphone, accessType);
                         setLoginStatus(true);
-                    } else {
-                        status = false;
-                        System.out.println("DEBUG: User already logged in");
                     }
                 } else if (dbmail.matches(email)) {
                     System.out.println("DEBUG: EMAIL MATCH, PW failed");
@@ -496,7 +485,7 @@ public class DBC {
     //felix
     public ArrayList<Account> getAllUsers() {
         ArrayList<Account> allUsers = new ArrayList<>();
-        Account tempAcc = null;
+        Account tempAcc;
         try {
             stmt = dbConnection.createStatement();
             String queryUsers = "SELECT accountID, email, password, name, phone, loginStatus, access_accessID FROM Account";
@@ -522,7 +511,7 @@ public class DBC {
         String query = "DELETE FROM Account WHERE accountID =" + accountID;
         try {
             PreparedStatement prepstmt = dbConnection.prepareStatement(query);
-            ;
+
             prepstmt.executeUpdate();
             prepstmt.close();
             return true;
