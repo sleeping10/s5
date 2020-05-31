@@ -29,6 +29,9 @@ public class Account implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+    public void setName(String name) { this.name = name;}
+    public void setPhoneNr(String phoneNr) { this.phoneNr = phoneNr; }
+
     public String getPassword(){
         return this.password;
     }

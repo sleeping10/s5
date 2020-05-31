@@ -171,6 +171,26 @@ public class DBC {
         }
         return tempService;
     }
+    public int getLeatesBookingId() {
+        int getCurrentLatest = 0;
+
+        try {
+            stmt = dbConnection.createStatement();
+            ResultSet latest = stmt.executeQuery("select max(bookingID) from booking;");
+
+            if (latest.next()) {
+                getCurrentLatest = latest.getInt(1);
+                System.out.println(getCurrentLatest);
+                getCurrentLatest+=1;
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+
+        return getCurrentLatest;
+    }
 
 
     // gets a complete account from accountID (booking -> getAccountID -> this method
@@ -318,19 +338,41 @@ public class DBC {
     //update the information in the DB
     public void updateAccount(Account account) {
         int resultSet;
-        String updateQuery = "UPDATE projektkurs2hkr.account set password='" + account.getPassword()
-                + "', name='" + account.getName() + "',phone='" + account.getPhoneNr()
-                + "', access_AccessID = '" + account.getAccessType() + "'" +
-                "  where accountID='" + account.getAccountID() + "' ";
-        try {
-            stmt = dbConnection.createStatement();
-            resultSet = stmt.executeUpdate(updateQuery);
-            if (resultSet > 0) {
-                //System.out.println("gick: "+resultSet);
-            } else //System.out.println("gick ej: "+resultSet);
-                System.out.println(resultSet);
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (!account.getPassword().isEmpty()) {
+            String updateQuery = "UPDATE projektkurs2hkr.account set password='" + account.getPassword()
+                    + "', name='" + account.getName() + "',phone='" + account.getPhoneNr()
+                    + "', access_AccessID = '" + account.getAccessType() + "'" +
+                    "  where accountID='" + account.getAccountID() + "' ";
+            try {
+                stmt = dbConnection.createStatement();
+                resultSet = stmt.executeUpdate(updateQuery);
+                if (resultSet > 0) {
+                    System.out.println("gick i först: "+resultSet);
+                    acc.setName(account.getName());
+                    acc.setPhoneNr(account.getPhoneNr());
+                } else System.out.println("gick ej i första: "+resultSet);
+                    System.out.println(resultSet);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }else {
+            String updateQuery = "UPDATE projektkurs2hkr.account set name='" + account.getName() + "',phone='" + account.getPhoneNr()
+                    + "', access_AccessID = '" + account.getAccessType() + "'" +
+                    "  where accountID='" + account.getAccountID() + "' ";
+
+            try {
+                stmt = dbConnection.createStatement();
+                resultSet = stmt.executeUpdate(updateQuery);
+                if (resultSet > 0) {
+                    System.out.println("gick i andra: "+resultSet);
+                    acc.setName(account.getName());
+                    acc.setPhoneNr(account.getPhoneNr());
+                } else System.out.println("gick ej i andra: "+resultSet);
+                    System.out.println(resultSet);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
     }

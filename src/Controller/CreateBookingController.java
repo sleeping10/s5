@@ -237,7 +237,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Please select at least 1 service");
         } else {
-            tempB = new Booking( 0, date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
+            tempB = new Booking( DBC.getInstance().getLeatesBookingId(), date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
                     tfLicense.getText(), services, false);
             System.out.println(tempB);
             DBC.getInstance().addBooking(tempB);

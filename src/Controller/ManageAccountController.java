@@ -63,6 +63,10 @@ public class ManageAccountController implements Initializable {
     public void saveB() {
         setCurrent();
         update();
+        textFieldName.clear();
+        textFieldPhone.clear();
+        textFieldName.setPromptText(DBC.getInstance().getCurrentAcc().getName());
+        textFieldPhone.setPromptText(DBC.getInstance().getCurrentAcc().getPhoneNr());
 
     }
 
@@ -118,13 +122,18 @@ public class ManageAccountController implements Initializable {
         }
 
         if (!pass.matches("1") && !checkPass) {
-            String salt = PasswordEncryption.generateSalt(5);
-            String hashed = PasswordEncryption.hashPassword(pass, salt) + "-" + salt;
-            DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
-                    DBC.getInstance().getCurrentAcc().getEmail(), hashed,
-                    name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));
-            text.setText("saved!");
+            if (!pass.isEmpty()) {
+                String salt = PasswordEncryption.generateSalt(5);
+                String hashed = PasswordEncryption.hashPassword(pass, salt) + "-" + salt;
+                DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
+                        DBC.getInstance().getCurrentAcc().getEmail(), hashed,
+                        name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));
+                text.setText("saved!");
+            }else {DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
+                    DBC.getInstance().getCurrentAcc().getEmail(), pass,
+                    name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));}
         }
+
     }
 
 
@@ -154,7 +163,7 @@ public class ManageAccountController implements Initializable {
         } else {
             if (textFieldNPassword.getText().isEmpty()) {
                 if (textFieldRNPassword.getText().isEmpty()) {
-                    return DBC.getInstance().getCurrentAcc().getPassword();
+                    return "";
                 } else {
                     System.out.println("Wrong password.");
                     Alert alert = new Alert(Alert.AlertType.ERROR);

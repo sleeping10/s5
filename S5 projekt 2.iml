@@ -9,15 +9,16 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-java-8.0" level="project" />
     <orderEntry type="library" name="mysql-connector-java-8.0.11" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="java" level="project" />
     <orderEntry type="library" name="xmlbeans-3.1.0" level="project" />
-    <orderEntry type="library" name="com.lynden:GMapsFX:2.12.0" level="project" />
     <orderEntry type="library" name="javax.mail:javax.mail-api:1.6.2" level="project" />
     <orderEntry type="library" name="com.guicedee.services:javax.activation:1.0.2.4-jre13" level="project" />
-    <orderEntry type="library" name="mysql-connector-java-8.0.20" level="project" />
     <orderEntry type="library" name="activation-1.1.1" level="project" />
-    <orderEntry type="library" name="com.convertapi.client:convertapi:2.2" level="project" />
     <orderEntry type="library" name="klar dependencies" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="library" name="activation" level="project" />
+    <orderEntry type="library" name="com.lynden:GMapsFX:2.12.0" level="application" />
+    <orderEntry type="library" name="com.convertapi.client:convertapi:2.2" level="application" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.20" level="application" />
   </component>
 </module>

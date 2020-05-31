@@ -3,10 +3,13 @@ package sample;
 import com.convertapi.client.Config;
 import com.convertapi.client.ConvertApi;
 import com.convertapi.client.Param;
+import javafx.stage.FileChooser;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
+
+import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -187,12 +190,26 @@ public class CreatePdf {
                     new Param("File", Paths.get(osType +"src/FXML/test1.docx"))
             ).get().saveFilesSync(Paths.get(osType +"src/FXML"));
 
-            String homeDir = System.getProperty("user.home");
-            Files.move(Path.of(osType +"src/FXML/test1.pdf") , Path.of(homeDir+"/booking confirmation.pdf"),REPLACE_EXISTING);
+            JFrame parentFrame = new JFrame();
+
+            JFileChooser fileChooser = new JFileChooser();
+            fileChooser.setDialogTitle("Specify where you want to save your file");
+
+
+            int userSelection = fileChooser.showSaveDialog(parentFrame);
+
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File fileToSave = fileChooser.getSelectedFile();
+                System.out.println("Save as file: " + fileToSave.getAbsolutePath());
+                Files.move(Path.of(osType +"src/FXML/test1.pdf") , Path.of(fileToSave.getAbsolutePath()+".pdf"),REPLACE_EXISTING);
+            }
+
 
             Files.deleteIfExists(Path.of(osType +"src/FXML/test.docx"));
             Files.deleteIfExists(Path.of(osType +"src/FXML/test1.docx"));
             System.out.println("done");
+
+
 
 
 
