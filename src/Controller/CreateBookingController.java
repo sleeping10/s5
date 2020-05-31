@@ -8,7 +8,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import sample.*;
-//import sample.editDocument;
 
 import java.io.*;
 import java.net.URL;
@@ -68,8 +67,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     @FXML
     private TextArea txtATotal;
     @FXML
-    private TextField dateField;
-    @FXML
     private TextField tfLicense;
     @FXML
     private Button btnClearSelections;
@@ -107,7 +104,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     private GridPane gridPaneTwo;
 
     @FXML
-    private ListView lwTimes;
+    private ListView<String> lwTimes;
     @FXML
     private RadioButton rdB;
 
@@ -116,15 +113,11 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     private ArrayList<Service> services = new ArrayList<>();
     private Booking tempB;
-    private CreatePdf editD = new CreatePdf();
     private String osType = "";
 
-    File source = new File("src/FXML/booking_confirmation.docx");
-    File dest = new File("src//FXML/test.docx");
-
-
+    private File source = new File("src/FXML/booking_confirmation.docx");
+    private File dest = new File("src//FXML/test.docx");
     private double totalCost = 0;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -216,29 +209,29 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
 
     @FXML
-    private void handleCreateBookingBtn() throws ParseException {
+    private void handleCreateBookingBtn() {
 
         Calendar cal = Calendar.getInstance();
 
         long millis=System.currentTimeMillis();
         java.util.Date currentDate =new java.util.Date(millis);
-        java.util.Date date = null;
         ArrayList<Booking> bookingsToCheck = DBC.getInstance().getAllBookings();
         boolean dateNotAvailable = false;
+        java.util.Date date = java.sql.Date.valueOf(datePicker.getValue());
 
         try {
-            date = java.sql.Date.valueOf(datePicker.getValue());
             cal.setTime(date);
-            cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(0, 2)));
-            cal.set(Calendar.MINUTE, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().toString().substring(3, 5)));
+            cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().substring(0, 2)));
+            cal.set(Calendar.MINUTE, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().substring(3, 5)));
             date = cal.getTime();
         } catch (NullPointerException e) {
             System.out.println("ERROR: Not able to get date");
         }
 
-        for (int i = 0; i < bookingsToCheck.size(); i++){
-            if (bookingsToCheck.get(i).getDate().compareTo(date) == 0){
+        for (Booking booking: bookingsToCheck){
+            if (booking.getDate().compareTo(date) == 0){
                 dateNotAvailable = true;
+                break;
             }
         }
 
@@ -296,7 +289,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     private void fillTimesListView() {
         progressBar.setProgress(0.6);
-        ArrayList<String> times = new ArrayList<String>();
+        ArrayList<String> times = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
         System.out.println(sdf.format(cal.getTime()));
@@ -561,26 +554,19 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         chbWashCompletePremium.setSelected(false);
     }
 
-    @FXML
-    public void resetTemplate() {
+    private void resetTemplate() {
         if (System.getProperty("os.name").equalsIgnoreCase("linux")){
             osType ="s5/";
         }
         try (FileChannel sourceChannel = new FileInputStream(osType+source).getChannel(); FileChannel destChannel = new FileOutputStream(osType+dest).getChannel()) {
             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-
-    @FXML
-    public void startCreatePdf()  {
+    private void startCreatePdf()  {
         if (rdB.isSelected()) {
             CreatePdf CreatePdf = new CreatePdf();
             try {
