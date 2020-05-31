@@ -1,15 +1,13 @@
 package Controller;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
+import javafx.fxml.*;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.*;
-
 import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -17,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-//This class is not done/implemented yet
 public class AdminMenuController extends ServiceHandler implements Initializable {
 
     @FXML private MenuItem menuItemBasicExtWash;
@@ -40,22 +37,18 @@ public class AdminMenuController extends ServiceHandler implements Initializable
     @FXML private TextField tfDiscount;
     @FXML private TextField tfStartDate;
     @FXML private TextField tfEndDate;
-    @FXML private Button btnApplyCost;
-    @FXML private Button btnApplyDiscount;
     @FXML private MenuButton menuButtonServices;
 
-    @FXML private TableView tvUserList;
-    @FXML private TableColumn tcAccID;
-    @FXML private TableColumn tcEmail;
-    @FXML private TableColumn tcName;
-    @FXML private TableColumn tcPhone;
-    @FXML private TableColumn tcAccess;
+    @FXML private TableView<Account> tvUserList;
+    @FXML private TableColumn<Integer, Account> tcAccID;
+    @FXML private TableColumn<String, Account> tcEmail;
+    @FXML private TableColumn<String, Account>  tcName;
+    @FXML private TableColumn<String, Account>  tcPhone;
+    @FXML private TableColumn<Integer, Account>  tcAccess;
 
     @FXML private RadioButton chbAdmin;
     @FXML private RadioButton chbEmployee;
     @FXML private RadioButton chbCustomer;
-    @FXML private Button btnApplyPermissions;
-
     @FXML private Button btnDeleteAcc;
 
     private ArrayList<Account> userList = new ArrayList<>();
@@ -63,12 +56,10 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
     @FXML private Label lblStatus;
 
-    public ObservableList<Account> view (){
+    private ObservableList<Account> view (){
         ObservableList<Account> views = FXCollections.observableArrayList();
         userList=DBC.getInstance().getAllUsers();
-        for (int i = 0; i <userList.size() ; i++) {
-            views.add(userList.get(i));
-        }
+        views.addAll(userList);
         return views;
     }
 
@@ -80,18 +71,14 @@ public class AdminMenuController extends ServiceHandler implements Initializable
                 DBC.getInstance().getCurrentAcc().getAccessType() == 3){
             btnDeleteAcc.setDisable(true);
         }
-
-        //tvUserList.getSelectionModel().selectedIndexProperty().addListener((num) -> setCheckBoxes((Account)tvUserList.getSelectionModel().getSelectedItem()));
-
-
     }
 
     private void updateUserTableView(){
-        tcAccID.setCellValueFactory(new PropertyValueFactory<Integer, Account>("accountID"));
-        tcEmail.setCellValueFactory(new PropertyValueFactory<String, Account>("email"));
-        tcName.setCellValueFactory(new PropertyValueFactory<String, Account>("name"));
-        tcPhone.setCellValueFactory(new PropertyValueFactory<String, Account>("phoneNr"));
-        tcAccess.setCellValueFactory(new PropertyValueFactory<Integer, Account>("accessType"));
+        tcAccID.setCellValueFactory(new PropertyValueFactory<>("accountID"));
+        tcEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tcName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tcPhone.setCellValueFactory(new PropertyValueFactory<>("phoneNr"));
+        tcAccess.setCellValueFactory(new PropertyValueFactory<>("accessType"));
         tvUserList.setItems(view());
     }
 
@@ -215,10 +202,10 @@ public class AdminMenuController extends ServiceHandler implements Initializable
 
     @FXML
     private void handleBtnApplyDiscount(){
-        double discount = 0;
+        double discount;
         try {
             discount = Double.parseDouble(tfDiscount.getText());
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             if (!tfStartDate.getText().isEmpty() && !tfEndDate.getText().isEmpty() && selectedService != null){
                 Date parsedStartDate = dateFormat.parse(tfStartDate.getText());
                 Date parsedEndDate = dateFormat.parse(tfEndDate.getText());
@@ -231,7 +218,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
                 DBC.getInstance().setDiscount(selectedService, 0, null, null);
             }
 
-        } catch(Exception e) { //this generic but you can control another types of exception
+        } catch(Exception e) {
             lblStatus.setText("Status: Date format wrong, YYYY-MM-DD HH:MM");
         }
 
@@ -244,18 +231,17 @@ public class AdminMenuController extends ServiceHandler implements Initializable
         alert.showAndWait();
         if(alert.getResult()==ButtonType.YES) {
             Account tempacc;
-            tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+            tempacc = tvUserList.getSelectionModel().getSelectedItem();
             DBC.getInstance().removeAllBookings(tempacc);
             DBC.getInstance().deleteUser(tempacc.getAccountID());
         }
         updateUserTableView();
-
     }
 
     @FXML
     private void handlePrivilegiesBtn(){
         Account tempacc;
-        tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+        tempacc = tvUserList.getSelectionModel().getSelectedItem();
 
         if (chbAdmin.isSelected()){
             tempacc.setAccessType(1);
@@ -265,19 +251,19 @@ public class AdminMenuController extends ServiceHandler implements Initializable
             tempacc.setAccessType(3);
         }
         DBC.getInstance().updateAccount(tempacc);
-
+        updateUserTableView();
     }
     @FXML
     private void handleButtonRemoveBookingsPressed(ActionEvent actionEvent) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to remove all of the selected user's bookings?",ButtonType.YES,ButtonType.NO);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,"Are you sure you want to remove " +
+                "all of the selected user's bookings?",ButtonType.YES,ButtonType.NO);
         alert.showAndWait();
         if(alert.getResult()==ButtonType.YES) {
             Account tempacc;
-            tempacc = (Account) tvUserList.getSelectionModel().getSelectedItem();
+            tempacc = tvUserList.getSelectionModel().getSelectedItem();
             DBC.getInstance().removeAllBookings(tempacc);
             lblStatus.setText("STATUS: All bookings removed successfully");
         }
         updateUserTableView();
-
     }
 }
