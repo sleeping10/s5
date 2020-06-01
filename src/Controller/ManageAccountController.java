@@ -3,6 +3,7 @@ package Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.text.Text;
@@ -27,7 +28,9 @@ public class ManageAccountController implements Initializable {
     @FXML
     TextField textFieldRNPassword;
     @FXML
-    Text text;
+    private Label label;
+    @FXML
+    private Text text;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -46,7 +49,7 @@ public class ManageAccountController implements Initializable {
         textFieldPassword.setTooltip(tooltipCurrentPass);
 
         final Tooltip tooltipPass = new Tooltip();
-        tooltipPass.setText("Finalize your booking");
+        tooltipPass.setText("Enter your new password 4-15 Characters");
         textFieldNPassword.setTooltip(tooltipPass);
 
         final Tooltip tooltipPassRepeat = new Tooltip();
@@ -65,8 +68,15 @@ public class ManageAccountController implements Initializable {
         update();
         textFieldName.clear();
         textFieldPhone.clear();
+        textFieldPassword.clear();
+        textFieldNPassword.clear();
+        textFieldRNPassword.clear();
         textFieldName.setPromptText(DBC.getInstance().getCurrentAcc().getName());
         textFieldPhone.setPromptText(DBC.getInstance().getCurrentAcc().getPhoneNr());
+        if (text.getText().equalsIgnoreCase("Saved!")) {
+            label.setText("");
+        }
+
 
     }
 
@@ -77,7 +87,7 @@ public class ManageAccountController implements Initializable {
             String[] parts = DBC.getInstance().getCurrentAcc().getPassword().split("-");
             part1 = parts[0];
             part2 = parts[1];
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("nothing");
         }
 
@@ -86,38 +96,28 @@ public class ManageAccountController implements Initializable {
         if (textFieldName.getText().isEmpty()) {
             name = DBC.getInstance().getCurrentAcc().getName();
         } else name = textFieldName.getText();
-        if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)){
+        if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)) {
             pass = verifyNewPassword();
         } else {
-            System.out.println("Wrong password");
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setHeaderText("Wrong password");
-            alert.setContentText("please input your current password\n on password field. ");
-            alert.showAndWait();
             checkPass = true;
+            label.setText("Wrong password\n\nplease input your current password ");
         }
-        if ((textFieldPhone.getText().isEmpty() && !checkPass)) {
+        if ((textFieldPhone.getText().isEmpty())) {
             phone = DBC.getInstance().getCurrentAcc().getPhoneNr();
         } else {
-            if (verifyPhone()) {
+            if (verifyPhone() & !checkPass) {
                 if (DBC.getInstance().checkPhoneNumber(textFieldPhone.getText())) {
-                    phone=textFieldPhone.getText();
+                    phone = textFieldPhone.getText();
 
-                }else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("Phone number already taken");
-                    alert.setContentText("please try again");
-                    alert.showAndWait();
-                    checkPass=true;
+                } else {
+                    checkPass = true;
+                    label.setText("Phone number already taken\nplease try again");
 
 
                 }
             } else {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("wrong phone format.");
-                alert.setContentText("the right (XXXXXXXXXX)\n please try again.");
-                alert.showAndWait();
-                checkPass=true;
+                checkPass = true;
+                label.setText("wrong phone format.\nplease try again.");
             }
         }
 
@@ -128,10 +128,13 @@ public class ManageAccountController implements Initializable {
                 DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
                         DBC.getInstance().getCurrentAcc().getEmail(), hashed,
                         name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));
-                text.setText("saved!");
-            }else {DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
-                    DBC.getInstance().getCurrentAcc().getEmail(), pass,
-                    name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));}
+                text.setText("Saved!");
+            } else {
+                DBC.getInstance().updateAccount(new Account(DBC.getInstance().getCurrentAcc().getAccountID(),
+                        DBC.getInstance().getCurrentAcc().getEmail(), pass,
+                        name, phone, DBC.getInstance().getCurrentAcc().getAccessType()));
+                text.setText("Saved!");
+            }
         }
 
     }
@@ -145,18 +148,12 @@ public class ManageAccountController implements Initializable {
                 if (textFieldNPassword.getText().matches(regex) && textFieldRNPassword.getText().matches(regex)) {//kolla om det nya lösenordet matchar regex och andra gången du skriver in lösenordet
                     return textFieldNPassword.getText();
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("new password dont match requirements.");
-                    alert.setContentText("password must be four to fifteen characters or numbers.");
-                    alert.showAndWait();
+                    label.setText("new password dont match requirements.");
 
                 }
             } else {
                 System.out.println("Wrong password.");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("new password filed do not match.");
-                alert.setContentText("check new password and repeat  new password.");
-                alert.showAndWait();
+                label.setText("New password do not match.\nCheck new password and repeat new password.");
                 return "1";
             }
 
@@ -165,19 +162,12 @@ public class ManageAccountController implements Initializable {
                 if (textFieldRNPassword.getText().isEmpty()) {
                     return "";
                 } else {
-                    System.out.println("Wrong password.");
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setHeaderText("repeat new password do not match new password.");
-                    alert.setContentText("check new password and repeat  new password .");
-                    alert.showAndWait();
+                    label.setText("New password do not match.\nCheck new password and repeat new password.");
                     return "1";
                 }
             } else {
                 System.out.println("Wrong password");
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setHeaderText("new password  do not match repeat new password.");
-                alert.setContentText("check new password and repeat  new password. ");
-                alert.showAndWait();
+                label.setText("New password do not match.\nCheck new password and repeat new password.");
                 return "1";
             }
 
