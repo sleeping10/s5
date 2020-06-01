@@ -96,16 +96,10 @@ public class ManageAccountController implements Initializable {
         if (textFieldName.getText().isEmpty()) {
             name = DBC.getInstance().getCurrentAcc().getName();
         } else name = textFieldName.getText();
-        if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)) {
-            pass = verifyNewPassword();
-        } else {
-            checkPass = true;
-            label.setText("Wrong password\n\nplease input your current password ");
-        }
         if ((textFieldPhone.getText().isEmpty())) {
             phone = DBC.getInstance().getCurrentAcc().getPhoneNr();
         } else {
-            if (verifyPhone() & !checkPass) {
+            if (verifyPhone() ) {
                 if (DBC.getInstance().checkPhoneNumber(textFieldPhone.getText())) {
                     phone = textFieldPhone.getText();
 
@@ -119,6 +113,12 @@ public class ManageAccountController implements Initializable {
                 checkPass = true;
                 label.setText("wrong phone format.\nplease try again.");
             }
+        }
+        if (PasswordEncryption.verifyPassword(textFieldPassword.getText(), part1, part2)) {
+            pass = verifyNewPassword();
+        } else {
+            checkPass = true;
+            label.setText("Wrong password\n\nplease input your current password ");
         }
 
         if (!pass.matches("1") && !checkPass) {
