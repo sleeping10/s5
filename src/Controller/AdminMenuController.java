@@ -50,6 +50,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
     @FXML private RadioButton chbEmployee;
     @FXML private RadioButton chbCustomer;
     @FXML private Button btnDeleteAcc;
+    @FXML private ToggleGroup tGroup;
 
     private ArrayList<Account> userList = new ArrayList<>();
     private String selectedService;
@@ -71,6 +72,11 @@ public class AdminMenuController extends ServiceHandler implements Initializable
                 DBC.getInstance().getCurrentAcc().getAccessType() == 3){
             btnDeleteAcc.setDisable(true);
         }
+        tGroup = new ToggleGroup();
+        chbAdmin.setToggleGroup(tGroup);
+        chbEmployee.setToggleGroup(tGroup);
+        chbCustomer.setToggleGroup(tGroup);
+
     }
 
     private void updateUserTableView(){
@@ -234,6 +240,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
             tempacc = tvUserList.getSelectionModel().getSelectedItem();
             DBC.getInstance().removeAllBookings(tempacc);
             DBC.getInstance().deleteUser(tempacc.getAccountID());
+            lblStatus.setText("Status: User removed successfully");
         }
         updateUserTableView();
     }
@@ -262,7 +269,7 @@ public class AdminMenuController extends ServiceHandler implements Initializable
             Account tempacc;
             tempacc = tvUserList.getSelectionModel().getSelectedItem();
             DBC.getInstance().removeAllBookings(tempacc);
-            lblStatus.setText("STATUS: All bookings removed successfully");
+            lblStatus.setText("Status: All bookings removed successfully");
         }
         updateUserTableView();
     }
