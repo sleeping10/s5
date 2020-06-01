@@ -217,15 +217,16 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         java.util.Date currentDate =new java.util.Date(millis);
         ArrayList<Booking> bookingsToCheck = DBC.getInstance().getAllBookings();
         boolean dateNotAvailable = false;
-        java.util.Date date = java.sql.Date.valueOf(datePicker.getValue());
+        java.util.Date date = new Date();
 
         try {
+            date = java.sql.Date.valueOf(datePicker.getValue());
             cal.setTime(date);
             cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().substring(0, 2)));
             cal.set(Calendar.MINUTE, Integer.parseInt(lwTimes.getSelectionModel().getSelectedItem().substring(3, 5)));
             date = cal.getTime();
         } catch (NullPointerException e) {
-            System.out.println("ERROR: Not able to get date");
+            lblStatus.setText("Please select a valid date");
         }
 
         for (Booking booking : bookingsToCheck) {
@@ -244,11 +245,11 @@ public class CreateBookingController extends ServiceHandler implements Initializ
         }
 
         if (datePicker.getValue() == null || !Verification.validateLicensePlate(tfLicense.getText())) {
-            lblStatus.setText("Status: Select a date and Registration ID");
+            lblStatus.setText("Status: Select a valid date and Registration ID");
         } else if (services.isEmpty()) {
             lblStatus.setText("Status: Select at least 1 service");
         } else if (date.before(currentDate)){
-            lblStatus.setText("Status: You cannot book a date before today's date");
+            lblStatus.setText("Status: Error, selected date has already passed");
         } else if (dateNotAvailable){
             lblStatus.setText("Status: This time is not available, try another date");
         }
