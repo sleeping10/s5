@@ -29,12 +29,11 @@ public class FindNearestStationController implements Initializable, MapComponent
     @FXML
     protected TextField fromTextField;
 
-    @FXML
-    protected TextField toTextField;
+
 
     @FXML
     private void toTextFieldAction(ActionEvent event) {
-        DirectionsRequest request = new DirectionsRequest(from.get(), to.get(), TravelModes.DRIVING);
+        DirectionsRequest request = new DirectionsRequest(from.get(), "Elmetorpsvägen 23", TravelModes.DRIVING);
         directionsService.getRoute(request, this, new DirectionsRenderer(true, mapView.getMap(), directionsPane));
 
     }
@@ -45,8 +44,8 @@ public class FindNearestStationController implements Initializable, MapComponent
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        mapView.setKey("AIzaSyADosv6x13HagnCrKo7ymTyJUkMLDEL-iE");
         mapView.addMapInializedListener(this);
-        to.bindBidirectional(toTextField.textProperty());
         from.bindBidirectional(fromTextField.textProperty());
     }
 
@@ -54,9 +53,10 @@ public class FindNearestStationController implements Initializable, MapComponent
     public void mapInitialized() {
         MapOptions options = new MapOptions();
 
-        options.center(new LatLong(47.606189, -122.335842))
+        options.center(new LatLong(56.048624, 14.146518))
                 .zoomControl(true)
                 .zoom(12)
+                .mapTypeControl(false)
                 .overviewMapControl(false)
                 .mapType(MapTypeIdEnum.ROADMAP);
         GoogleMap map = mapView.createMap(options);
