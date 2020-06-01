@@ -228,10 +228,18 @@ public class CreateBookingController extends ServiceHandler implements Initializ
             System.out.println("ERROR: Not able to get date");
         }
 
-        for (Booking booking: bookingsToCheck){
-            if (booking.getDate().compareTo(date) == 0){
-                dateNotAvailable = true;
+        for (Booking booking : bookingsToCheck) {
+            if (booking == null){
+                bookingsToCheck.clear();
                 break;
+            }
+        }
+
+        if (bookingsToCheck != null) {
+            for (Booking booking : bookingsToCheck) {
+                if (booking.getDate().compareTo(date) == 0) {
+                    dateNotAvailable = true;
+                }
             }
         }
 
