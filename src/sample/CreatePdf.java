@@ -39,7 +39,8 @@ public class CreatePdf {
                 price.add(booking.getServices().get(i).getCostAndDiscountAsString());
 
             }
-
+            java.util.Date utilDate = booking.getDate();
+            java.sql.Timestamp sq = new java.sql.Timestamp(utilDate.getTime());
 
             Date myDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -140,9 +141,8 @@ public class CreatePdf {
                 if (runs != null) {
                     for (XWPFRun r : runs) {
                         String text = r.getText(0);
-                        if (text != null && text.contains("date1")) {
-                            text = text.replace("date1", booking.getDate().toString());
-                            System.out.println(booking.getDate().toString());
+                        if (text != null && text.contains("test")) {
+                            text = text.replace("test", sq.toString());
                             r.setText(text, 0);
                         }
 
@@ -185,7 +185,7 @@ public class CreatePdf {
             doc.close();
 
 //            api to covert from Docx to pdf.
-            Config.setDefaultSecret("GTV4WT1bbidv7rUV");
+            Config.setDefaultSecret("0xyvXjrUHhweyeh7");
             ConvertApi.convert("docx", "pdf",
                     new Param("File", Paths.get(osType +"src/FXML/test1.docx"))
             ).get().saveFilesSync(Paths.get(osType +"src/FXML"));
