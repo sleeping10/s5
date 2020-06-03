@@ -27,13 +27,11 @@ public class CreatePdf {
     private ArrayList<String> service = new ArrayList<>();
     private ArrayList<String> price = new ArrayList<>();
 //     Putting in all the information in the Docx file.
-    private String osType = "";
+
     public void createDocument(Booking booking) throws Exception {
         DecimalFormat decimalFormat = new DecimalFormat(".##");
         try {
-            if (System.getProperty("os.name").equalsIgnoreCase("linux")){
-                osType ="s5/";
-            }
+
             for (int i = 0; i < booking.getServices().size(); i++) {
                 service.add(booking.getServices().get(i).getServiceName());
                 price.add(booking.getServices().get(i).getCostAndDiscountAsString());
@@ -45,7 +43,7 @@ public class CreatePdf {
             Date myDate = new Date();
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             String timeStamp = sdf.format(myDate);
-            XWPFDocument doc = new XWPFDocument(OPCPackage.open(osType +"src//FXML/test.docx"));
+            XWPFDocument doc = new XWPFDocument(OPCPackage.open("src//FXML/test.docx"));
             for (XWPFParagraph p : doc.getParagraphs()) {
                 List<XWPFRun> runs = p.getRuns();
                 if (runs != null) {
@@ -178,7 +176,7 @@ public class CreatePdf {
                     }
                 }
             }
-            FileOutputStream fos = new FileOutputStream(osType + "src/FXML/test1.docx");
+            FileOutputStream fos = new FileOutputStream( "src/FXML/test1.docx");
 
             doc.write(fos);
             fos.close();
@@ -187,8 +185,8 @@ public class CreatePdf {
 //            api to covert from Docx to pdf.
             Config.setDefaultSecret("0xyvXjrUHhweyeh7");
             ConvertApi.convert("docx", "pdf",
-                    new Param("File", Paths.get(osType +"src/FXML/test1.docx"))
-            ).get().saveFilesSync(Paths.get(osType +"src/FXML"));
+                    new Param("File", Paths.get("src/FXML/test1.docx"))
+            ).get().saveFilesSync(Paths.get("src/FXML"));
 
             JFrame parentFrame = new JFrame();
 
@@ -201,12 +199,12 @@ public class CreatePdf {
             if (userSelection == JFileChooser.APPROVE_OPTION) {
                 File fileToSave = fileChooser.getSelectedFile();
                 System.out.println("Save as file: " + fileToSave.getAbsolutePath());
-                Files.move(Path.of(osType +"src/FXML/test1.pdf") , Path.of(fileToSave.getAbsolutePath()+".pdf"),REPLACE_EXISTING);
+                Files.move(Path.of("src/FXML/test1.pdf") , Path.of(fileToSave.getAbsolutePath()+".pdf"),REPLACE_EXISTING);
             }
 
 
-            Files.deleteIfExists(Path.of(osType +"src/FXML/test.docx"));
-            Files.deleteIfExists(Path.of(osType +"src/FXML/test1.docx"));
+            Files.deleteIfExists(Path.of("src/FXML/test.docx"));
+            Files.deleteIfExists(Path.of("src/FXML/test1.docx"));
             System.out.println("done");
 
 

@@ -12,7 +12,6 @@ import sample.*;
 import java.io.*;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -113,7 +112,6 @@ public class CreateBookingController extends ServiceHandler implements Initializ
 
     private ArrayList<Service> services = new ArrayList<>();
     private Booking tempB;
-    private String osType = "";
 
     private File source = new File("src/FXML/booking_confirmation.docx");
     private File dest = new File("src//FXML/test.docx");
@@ -254,7 +252,7 @@ public class CreateBookingController extends ServiceHandler implements Initializ
             lblStatus.setText("Status: This time is not available, try another date");
         }
         else {
-            tempB = new Booking( DBC.getInstance().getLeatesBookingId(), date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
+            tempB = new Booking( DBC.getInstance().getLatestBookingId(), date, taDesc.getText(), DBC.getInstance().getCurrentAcc().getAccountID(),
                     tfLicense.getText().toUpperCase(), services, false);
             System.out.println(tempB);
             DBC.getInstance().addBooking(tempB);
@@ -564,10 +562,8 @@ public class CreateBookingController extends ServiceHandler implements Initializ
     }
 
     private void resetTemplate() {
-        if (System.getProperty("os.name").equalsIgnoreCase("linux")){
-            osType ="s5/";
-        }
-        try (FileChannel sourceChannel = new FileInputStream(osType+source).getChannel(); FileChannel destChannel = new FileOutputStream(osType+dest).getChannel()) {
+
+        try (FileChannel sourceChannel = new FileInputStream(source).getChannel(); FileChannel destChannel = new FileOutputStream(dest).getChannel()) {
             destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
 
         }catch (IOException e) {

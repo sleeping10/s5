@@ -163,7 +163,7 @@ public class DBC {
         }
         return tempService;
     }
-    public int getLeatesBookingId() {
+    public int getLatestBookingId() {
         int getCurrentLatest = 0;
 
         try {
